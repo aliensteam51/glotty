@@ -4,13 +4,15 @@
 // for more of what you can do here.
 module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
-  const users = new mongooseClient.Schema({
+  const { Schema } = mongooseClient;
 
-    name: { type: String, required: true, default: '' },
+  const users = new Schema({
+
+    name: { type: String, required: true },
     email: {type: String, unique: true},
     password: { type: String },
 
-    role: { type: String, required: true, default: '' },
+    role: { type: String, default: '' },
     organizationId: { type: Schema.Types.ObjectId, ref: 'organizations' },
     deleted: { type: Boolean, default: false },
 
