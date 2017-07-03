@@ -3,10 +3,15 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "feathers": "^2.1.4",
+    "feathers-authentication-client": "^0.3.2",
+    "feathers-hooks": "^2.0.1",
+    "feathers-socketio": "^2.0.0",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
     "react-router": "3.0.5",
-    "react-router-redux": "4.0.8"
+    "react-router-redux": "4.0.8",
+    "socket.io-client": "^2.0.3"
   },
   "devDependencies": {
     "react-scripts": "1.0.10"
