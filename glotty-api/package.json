@@ -26,7 +26,8 @@
     "eslint": "eslint src/. test/. --config .eslintrc.json",
     "start": "node src/",
     "mocha": "mocha test/ --recursive",
-    "dev": "nodemon --inspect src/"
+    "dev": "nodemon --inspect src/",
+    "seed": "node src/seeds.js"
   },
   "dependencies": {
     "body-parser": "^1.17.2",
