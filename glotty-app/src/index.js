@@ -6,7 +6,7 @@ import store, { history } from './store'
 import registerServiceWorker from './registerServiceWorker'
 import App from './App'
 import ProjectsContainer from './projects/ProjectsContainer'
-
+import SignIn from './users/SignIn'
 import './index.css'
 
 ReactDOM.render(
@@ -14,6 +14,7 @@ ReactDOM.render(
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={ProjectsContainer} />
+        <Route path="/sign-in" component={SignIn} />
       </Route>
     </Router>
   </Provider>,
