@@ -10,17 +10,13 @@ export class SignIn extends PureComponent {
 
   submitForm(event) {
     event.preventDefault()
-    if (this.validateAll()) {
+    if (this.validateEmail()) {
       const user = {
         email: this.refs.email.value,
         password: this.refs.password.value
       }
       this.props.signIn(user)
     }
-  }
-
-  validateAll() {
-    return this.validateEmail() && this.validatePassword()
   }
 
   validateEmail() {
