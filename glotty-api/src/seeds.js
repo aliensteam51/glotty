@@ -7,7 +7,6 @@ const hooks = require('feathers-hooks');
 const auth = require('feathers-authentication-client');
 
 const user = {
-  name: 'admin',
   email: 'admin@admin.com',
   password: 'qwerty1'
 };
@@ -3683,9 +3682,9 @@ feathersClient.service('users').create(user)
         locales.map((locale) => {
           feathersClient.service('locales').create(locale)
             .then((result) => {
-              console.log('Batch seeded...', result.title);
+              console.log('Locale seeded...', result.name);
             }).catch((error) => {
-              console.error('Error seeding batch!', error.message);
+              console.error('Error seeding locale!', error.message);
             });
         });
       })
