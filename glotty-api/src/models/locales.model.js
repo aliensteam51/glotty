@@ -6,8 +6,8 @@ module.exports = function (app) {
   const mongooseClient = app.get('mongooseClient');
   const { Schema } = mongooseClient;
   const locales = new Schema({
-    name: { type: String, required: true },
-    code: { type: String, required: true },
+    name: { type: String},
+    code: { type: String},
     deleted: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
