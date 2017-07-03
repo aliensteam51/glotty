@@ -4416,8 +4416,8 @@ feathersClient.service('users').create(user)
       password: user.password
     })
       .then(() => {
-        batches.map((batch) => {
-          feathersClient.service('batches').create(batch)
+        locales.map((locale) => {
+          feathersClient.service('locales').create(locale)
             .then((result) => {
               console.log('Batch seeded...', result.title);
             }).catch((error) => {
