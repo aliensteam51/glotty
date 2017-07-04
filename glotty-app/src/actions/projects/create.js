@@ -1,5 +1,4 @@
 import API from '../../api'
-import { history } from '../../store'
 import {
   APP_LOADING,
   APP_DONE_LOADING,
@@ -27,7 +26,6 @@ export default (newProject) => {
          type: CREATE_PROJECT,
          payload: result
        })
-       history.replace('/')
      })
      .catch((error) => {
        dispatch({ type: APP_DONE_LOADING })
