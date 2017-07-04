@@ -11,14 +11,16 @@ const organizationSchema = {
 
 const addPlatform = require('../../hooks/add-platform');
 
+const addLocale = require('../../hooks/add-locale');
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
     create: [],
-    update: [addPlatform()],
-    patch: [addPlatform()],
+    update: [addPlatform(), addLocale()],
+    patch: [addPlatform(), addLocale()],
     remove: []
   },
 
