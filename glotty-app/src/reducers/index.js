@@ -5,6 +5,7 @@ import currentProject from './currentProject'
 import projects from './projects'
 import entries from './entries'
 import subscriptions from './subscriptions'
+import locales from './locales'
 
 export default {
   projects,
@@ -14,4 +15,5 @@ export default {
   subscriptions,
   loading,
   loadError,
+  locales,
 }
