@@ -15,13 +15,13 @@ export class ProjectsContainer extends PureComponent {
       super(props)
       this.state = {
         name: '',
-        description: ''
+        description: '',
       }
     }
 
   componentWillMount() {
     const { fetchProjects, currentUser } = this.props
-    getOrganization(currentUser.organizationId)
+    // getOrganization(currentUser.organizationId)
     fetchProjects()
   }
 
