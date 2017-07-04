@@ -1,10 +1,8 @@
 import loading from './loading'
 import loadError from './loadError'
 import currentUser from './currentUser'
-import currentProject from './currentProject'
+import curentProject from './currentProject'
 import projects from './projects'
-
-
 
 export default {
   projects,
