@@ -4,6 +4,8 @@ import { push } from 'react-router-redux'
 import { Link } from 'react-router'
 import fetchProjects from '../actions/projects/fetch'
 import createProjects from '../actions/projects/create'
+import getOrganization from '../actions/projects/get'
+import deleteProject from '../actions/projects/delete'
 
 import './ProjectsContainer.css'
 
@@ -13,13 +15,13 @@ export class ProjectsContainer extends PureComponent {
       super(props)
       this.state = {
         name: '',
-        organizationId: '',
         description: ''
       }
     }
 
   componentWillMount() {
-    const { fetchProjects } = this.props
+    const { fetchProjects, currentUser } = this.props
+    getOrganization(currentUser.organizationId)
     fetchProjects()
   }
 
@@ -61,13 +63,16 @@ export class ProjectsContainer extends PureComponent {
             <Link to={"/projects/" + project._id }>
               <button type="button" className="primary button">View</button>
             </Link>
-            <button type="button" className="alert button">Delete</button>
+            <button type="button"
+              className="alert button"
+              onClick={() => {this.props.deleteProject(project._id, {delete: true})}}>Delete</button>
           </td>
         }
       </tr>
   }
 
   render() {
+    if (!this.props.projects[0]) return null
     return (
       <main className="grid-container projects">
         <h1 className="text-center">Organization Name</h1>
@@ -108,7 +113,7 @@ export class ProjectsContainer extends PureComponent {
               </tr>
             </thead>
             <tbody>
-                { this.props.projects.map(this.renderProject) }
+                { this.props.projects.map(this.renderProject.bind(this)) }
             </tbody>
           </table>
       </main>
@@ -116,13 +121,16 @@ export class ProjectsContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = ({currentUser, projects }) => ({
+const mapStateToProps = ({currentUser, projects, currentOrganization }) => ({
   projects,
   currentUser,
+  currentOrganization,
 })
 
 export default connect(mapStateToProps, {
   fetchProjects,
+  deleteProject,
+  getOrganization,
   createProjects,
   push
 })(ProjectsContainer)
