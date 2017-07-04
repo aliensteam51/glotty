@@ -7,7 +7,6 @@ import registerServiceWorker from './registerServiceWorker'
 import App from './App'
 import ProjectsContainer from './projects/ProjectsContainer'
 import SignIn from './users/SignIn'
-import './index.css'
 
 ReactDOM.render(
   <Provider store={store}>
