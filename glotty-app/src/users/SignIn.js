@@ -1,6 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import signIn from '../actions/users/sign-in'
+import './SignIn.css'
 
 export class SignIn extends PureComponent {
   constructor() {
@@ -10,61 +11,33 @@ export class SignIn extends PureComponent {
 
   submitForm(event) {
     event.preventDefault()
-    if (this.validateEmail()) {
-      const user = {
-        email: this.refs.email.value,
-        password: this.refs.password.value
-      }
-      this.props.signIn(user)
+    const user = {
+      email: this.refs.email.value,
+      password: this.refs.password.value
     }
-  }
-
-  validateEmail() {
-    const { email } = this.refs
-
-    if (email.value.match(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+$/)) {
-      this.setState({
-        emailError: null
-      })
-      return true
-    }
-
-    if (email.value === '') {
-      this.setState({
-        emailError: 'Please provide your email address'
-      })
-      return false
-    }
-
-    this.setState({
-      emailError: 'Please provide a valid email address'
-    })
-    return false
+    this.props.signIn(user)
   }
 
   render() {
     return (
-      <div className="sign-in form">
-        <h2>Sign In</h2>
-
+      <div className="sign-in grid-container">
         <form onSubmit={this.submitForm.bind(this)}>
-          <div className="input">
-            <input ref="email" type="email" placeholder="Email address" />
-            { this.state.emailError ?
-              <p className="formError">{ this.state.emailError }</p> :
-              null
-            }
+          <h2>Sign In</h2>
+          <div className="grid-x">
+            <div className="medium-offset-4 medium-4 cell">
+              <label>Email
+                <input ref="email" type="email" placeholder="Email address" />
+              </label>
+            </div>
+            <div className="medium-offset-4 medium-4 cell">
+              <label>Password
+                <input ref="password" type="password" placeholder="Password" />
+              </label>
+            </div>
+            <div className="medium-offset-4 medium-4 cell right">
+              <input type="submit" className="button" value="Sign In" />
+            </div>
           </div>
-
-          <div className="input">
-            <input ref="password" type="password" placeholder="Password" />
-            { this.state.passwordError ?
-              <p className="formError">{ this.state.passwordError }</p> :
-              null
-            }
-          </div>
-
-          <input type="submit" value="Sign In" />
         </form>
       </div>
     )
