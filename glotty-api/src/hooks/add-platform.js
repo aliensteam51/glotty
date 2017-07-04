@@ -31,7 +31,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
     return entries.find( { projectId: hook.id } ).limit(0)
       then((result) => {
         result.data.map((entry) => {
-          entries.patch(entry._id, { platforms: entry.platforms.concat(newPlatform))
+          entries.patch(entry._id, { platforms: entry.platforms.concat(newPlatform) })
         });
         return Promise.resolve(hook);
       });
