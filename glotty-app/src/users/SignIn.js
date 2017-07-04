@@ -22,7 +22,7 @@ export class SignIn extends PureComponent {
   validateEmail() {
     const { email } = this.refs
 
-    if (email.value.match(/^[a-z0-9.\_-]+@[a-z0-9.\_-]+\.[a-z0-9.\_-]+$/)) {
+    if (email.value.match(/^[a-z0-9._-]+@[a-z0-9._-]+\.[a-z0-9._-]+$/)) {
       this.setState({
         emailError: null
       })
