@@ -11,15 +11,15 @@ export const FETCHED_ENTRIES = 'FETCHED_ENTRIES'
 const api = new API()
 
 export default (projectId) => {
+  console.log(projectId)
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
     dispatch({ type: LOAD_SUCCESS })
 
     const backend = api.service('entries')
 
-    backend.find({ query: { projectId: projectId } }).limit(0)
+    backend.find({ query: { projectId: projectId } })
     .then((result) => {
-      console.log(result)
       dispatch({ type: APP_DONE_LOADING })
       dispatch({ type: LOAD_SUCCESS })
 

@@ -1,6 +1,11 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
+
+import getProject from '../actions/projects/get'
+import fetchEntries from '../actions/entries/fetch'
+
+
 // import { Link } from 'react-router'
 
 export class ProjectPage extends PureComponent {
@@ -11,30 +16,36 @@ export class ProjectPage extends PureComponent {
 
   componentWillMount() {
     const {
-      // fetchEntries,
-      // getProject,
+      getProject,
+      fetchEntries
     } = this.props
-    // const { projectId } = this.props.params
-    // getProject(projectId)
-    // fetchEntries()
+    const { projectId } = this.props.params
+    getProject(projectId)
+    fetchEntries(projectId)
   }
 
   render() {
-    console.log(this.props.params)
+    const { currentProject } = this.props
+    if (!currentProject) return null
     return (
-      <h1>Project Page</h1>
+      <div className="grid-container single-project">
+        <h1>{currentProject.name}</h1>
+        <p>{currentProject.description}</p>
+        <h1>Locales Component</h1>
+        <h1>Entries Component</h1>
+      </div>
     )
   }
 }
 
-const mapStateToProps = ({currentUser, projects }, {params}) => ({
-  project: projects.find(p => p._id.toString() === params.projectId.toString()),
+const mapStateToProps = ({currentUser, projects, currentProject}, {params}) => ({
   currentUser,
+  currentProject,
 })
 
 export default connect(mapStateToProps, {
-  // getProject,
-  // fetchEntries,
+  getProject,
+  fetchEntries,
   // subscribeToEntries,
   push
 })(ProjectPage)

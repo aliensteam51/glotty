@@ -17,7 +17,6 @@ export default () => {
     const backend = api.service('projects')
     backend.find()
     .then((result) => {
-      console.log(result)
       dispatch({ type: APP_DONE_LOADING })
       dispatch({ type: LOAD_SUCCESS })
       dispatch({
