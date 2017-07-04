@@ -1,4 +1,4 @@
-// src/seeds.js
+// src/setup-seeds.js
 
 const feathers = require('feathers/client');
 const rest = require('feathers-rest/client');
@@ -3669,6 +3669,29 @@ const locales = [
   }
 ];
 
+const platforms = [
+  {
+    name: 'default',
+    description: 'Default keys and translations',
+    code: 'default'
+  },
+  {
+    name: 'iOS',
+    description: 'iOS specific keys and translations',
+    code: 'ios'
+  },
+  {
+    name: 'Android',
+    description: 'Android specific keys and translations',
+    code: 'android'
+  },
+  {
+    name: 'i18n',
+    description: 'i18n internalization format specific keys and translations',
+    code: 'i18n'
+  }
+]
+
 const feathersClient = feathers();
 
 feathersClient
@@ -3686,12 +3709,20 @@ feathersClient.service('users').create(user)
       .then(() => {
         locales.map((locale) => {
           feathersClient.service('locales').create(locale)
-            .then((result) => {
-              console.log('Locale seeded...', result.name);
+            .then((local) => {
+              console.log('Locale seeded...', local.name);
             }).catch((error) => {
               console.error('Error seeding locale!', error.message);
             });
         });
+        platforms.map((platform) => {
+          feathersClient.service('platforms').create(platform)
+            .then((platf) => {
+              console.log('Locale seeded...', platf.name);
+            }).catch((error) => {
+              console.log('Error seeding platform!', error.message);
+            });
+        })
       })
       .catch(function(error){
         console.error('Error authenticating!', error);

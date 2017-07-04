@@ -8,11 +8,13 @@ module.exports = function (app) {
 
   const translationSchema = new Schema({
     localeId: { type: Schema.Types.ObjectId, ref: 'locales' },
+    localeCode: { type: String },
     translation: { type: String, default: '' }
   })
 
   const platformSchema = new Schema({
     platformId: { type: Schema.Types.ObjectId, ref: 'platforms' },
+    platformCode: { type: String },
     translations: [translationSchema]
   })
 
@@ -21,6 +23,7 @@ module.exports = function (app) {
     description: { type: String },
     group: { type: String },
     tags: [{type: String}],
+    projectId: { type: Schema.Types.ObjectId, ref: 'projects' },
     platforms: [platformSchema],
     deleted: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
