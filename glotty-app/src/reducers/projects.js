@@ -1,5 +1,5 @@
-import { CREATE_PROJECT } from '../actions/projrcts/create'
-import { FETCHED_PROJECTS } from '../actions/projrcts/fetch'
+import { CREATE_PROJECT } from '../actions/projects/create'
+import { FETCHED_PROJECTS } from '../actions/projects/fetch'
 
 export default (state = [], { type, payload } = {}) => {
   switch(type) {
@@ -12,3 +12,4 @@ export default (state = [], { type, payload } = {}) => {
     default :
       return state
   }
+}
