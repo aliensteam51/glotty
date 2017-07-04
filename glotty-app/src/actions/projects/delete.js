@@ -10,7 +10,7 @@ export const PROJECT_DELETED = 'PROJECT_DELETED'
 
 const api = new API()
 
-export default (project) => {
+export default (projectId) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
@@ -18,7 +18,7 @@ export default (project) => {
 
     api.app.authenticate()
       .then(() => {
-        backend.patch(project)
+        backend.patch(projectId, {projectId, deleted: true})
           .then((result) => {
             dispatch({ type: APP_DONE_LOADING })
             dispatch({ type: LOAD_SUCCESS })

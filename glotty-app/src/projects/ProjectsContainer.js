@@ -65,7 +65,7 @@ export class ProjectsContainer extends PureComponent {
             </Link>
             <button type="button"
               className="alert button"
-              onClick={() => {this.props.deleteProject(project._id, {delete: true})}}>Delete</button>
+              onClick={() => {this.props.deleteProject(project._id)}}>Delete</button>
           </td>
         }
       </tr>
