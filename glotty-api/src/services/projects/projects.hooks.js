@@ -9,14 +9,16 @@ const organizationSchema = {
   }
 };
 
+const addPlatform = require('../../hooks/add-platform');
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
     create: [],
-    update: [],
-    patch: [],
+    update: [addPlatform()],
+    patch: [addPlatform()],
     remove: []
   },
 
