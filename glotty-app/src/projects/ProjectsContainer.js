@@ -13,7 +13,7 @@ export class ProjectsContainer extends PureComponent {
       super(props)
       this.state = {
         name: '',
-        organisationId: '',
+        organizationId: '',
         description: ''
       }
     }
@@ -35,13 +35,13 @@ export class ProjectsContainer extends PureComponent {
     const {
       name,
       description,
-      organisationId,
+      organizationId,
     } = this.state
 
     const project = {
       name,
       description,
-      organisationId,
+      organizationId,
     }
       this.props.createProjects(project)
       console.log(project)
@@ -67,32 +67,10 @@ export class ProjectsContainer extends PureComponent {
       </tr>
   }
 
-  renderCreate() {
-    return <form onSubmit={this.handleSubmit.bind(this)}>
-        <div className="row">
-          <div className="medium-4 columns">
-            <input type="text"
-              value={this.state.value}
-              onChange={this.handleNameChange.bind(this)}
-              placeholder="Name of the Project" />
-          </div>
-          <div className="medium-6 columns">
-            <input type="text"
-              value={this.state.value}
-              onChange={this.handleDescritpionChange.bind(this)}
-              placeholder="Description" />
-          </div>
-          <div className="medium-2 columns">
-            <input type="submit" className="button" value="Submit" />
-          </div>
-        </div>
-      </form>
-  }
-
   render() {
     return (
       <main className="grid-container projects">
-        <h1 className="text-center">Organisation Name</h1>
+        <h1 className="text-center">Organization Name</h1>
         <div className="grid-x">
           {/* <button type="button"
             className="primary button medium-offset-10 medium-2 cell">
@@ -102,20 +80,20 @@ export class ProjectsContainer extends PureComponent {
 
           {/* Move Form to a seperate render, hid show if required */}
           <form onSubmit={this.handleSubmit.bind(this)}>
-            <div className="row">
-              <div className="medium-4 columns">
+            <div className="grid-container ">
+              <div className="medium-4 grid-x">
                 <input type="text"
                   value={this.state.value}
                   onChange={this.handleNameChange.bind(this)}
                   placeholder="Name of the Project" />
               </div>
-              <div className="medium-6 columns">
+              <div className="medium-6 grid-x">
                 <input type="text"
                   value={this.state.value}
                   onChange={this.handleDescritpionChange.bind(this)}
                   placeholder="Description" />
               </div>
-              <div className="medium-2 columns">
+              <div className="medium-2 grid-x">
                 <input type="submit" className="button" value="Create new Project" />
               </div>
             </div>
