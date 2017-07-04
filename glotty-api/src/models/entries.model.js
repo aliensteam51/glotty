@@ -8,14 +8,14 @@ module.exports = function (app) {
 
   const translationSchema = new Schema({
     localeId: { type: Schema.Types.ObjectId, ref: 'locales' },
-    localeCode: { type: String },
+    localeCode: { type: String, required: true },
     translation: { type: String, default: '' }
   });
 
   const platformSchema = new Schema({
     platformId: { type: Schema.Types.ObjectId, ref: 'platforms' },
-    platformCode: { type: String },
-    key: { type: String },
+    platformCode: { type: String, required: true },
+    key: { type: String, default: '' },
     translations: [translationSchema]
   });
 
@@ -23,7 +23,9 @@ module.exports = function (app) {
     name: { type: String, required: true },
     description: { type: String },
     group: { type: String },
-    tags: [{type: String}],
+    tags: [{ type: String }],
+    localeCodes: [{ type: String }],
+    platformCodes: [{ type: String }],
     projectId: { type: Schema.Types.ObjectId, ref: 'projects' },
     platforms: [platformSchema],
     deleted: { type: Boolean, default: false },
