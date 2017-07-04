@@ -16,7 +16,7 @@ export default (newProject) => {
 
   dispatch({ type: APP_LOADING })
 
-   const backend = api.service('batches')
+   const backend = api.service('projects')
 
    backend.create(newProject)
      .then((result) => {
