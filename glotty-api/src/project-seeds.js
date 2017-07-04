@@ -9,12 +9,12 @@ const auth = require('feathers-authentication-client');
 const organization = {
   name: 'Aliens Are Among Us',
   description: 'Aliens Are Among Us main organization'
-}
+};
 
 const project = {
   name: 'My first project',
   description: 'This is a project description'
-}
+};
 
 const entries = [
   {
@@ -68,7 +68,7 @@ const entries = [
       }
     ]
   }
-]
+];
 
 const feathersClient = feathers();
 
@@ -79,24 +79,24 @@ feathersClient
 
 feathersClient.service('organizations').create(organization)
   .then((org) => {
-    console.log('Organization seeded...', org.name)
+    console.log('Organization seeded...', org.name);
     feathersClient.service('projects').create(Object.assign(project, {organizationId: org._id}))
       .then((proj) => {
-        console.log('Project seeded...', proj.name)
+        console.log('Project seeded...', proj.name);
         entries.map((entry) => {
           feathersClient.service('entries').create(Object.assign(entry, {projectId: proj._id}))
             .then((ent) => {
-              console.log('Entry seeded...', ent.name)
+              console.log('Entry seeded...', ent.name);
             })
             .catch((error) => {
-              console.error('Error seeding entry!', error.message)
-            })
-        })
+              console.error('Error seeding entry!', error.message);
+            });
+        });
       })
       .catch((error) => {
-        console.error('Error seeding project!', error.message)
-      })
+        console.error('Error seeding project!', error.message);
+      });
   })
   .catch((error) => {
-    console.error('Error seeding organization!', error.message)
-  })
+    console.error('Error seeding organization!', error.message);
+  });

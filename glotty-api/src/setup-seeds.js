@@ -3690,7 +3690,7 @@ const platforms = [
     description: 'i18n internalization format specific keys and translations',
     code: 'i18n'
   }
-]
+];
 
 const feathersClient = feathers();
 
@@ -3722,12 +3722,12 @@ feathersClient.service('users').create(user)
             }).catch((error) => {
               console.log('Error seeding platform!', error.message);
             });
-        })
+        });
       })
       .catch(function(error){
-        console.error('Error authenticating!', error);
+        console.error('Error authenticating!', error.message);
       });
   })
   .catch(function(error) {
-    console.error('Error creating user!');
+    console.error('Error creating user!', error.message);
   });

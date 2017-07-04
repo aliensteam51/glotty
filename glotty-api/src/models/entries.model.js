@@ -10,13 +10,13 @@ module.exports = function (app) {
     localeId: { type: Schema.Types.ObjectId, ref: 'locales' },
     localeCode: { type: String },
     translation: { type: String, default: '' }
-  })
+  });
 
   const platformSchema = new Schema({
     platformId: { type: Schema.Types.ObjectId, ref: 'platforms' },
     platformCode: { type: String },
     translations: [translationSchema]
-  })
+  });
 
   const entries = new Schema({
     name: { type: String, required: true },
