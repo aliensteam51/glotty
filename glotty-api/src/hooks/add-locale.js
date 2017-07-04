@@ -21,7 +21,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 
     const entries = hook.app.service('entries');
 
-    return entries.find( { projectId: hook.id } ).limit(0)
+    return entries.find({ query: { projectId: hook.id } }).limit(0)
       then((result) => {
         result.data.map((entry) => {
           const platforms = entry.platforms.map((platform) => {
