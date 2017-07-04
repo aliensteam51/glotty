@@ -7,7 +7,7 @@ module.exports = function (app) {
   const platforms = new mongooseClient.Schema({
     name: { type: String, required: true, default: '' },
     description: { type: String, required: true },
-    code: { type: String, required: true },
+    code: { type: String, required: true, unique: true },
     deleted: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }
