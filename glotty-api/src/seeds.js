@@ -3158,6 +3158,7 @@ const locales = [
     'deleted': 0
   },
   {
+    'name': 'Yiddish',
     'code': 'yi',
     'deleted': 0
   },
@@ -3383,6 +3384,7 @@ const locales = [
   },
   {
     'name': 'Indonesian',
+    'code': 'id',
     'deleted': 0
   },
   {
@@ -3416,6 +3418,7 @@ const locales = [
     'deleted': 0
   },
   {
+    'name': 'Yiddish (World)',
     'code': 'yi_001',
     'deleted': 0
   },
@@ -3596,6 +3599,7 @@ const locales = [
   },
   {
     'name': 'Indonesian (Indonesia)',
+    'code': 'id_ID',
     'deleted': 0
   },
   {
