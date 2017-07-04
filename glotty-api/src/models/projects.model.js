@@ -10,6 +10,8 @@ module.exports = function (app) {
     name: { type: String, required: true },
     description: { type: String },
     organizationId: { type: Schema.Types.ObjectId, ref: 'organizations' },
+    localeCodes: [{ type: String }],
+    platformCodes: [{ type: String }],
     deleted: { type: Boolean, default: false },
     createdAt: { type: Date, default: Date.now },
     updatedAt: { type: Date, default: Date.now }

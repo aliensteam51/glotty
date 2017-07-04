@@ -24,8 +24,6 @@ module.exports = function (app) {
     description: { type: String },
     group: { type: String },
     tags: [{ type: String }],
-    localeCodes: [{ type: String }],
-    platformCodes: [{ type: String }],
     projectId: { type: Schema.Types.ObjectId, ref: 'projects' },
     platforms: [platformSchema],
     deleted: { type: Boolean, default: false },
