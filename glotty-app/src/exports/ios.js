@@ -1,7 +1,8 @@
 export default(entries, localeCode) => {
 
   const outputString = entries.reduce((str, entry) => {
-    const platform = entry.platforms.find((platf) => platf.platformCode === "ios")
+    let platform = entry.platforms.find((platf) => platf.platformCode === "ios")
+    if (!platform) platform = entry.platforms.find((platf) => platf.platformCode === "default") //find default platform if ios wasn't found
     if (!platform) return str + `No ios platform in this entry\n`
 
     const translation = platform.translations.find((tran) => tran.localeCode === localeCode)

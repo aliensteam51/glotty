@@ -1,7 +1,8 @@
 export default(entries, localeCode) => {
   debugger
   const outputString = entries.reduce((str, entry) => {
-    const platform = entry.platforms.find((platf) => platf.platformCode === "i18n")
+    let platform = entry.platforms.find((platf) => platf.platformCode === "i18n")
+    if (!platform) platform = entry.platforms.find((platf) => platf.platformCode === "default") //find default platform if ios wasn't found
     if (!platform) return str + `No i18n platform in this entry\n`
 
     const translation = platform.translations.find((tran) => tran.localeCode === localeCode)
@@ -9,7 +10,7 @@ export default(entries, localeCode) => {
 
     const lastEntry =  entries[entries.length-1] !== entry ? `,\n` : `\n`
 
-    return str + `\t{\n\t\t"id": "${platform.key}",\n\t\t"translation": "${translation.translation}"\n\t}${lastEntry}`
+    return str + `    {\n        "id": "${platform.key}",\n        "translation": "${translation.translation}"\n    }${lastEntry}`
 
   }, "[\n")
 
