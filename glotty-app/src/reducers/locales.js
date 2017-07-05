@@ -1,8 +1,8 @@
-import { LOCALE_SEARCH } from '../actions/locales/search'
+import { FETCHED_LOCALES } from '../actions/locales/fetch'
 
 export default (state = [], { type, payload } = {}) => {
   switch (type) {
-    case LOCALE_SEARCH:
+    case FETCHED_LOCALES:
       return [ ...payload ]
 
     default:
