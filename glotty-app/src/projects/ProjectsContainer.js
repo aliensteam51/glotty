@@ -1,3 +1,5 @@
+/*global event*/
+/*eslint no-restricted-globals: ["warn", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
@@ -56,16 +58,16 @@ export class ProjectsContainer extends PureComponent {
         <td>{project.description}</td>
         { project.deleted ?
           <td>
-            <button type="button" className="primary button" disabled>View</button>
-            <button type="button" className="alert button" disabled>Delete</button>
+            <button type="button" className="primary button half-button" disabled>View</button>
+            <button type="button" className="alert button half-button" disabled>Delete</button>
           </td>:
           <td>
             <Link to={"/projects/" + project._id }>
-              <button type="button" className="primary button">View</button>
+              <button type="button" className="primary button half-button">View</button>
             </Link>
             <button type="button"
-              className="alert button"
-              onClick={() => {this.props.deleteProject(project._id)}}>Delete</button>
+              className="alert button half-button"
+              onClick={() => {if(confirm('Delete the item?')) {this.props.deleteProject(project._id)}}}>Delete</button>
           </td>
         }
       </tr>
@@ -76,46 +78,38 @@ export class ProjectsContainer extends PureComponent {
     return (
       <main className="grid-container projects">
         <h1 className="text-center">Organization Name</h1>
-        <div className="grid-x">
-          {/* <button type="button"
-            className="primary button medium-offset-10 medium-2 cell">
-            Create new Project
-          </button> */}
-        </div>
-
-          {/* Move Form to a seperate render, hid show if required */}
           <form onSubmit={this.handleSubmit.bind(this)}>
-            <div className="grid-container ">
-              <div className="medium-4 grid-x">
-                <input type="text"
-                  value={this.state.value}
-                  onChange={this.handleNameChange.bind(this)}
-                  placeholder="Name of the Project" />
-              </div>
-              <div className="medium-6 grid-x">
-                <input type="text"
-                  value={this.state.value}
-                  onChange={this.handleDescritpionChange.bind(this)}
-                  placeholder="Description" />
-              </div>
-              <div className="medium-2 grid-x">
-                <input type="submit" className="button" value="Create new Project" />
-              </div>
-            </div>
-          </form>
-
           <table>
             <thead>
               <tr>
-                <th width="200">Project Name</th>
-                <th width="600">Project Description</th>
-                <th width="200">Project Action</th>
+                <th width="16.66667%">Project Name</th>
+                <th width="66.66667%">Project Description</th>
+                <th width="16.66667%">Project Action</th>
               </tr>
             </thead>
             <tbody>
+              <tr>
+                <td>
+                  <input type="text"
+                  value={this.state.value}
+                  onChange={this.handleNameChange.bind(this)}
+                  placeholder="Name of the Project" />
+                </td>
+                <td>
+                  <input type="text"
+                  value={this.state.value}
+                  onChange={this.handleDescritpionChange.bind(this)}
+                  placeholder="Description" />
+                </td>
+                <td>
+                  <input type="submit" className="button cell" value="Create New Project" />
+                </td>
+              </tr>
                 { this.props.projects.map(this.renderProject.bind(this)) }
             </tbody>
           </table>
+        </form>
+
       </main>
     )
   }
