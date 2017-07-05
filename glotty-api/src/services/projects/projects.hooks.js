@@ -9,6 +9,19 @@ const organizationSchema = {
   }
 };
 
+const localeSchema = {
+  include: {
+    service: 'locales',
+    nameAs: 'locales',
+    asArray: true,
+    parentField: 'localeCodes',
+    childField: 'code',
+    select: (_, parent) => parent.localeCodes ? ({
+      code: { $in: parent.localeCodes }
+    }) : {},
+  }
+};
+
 const addPlatform = require('../../hooks/add-platform');
 
 const addLocale = require('../../hooks/add-locale');
@@ -27,6 +40,7 @@ module.exports = {
   after: {
     all: [
       populate({ schema: organizationSchema }),
+      populate({ schema: localeSchema })
     ],
     find: [],
     get: [],
