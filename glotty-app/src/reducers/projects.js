@@ -13,8 +13,6 @@ export default (state = [], { type, payload } = {}) => {
     case PROJECT_DELETED :
     return state.map((project) => {
       if (project._id === payload._id) {
-        console.log( ...payload)
-        console.log(payload)
         return { ...payload }
       }
       return project
