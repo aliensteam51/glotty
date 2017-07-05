@@ -38,7 +38,7 @@ export class ProjectPage extends PureComponent {
       <div className="grid-container single-project">
         <h1>{currentProject.name}</h1>
         <p>{currentProject.description}</p>
-      
+
         <LocaleContainer projectId={_id} localeCodes={localeCodes} platformCodes={platformCodes} />
 
         <SearchItem />

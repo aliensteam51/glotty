@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import deleteEntry from '../actions/entries/delete'
 import deleteTranslation from '../actions/translations/delete'
+import PlatformItem from './PlatformItem'
 
 export class EntryItem extends PureComponent {
 
@@ -15,47 +16,9 @@ export class EntryItem extends PureComponent {
     }
   }
 
-
-  renderTranslations(translation, index) {
-    return (
-      <div key={index} className="grid-x">
-        <div className="cell small-1">
-          <label htmlFor="middle-label" className="text-left middle">{translation.localeCode}</label>
-        </div>
-        <div className="cell small-11">
-          <input type="text" id="middle-label" placeholder="Right- and middle-aligned text input"/>
-        </div>
-      </div>
-    )
-  }
-
   renderPlatforms(platform, index) {
-    const { platformCode, translations } = platform
     return (
-      <tr key={index} style={{ display: this.state.display }}>
-        <td className="text-center">
-          <button
-            className="button tinyer alert"
-            onClick={() => {console.log("delete")}}>
-            X
-          </button>
-        </td>
-        <td className="text-center uppercase">{platformCode}</td>
-        <td colSpan="4">
-          <div className="grid-x">
-            <div className="cell small-1">
-              <label htmlFor="middle-label" className="text-left middle">Key</label>
-            </div>
-            <div className="cell small-11">
-              <input
-                type="text"
-                id="middle-label"
-                placeholder="Right- and middle-aligned text input"/>
-            </div>
-          </div>
-          { translations.map(this.renderTranslations.bind(this)) }
-        </td>
-      </tr>
+      <PlatformItem key={index} {...platform} style={{ display: this.state.display }} />
     )
   }
 
