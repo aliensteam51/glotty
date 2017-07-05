@@ -3,6 +3,7 @@
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function (hook) {
+    console.log(hook)
     if (hook.data.addLocale === undefined) return Promise.resolve(hook);
 
     const localeCodes = hook.data.localeCodes;
@@ -21,14 +22,16 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 
     const entries = hook.app.service('entries');
 
-    return entries.find({ query: { projectId: hook.id } }).limit(0)
-      then((result) => {
+    return entries.find({ query: { projectId: hook.id, $limit: 800 } })
+      .then((result) => {
         result.data.map((entry) => {
           const platforms = entry.platforms.map((platform) => {
             platform.translations = platform.translations.concat(newTranslation)
+            return platform
           })
           entries.patch(entry._id, { platforms: platforms })
         });
+        console.log(hook)
         return Promise.resolve(hook);
       });
   };
