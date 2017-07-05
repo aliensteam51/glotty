@@ -7,6 +7,7 @@ import {
 } from '../loading'
 
 const api = new API()
+export const ENTRY_CREATED = 'ENTRY_CREATED'
 
 export default (newEntry) => {
   return (dispatch) => {

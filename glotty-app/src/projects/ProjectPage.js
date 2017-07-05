@@ -36,8 +36,6 @@ export class ProjectPage extends PureComponent {
       <div className="grid-container single-project">
         <h1>{currentProject.name}</h1>
         <p>{currentProject.description}</p>
-        <h1>Locales Component</h1>
-        <h1>Entries Component</h1>
 
         <SearchItem />
 
@@ -56,7 +54,7 @@ export class ProjectPage extends PureComponent {
         </table>
 
         <SaveFile />
-          
+
       </div>
     )
   }

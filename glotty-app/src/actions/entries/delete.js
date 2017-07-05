@@ -6,25 +6,25 @@ import {
   LOAD_SUCCESS
 } from '../loading'
 
-export const PROJECT_DELETED = 'PROJECT_DELETED'
+export const ENTRY_DELETED = 'ENTRY_DELETED'
 
 const api = new API()
 
-export default (projectId) => {
+export default (entryId) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    const backend = api.service('projects')
+    const backend = api.service('entries')
 
     api.app.authenticate()
       .then(() => {
-        backend.patch(projectId, {deleted: true})
+        backend.patch(entryId, {deleted: true})
           .then((result) => {
             dispatch({ type: APP_DONE_LOADING })
             dispatch({ type: LOAD_SUCCESS })
 
             dispatch({
-              type: PROJECT_DELETED,
+              type: ENTRY_DELETED,
               payload: result
             })
           })
