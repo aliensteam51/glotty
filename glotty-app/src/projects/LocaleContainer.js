@@ -20,10 +20,9 @@ export class LocaleContainer extends PureComponent {
 
   submitForm(event) {
     event.preventDefault()
-    const { projectId, localeCodes, platformCodes, addLocale } = this.props
+    const { projectId, localeCodes, addLocale } = this.props
     const data = {
       localeCodes: localeCodes,
-      platformCodes: platformCodes,
       addLocale: this.state.selected.code
     }
     addLocale(projectId, data)

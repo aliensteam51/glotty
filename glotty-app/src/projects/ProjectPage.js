@@ -41,11 +41,10 @@ export class ProjectPage extends PureComponent {
         <LocaleContainer
           projectId={_id}
           localeCodes={localeCodes}
-          platformCodes={platformCodes}
           projectLocales={locales}
         />
         <h1>Entries Component</h1>
-      
+
         <LocaleContainer projectId={_id} localeCodes={localeCodes} platformCodes={platformCodes} />
 
 

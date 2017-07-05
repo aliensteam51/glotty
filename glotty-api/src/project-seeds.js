@@ -15,7 +15,6 @@ const project = {
   name: 'My first project',
   description: 'This is a project description',
   localeCodes: ['nl'],
-  platformCodes: ['default']
 };
 
 const entries = [

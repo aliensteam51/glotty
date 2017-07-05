@@ -3,7 +3,6 @@
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function (hook) {
-    console.log(hook)
     if (hook.data.addLocale === undefined) return Promise.resolve(hook);
 
     const localeCodes = hook.data.localeCodes;
@@ -12,8 +11,6 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
     if (localeCodes.includes(addLocale)) throw new Errors.Unprocessable('Locale already exists on this project');
 
     hook.data.localeCodes = localeCodes.concat(addLocale);
-
-    const platformCodes = hook.data.platformCodes
 
     const newTranslation = {
       localeCode: addLocale,
@@ -31,7 +28,6 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
           })
           entries.patch(entry._id, { platforms: platforms })
         });
-        console.log(hook)
         return Promise.resolve(hook);
       });
   };
