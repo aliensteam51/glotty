@@ -8,11 +8,12 @@ import './LocaleContainer.css'
 export class LocaleContainer extends PureComponent {
   state = {
     focus: false,
-    search: ''
+    search: '',
+    selected: {},
   }
 
   componentWillMount() {
-    this.props.fetchLocales(this.state.search)
+    this.props.fetchLocales('')
   }
 
   submitForm(event) {
@@ -24,14 +25,19 @@ export class LocaleContainer extends PureComponent {
     this.setState({ focus: true })
   }
 
-  blur() {
+  async blur() {
+    await sleep(200)
     this.setState({ focus: false })
   }
 
   updateSearch(event) {
     this.setState({ search: event.target.value })
-    this.props.fetchLocales(event.target.value)
-    console.log(event.target.value)
+    const search = event.target.value.replace(/\W+/gi, '.*')
+    this.props.fetchLocales(search)
+  }
+
+  selectLocale(option) {
+    this.setState({ search: option.name, selected: option })
   }
 
   classNames() {
@@ -51,14 +57,28 @@ export class LocaleContainer extends PureComponent {
       <div className="container">
         <h2>Locales</h2>
         <form onSubmit={this.submitForm.bind(this)}>
-          <input type="text" onFocus={this.focus.bind(this)} onBlur={this.blur.bind(this)} onChange={this.updateSearch.bind(this)}/>
-          <div className={this.classNames()}>
-            {locales.map((option, index) => <p key={index}>{option.name}</p>)}
+          <div className="grid-container">
+            <div className="medium-4 grid-x">
+            <input
+              type="text"
+              className='locale-select'
+              onFocus={this.focus.bind(this)}
+              onBlur={this.blur.bind(this)}
+              onChange={this.updateSearch.bind(this)}
+              value={this.state.search}/>
+            <div className={this.classNames()}>
+            {locales.map((option, index) => <p key={index} onClick={this.selectLocale.bind(this, option)}>{option.name}</p>)}
+            </div>
+            </div>
           </div>
         </form>
       </div>
     )
   }
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
 }
 
 const mapStateToProps = ({ locales }) => ({ locales })
