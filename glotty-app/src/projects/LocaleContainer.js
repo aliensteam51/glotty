@@ -2,6 +2,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import fetchLocales from '../actions/locales/fetch'
+import addLocale from '../actions/projects/add-locale'
 
 import './LocaleContainer.css'
 
@@ -19,7 +20,13 @@ export class LocaleContainer extends PureComponent {
 
   submitForm(event) {
     event.preventDefault()
-    console.log('Form submitted')
+    const { projectId, localeCodes, platformCodes, addLocale } = this.props
+    const data = {
+      localeCodes: localeCodes,
+      platformCodes: platformCodes,
+      addLocale: this.state.selected.code
+    }
+    addLocale(projectId, data)
   }
 
   focus() {
@@ -39,7 +46,6 @@ export class LocaleContainer extends PureComponent {
       (!!locale.name && search.test(locale.name.toLowerCase()))
     )).slice(0, 10)
     this.setState({ search: event.target.value, display: filtered })
-    console.log(search)
   }
 
   selectLocale(option) {
@@ -64,17 +70,28 @@ export class LocaleContainer extends PureComponent {
         <h2>Locales</h2>
         <form onSubmit={this.submitForm.bind(this)}>
           <div className="grid-container">
-            <div className="medium-4 grid-x">
-            <input
-              type="text"
-              className='locale-select'
-              onFocus={this.focus.bind(this)}
-              onBlur={this.blur.bind(this)}
-              onChange={this.updateSearch.bind(this)}
-              value={this.state.search}/>
-            <div className={this.classNames()}>
-            {this.state.display.map((option, index) => <p key={index} onClick={this.selectLocale.bind(this, option)}>{`${option.name} (${option.code})`}</p>)}
-            </div>
+            <div className="grid-x">
+              <div className="content-box medium-10">
+                <input
+                  type="text"
+                  className='locale-select'
+                  onFocus={this.focus.bind(this)}
+                  onBlur={this.blur.bind(this)}
+                  onChange={this.updateSearch.bind(this)}
+                  value={this.state.search}/>
+                  <div className={this.classNames()}>
+                  <div className="medium-10">
+                  {this.state.display.map((option, index) => <p key={index} onClick={this.selectLocale.bind(this, option)}>{`${option.name} (${option.code})`}</p>)}
+                  </div>
+                  </div>
+              </div>
+              <div className="medium-2">
+                <button
+                  className="primary button"
+                  onClick={this.submitForm.bind(this)}>
+                  Add locale
+                </button>
+              </div>
             </div>
           </div>
         </form>
@@ -89,4 +106,4 @@ function sleep(ms) {
 
 const mapStateToProps = ({ locales }) => ({ locales })
 
-export default connect(mapStateToProps, { fetchLocales })(LocaleContainer)
+export default connect(mapStateToProps, { fetchLocales, addLocale })(LocaleContainer)

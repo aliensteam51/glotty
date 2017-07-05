@@ -10,16 +10,12 @@ export const ADDED_LOCALE = 'ADDED_LOCALE'
 
 const api = new API()
 
-export default (projectId, addLocale, platformCodes, localeCodes) => {
+export default (projectId, data) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
     dispatch({ type: LOAD_SUCCESS })
     const backend = api.service('projects')
-    backend.patch(projectId, {
-      platformCodes: platformCodes,
-      localeCodes: localeCodes,
-      addLocale: addLocale
-    })
+    backend.patch(projectId, data)
       .then((result) => {
         console.log(result)
         dispatch({ type: APP_DONE_LOADING })
