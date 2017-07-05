@@ -2149,6 +2149,7 @@ const locales = [
     'deleted': 0
   },
   {
+    'name': 'English (Trinidad and Tobago)',
     'code': 'en_TT',
     'deleted': 0
   },

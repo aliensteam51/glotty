@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
-import fetchLocales from '../actions/locales/search'
+import fetchLocales from '../actions/locales/fetch'
 
 import './LocaleContainer.css'
 
@@ -10,10 +10,11 @@ export class LocaleContainer extends PureComponent {
     focus: false,
     search: '',
     selected: {},
+    display: [],
   }
 
   componentWillMount() {
-    this.props.fetchLocales('')
+    this.props.fetchLocales()
   }
 
   submitForm(event) {
@@ -22,6 +23,7 @@ export class LocaleContainer extends PureComponent {
   }
 
   focus() {
+    if (this.state.display.length === 0) this.setState({ display: this.props.locales.slice(0, 10)})
     this.setState({ focus: true })
   }
 
@@ -31,13 +33,17 @@ export class LocaleContainer extends PureComponent {
   }
 
   updateSearch(event) {
-    this.setState({ search: event.target.value })
-    const search = event.target.value.replace(/\W+/gi, '.*')
-    this.props.fetchLocales(search)
+    const search = new RegExp('.*' + event.target.value.toLowerCase().replace(/\W+/gi, '.*') + '.*')
+    const filtered = this.props.locales.filter((locale) => (
+      (!!locale.code && search.test(locale.code.toLowerCase())) ||
+      (!!locale.name && search.test(locale.name.toLowerCase()))
+    )).slice(0, 10)
+    this.setState({ search: event.target.value, display: filtered })
+    console.log(search)
   }
 
   selectLocale(option) {
-    this.setState({ search: option.name, selected: option })
+    this.setState({ search: `${option.name} (${option.code})`, selected: option })
   }
 
   classNames() {
@@ -67,7 +73,7 @@ export class LocaleContainer extends PureComponent {
               onChange={this.updateSearch.bind(this)}
               value={this.state.search}/>
             <div className={this.classNames()}>
-            {locales.map((option, index) => <p key={index} onClick={this.selectLocale.bind(this, option)}>{option.name}</p>)}
+            {this.state.display.map((option, index) => <p key={index} onClick={this.selectLocale.bind(this, option)}>{`${option.name} (${option.code})`}</p>)}
             </div>
             </div>
           </div>
