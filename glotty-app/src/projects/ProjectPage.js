@@ -1,7 +1,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-
+import SaveFile from '../exports/SaveFile'
 import getProject from '../actions/projects/get'
 import fetchEntries from '../actions/entries/fetch'
 
@@ -36,6 +36,8 @@ export class ProjectPage extends PureComponent {
       <div className="grid-container single-project">
         <h1>{currentProject.name}</h1>
         <p>{currentProject.description}</p>
+        <h1>Locales Component</h1>
+        <h1>Entries Component</h1>
 
         <SearchItem />
 
@@ -52,6 +54,9 @@ export class ProjectPage extends PureComponent {
           </thead>
             { entries.map(this.renderEntries.bind(this)) }
         </table>
+
+        <SaveFile />
+          
       </div>
     )
   }
