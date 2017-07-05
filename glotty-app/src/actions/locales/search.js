@@ -14,7 +14,6 @@ export default (search) => {
           type: LOCALE_SEARCH,
           payload: result.data
         })
-        console.log(result)
       })
       .catch((error) => {
         dispatch({
