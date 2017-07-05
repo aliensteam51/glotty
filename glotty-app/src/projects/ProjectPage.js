@@ -32,14 +32,22 @@ export class ProjectPage extends PureComponent {
   render() {
     const { currentProject, entries } = this.props
     if(!currentProject || !entries) return null
-    const { _id, localeCodes, platformCodes } = this.props.currentProject
+    const { _id, localeCodes, platformCodes, locales } = this.props.currentProject
     return (
 
       <div className="grid-container single-project">
         <h1>{currentProject.name}</h1>
         <p>{currentProject.description}</p>
+        <LocaleContainer
+          projectId={_id}
+          localeCodes={localeCodes}
+          platformCodes={platformCodes}
+          projectLocales={locales}
+        />
+        <h1>Entries Component</h1>
       
         <LocaleContainer projectId={_id} localeCodes={localeCodes} platformCodes={platformCodes} />
+
 
         <SearchItem />
 
