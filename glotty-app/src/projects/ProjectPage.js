@@ -12,6 +12,9 @@ import LocaleContainer from './LocaleContainer'
 import './ProjectPage.css'
 
 export class ProjectPage extends PureComponent {
+  state = {
+    selectedLocales: []
+  }
 
   componentWillMount() {
     const {
@@ -21,6 +24,14 @@ export class ProjectPage extends PureComponent {
     const { projectId } = this.props.params
     getProject(projectId)
     fetchEntries(projectId)
+  }
+
+  selectLocale(localeCode) {
+    this.setState({ selectedLocales: this.state.selectedLocales.concat(localeCode) })
+  }
+
+  deselectLocale(localeCode) {
+    this.setState({ selectedLocales: this.state.selectedLocales.filter((locale) => locale !== localeCode)})
   }
 
   renderEntries(entry, index) {
@@ -33,6 +44,7 @@ export class ProjectPage extends PureComponent {
     const { currentProject, entries } = this.props
     if(!currentProject || !entries) return null
     const { _id, localeCodes, platformCodes, locales } = this.props.currentProject
+    console.log(this.state.selectedLocales)
     return (
 
       <div className="grid-container single-project">
@@ -42,11 +54,10 @@ export class ProjectPage extends PureComponent {
           projectId={_id}
           localeCodes={localeCodes}
           projectLocales={locales}
+          selectLocale={this.selectLocale.bind(this)}
+          deselectLocale={this.deselectLocale.bind(this)}
         />
         <h1>Entries Component</h1>
-
-        <LocaleContainer projectId={_id} localeCodes={localeCodes} platformCodes={platformCodes} />
-
 
         <SearchItem />
 

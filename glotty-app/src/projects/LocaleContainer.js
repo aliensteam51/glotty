@@ -60,6 +60,7 @@ export class LocaleContainer extends PureComponent {
   }
 
   toggleCheckbox(event) {
+    this.props.selectLocale('nl')
     console.log(event)
     console.log(event.target)
     console.log(event.target.value)
