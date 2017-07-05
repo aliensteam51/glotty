@@ -36,7 +36,7 @@ export class SaveFile extends PureComponent {
     this.setState({ selectedLanguage: e.target.value })
   }
 
-  generateFile() {
+  generateString() {
     const { entries } = this.props
     const { selectedLanguage, selectedPlatform } = this.state
     let outputString = ""
@@ -54,7 +54,36 @@ export class SaveFile extends PureComponent {
       default :
         return outputString
     }
+  }
 
+  generateFile() {
+    const { currentProject } = this.props
+    const { name } = currentProject
+    const { selectedLanguage, selectedPlatform } = this.state
+
+    let filetype = "strings"
+    if (selectedPlatform === 'android') filetype = "xml"
+    if (selectedPlatform === 'i18n') filetype = "json"
+
+    const filename = name.replace(/\s+/g, '') + "_" + selectedLanguage + `.${filetype}`
+    const data = this.generateString()
+
+    const file = new Blob([data], {type: 'text/plain'})
+
+    if (window.navigator.msSaveOrOpenBlob) window.navigator.msSaveOrOpenBlob(file, filename) //for internet explorer
+
+    else { // all other browsers
+        var a = document.createElement("a"),
+        url = URL.createObjectURL(file)
+        a.href = url
+        a.download = filename
+        document.body.appendChild(a)
+        a.click()
+        setTimeout(() => {
+            document.body.removeChild(a)
+            window.URL.revokeObjectURL(url)
+        }, 0)
+    }
   }
 
   render() {
@@ -74,7 +103,7 @@ export class SaveFile extends PureComponent {
             <option value="i18n">i18n</option>
           </select>
         </label>
-        <button type="button" onClick={this.generateFile.bind(this)} className="success button">Save & Generate File</button>
+        <button type="button" onClick={this.generateFile.bind(this)} className="success button">Generate & Download</button>
       </div>
     )
   }

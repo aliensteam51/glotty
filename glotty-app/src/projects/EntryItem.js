@@ -1,5 +1,9 @@
+/*global event*/
+/*eslint no-restricted-globals: ["warn", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import deleteEntry from '../actions/entries/delete'
+import deleteTranslation from '../actions/translations/delete'
 
 export class EntryItem extends PureComponent {
 
@@ -56,7 +60,7 @@ export class EntryItem extends PureComponent {
   }
 
   render() {
-    const {name, description, tags, group, deleted, platforms} = this.props
+    const {name, description, tags, group, deleted, platforms, _id} = this.props
     return (
       <tbody
         className={deleted ? "deleted" : ""}>
@@ -65,7 +69,7 @@ export class EntryItem extends PureComponent {
             { deleted ? null :
               <button
                 className="button tiny alert"
-                onClick={() => {console.log("delete")}}>
+                onClick={() => {if(confirm('Delete the item?')) {this.props.deleteEntry(_id)}}}>
                 X
               </button>
             }
@@ -95,4 +99,4 @@ const mapStateToProps = ({currentUser}) => ({
   currentUser,
 })
 
-export default connect(mapStateToProps)(EntryItem)
+export default connect(mapStateToProps, {deleteEntry, deleteTranslation})(EntryItem)
