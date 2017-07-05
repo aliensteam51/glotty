@@ -16,6 +16,7 @@ module.exports = function (app) {
     platformId: { type: Schema.Types.ObjectId, ref: 'platforms' },
     platformCode: { type: String, required: true },
     key: { type: String, default: '' },
+    deleted: { type: Boolean, default: false },
     translations: [translationSchema]
   });
 
