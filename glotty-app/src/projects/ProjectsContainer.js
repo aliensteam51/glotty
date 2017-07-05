@@ -3,7 +3,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
-import { Link } from 'react-router'
 import fetchProjects from '../actions/projects/fetch'
 import createProjects from '../actions/projects/create'
 import getOrganization from '../actions/projects/get'
@@ -22,7 +21,7 @@ export class ProjectsContainer extends PureComponent {
     }
 
   componentWillMount() {
-    const { fetchProjects, currentUser } = this.props
+    const { fetchProjects } = this.props
     // getOrganization(currentUser.organizationId)
     fetchProjects()
   }
@@ -48,7 +47,6 @@ export class ProjectsContainer extends PureComponent {
       organizationId,
     }
       this.props.createProjects(project)
-      console.log(project)
       event.preventDefault()
   }
 
@@ -58,16 +56,26 @@ export class ProjectsContainer extends PureComponent {
         <td>{project.description}</td>
         { project.deleted ?
           <td>
-            <button type="button" className="primary button half-button" disabled>View</button>
-            <button type="button" className="alert button half-button" disabled>Delete</button>
+            <div className="expanded button-group">
+              <button type="button" className="primary button" disabled>View</button>
+              <button type="button" className="alert button" disabled>Delete</button>
+            </div>
           </td>:
           <td>
-            <Link to={"/projects/" + project._id }>
-              <button type="button" className="primary button half-button">View</button>
-            </Link>
-            <button type="button"
-              className="alert button half-button"
-              onClick={() => {if(confirm('Delete the item?')) {this.props.deleteProject(project._id)}}}>Delete</button>
+            <div className="expanded button-group">
+                <button
+                  className="primary button"
+                  onClick={() => { this.props.push("/projects/" + project._id) }}>
+                  View
+                </button>
+              <button type="button"
+                className="alert button"
+                onClick={() => {if(confirm('Delete the item?')) {this.props.deleteProject(project._id)}}}>
+                Delete
+              </button>
+            </div>
+
+
           </td>
         }
       </tr>

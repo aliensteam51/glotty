@@ -11,7 +11,6 @@ export const FETCHED_ENTRIES = 'FETCHED_ENTRIES'
 const api = new API()
 
 export default (projectId) => {
-  console.log(projectId)
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
     dispatch({ type: LOAD_SUCCESS })
