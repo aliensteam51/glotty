@@ -5,6 +5,7 @@ import {
   LOAD_ERROR,
   LOAD_SUCCESS
  } from '../loading'
+import { FETCHED_ENTRIES } from '../entries/fetch'
 
 export const ADDED_LOCALE = 'ADDED_LOCALE'
 
@@ -17,12 +18,19 @@ export default (projectId, data) => {
     const backend = api.service('projects')
     backend.patch(projectId, data)
       .then((result) => {
-        dispatch({ type: APP_DONE_LOADING })
-        dispatch({ type: LOAD_SUCCESS })
         dispatch({
           type: ADDED_LOCALE,
           payload: result
         })
+        api.service('entries').find({ query: { projectId: result._id } })
+          .then((result) => {
+            dispatch({ type: APP_DONE_LOADING })
+            dispatch({ type: LOAD_SUCCESS })
+            dispatch({
+              type: FETCHED_ENTRIES,
+              payload: result.data
+            })
+          })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })
