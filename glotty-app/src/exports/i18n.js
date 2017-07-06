@@ -1,5 +1,4 @@
 export default(entries, localeCode) => {
-  debugger
   const outputString = entries.reduce((str, entry) => {
     let platform = entry.platforms.find((platf) => platf.platformCode === "i18n")
     if (!platform) platform = entry.platforms.find((platf) => platf.platformCode === "default") //find default platform if ios wasn't found
