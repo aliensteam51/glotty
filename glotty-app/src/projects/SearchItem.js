@@ -1,22 +1,24 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import searchEntries from '../actions/entries/fetch'
+import updateQuery from '../actions/entries/search'
 
 export class SearchItem extends PureComponent {
 
-  constructor(props) {
-    super(props)
-    this.handleFilterTextInputChange = this.handleFilterTextInputChange.bind(this)
-    this.handleSearchTermInputChange = this.handleSearchTermInputChange.bind(this)
+  componentWillUpdate(nextProps) {
+    const query = nextProps.searchQuery
+    const oldQuery = this.props.query
+    const { currentProject } = this.props
+
+    if (query !== oldQuery) {
+      this.props.searchEntries(currentProject._id, query)
+    }
   }
 
-  handleFilterTextInputChange(e) {
-    e.preventDefault()
-    this.props.onFilterTextInput(e.target.value)
-  }
-
-  handleSearchTermInputChange(e) {
-    e.preventDefault()
-    this.props.onSearchTermInput(e.target.value)
+  textSearch = (event) => {
+    const query = event.target.value
+    if (query.length > 0 && query.length < 3) return
+    this.props.updateQuery(query)
   }
 
   render() {
@@ -27,50 +29,13 @@ export class SearchItem extends PureComponent {
           <div className="medium-2 cell">
             <input
               type="search"
-              placeholder="Search"
+              placeholder="Search entries..."
               required
-              value={this.props.filterText}
-              onChange={this.handleFilterTextInputChange}
+              onChange={this.textSearch}
+              onKeyUp={this.textSearch}
+              fullWidth={true}
             />
           </div>
-          <div className="cell auto">
-            <fieldset>
-
-              <input
-                type="radio"
-                name="searchTerm"
-                value="Name"
-                id="searchName"
-                onChange={this.handleSearchTermInputChange}
-              />
-              <label htmlFor="searchName" className="middle">Name</label>
-
-              <input
-                type="radio"
-                name="searchTerm"
-                value="Group"
-                id="searchGroup"
-                onChange={this.handleSearchTermInputChange}
-              />
-              <label htmlFor="searchGroup" className="middle">Group</label>
-
-              <input
-                type="radio"
-                name="searchTerm"
-                value="Tag"
-                id="searchTag"
-                onChange={this.handleSearchTermInputChange}
-              />
-              <label htmlFor="searchTag" className="middle">Tag</label>
-
-              <input
-                type="submit"
-                className="button"
-                value="Search"
-                onClick={this.props.searchEntries}
-              />
-           </fieldset>
-         </div>
         </div>
       </div>
     </form>
@@ -78,6 +43,6 @@ export class SearchItem extends PureComponent {
   }
 }
 
-const mapStateToProps = ({currentUser, entries}) => ({ currentUser, entries })
+const mapStateToProps = ({ currentProject, searchQuery }) => ({ currentProject, searchQuery })
 
-export default connect(mapStateToProps)(SearchItem)
+export default connect(mapStateToProps, { searchEntries, updateQuery })(SearchItem)

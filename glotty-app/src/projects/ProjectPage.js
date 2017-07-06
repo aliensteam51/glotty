@@ -108,6 +108,8 @@ export class ProjectPage extends PureComponent {
           deselectLocale={this.deselectLocale.bind(this)}
         />
 
+        <SearchItem />
+
         <table>
           <thead>
             <tr>
