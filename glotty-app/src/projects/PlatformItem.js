@@ -31,7 +31,8 @@ export class PlatformItem extends PureComponent {
       <TranslationItem
         key={index} {...translation}
         isDeleted={this.props.deleted}
-        platformCode={this.props.platformCode} />
+        platformCode={this.props.platformCode}
+        entryId={this.props.entryId} />
     )
   }
 
