@@ -16,6 +16,11 @@ export class SaveFile extends PureComponent {
     }
   }
 
+  componentWillMount() {
+    const { fetchEntries, currentProject } = this.props
+    fetchEntries(currentProject._id)
+  }
+
   renderSelectLangauges() {
     const { currentProject } = this.props
     const { localeCodes } = currentProject
