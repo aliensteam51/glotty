@@ -17,7 +17,7 @@ export default (state = [], { type, payload } = {}) => {
 
     case ENTRY_CREATED :
       const newEntry = { ...payload }
-      return [newEntry].concat(state)
+      return state.concat([newEntry])
     //
     // case ENTRY_UPDATED :
     //   return state.map((entry) => {

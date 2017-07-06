@@ -73,12 +73,17 @@ export class ProjectPage extends PureComponent {
       tags,
     } = this.state
 
+    const {localeCodes} = this.props.currentProject
+    console.log(localeCodes)
     const entry = {
       projectId: this.props.currentProject._id,
       name,
       description,
       group,
-      tags,
+      platforms: [{translations:
+        localeCodes.map((l) => ({localeCode: l }))
+      }],
+      tags: tags.split(/\W+/),
     }
       console.log(entry)
       this.props.createEntry(entry)
@@ -89,7 +94,6 @@ export class ProjectPage extends PureComponent {
     const { currentProject, entries } = this.props
     if(!currentProject || !entries) return null
     const { _id, localeCodes, locales } = this.props.currentProject
-    console.log(this.state)
     return (
 
       <div className="grid-container single-project">
