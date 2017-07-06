@@ -25,6 +25,7 @@ export class LocaleContainer extends PureComponent {
       localeCodes: localeCodes,
       addLocale: this.state.selected.code
     }
+    this.setState({ search: '', selected: {} })
     addLocale(projectId, data)
   }
 

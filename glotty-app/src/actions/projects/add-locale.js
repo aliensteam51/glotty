@@ -17,7 +17,6 @@ export default (projectId, data) => {
     const backend = api.service('projects')
     backend.patch(projectId, data)
       .then((result) => {
-        console.log(result)
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
         dispatch({
