@@ -13,7 +13,7 @@ export default(entries, localeCode) => {
     let group = ''
     if (entries.length > index+1 && (entries[index+1].group !== entry.group)) group = `/*${entries[index+1].group}*/\n\n` //checking if next entry doesnt have the same group
 
-    return str + `"${platform.key}" = "${translation.translation}";\n`
+    return str + `"${platform.keyId}" = "${translation.translation}";\n`
   }, `/*${header}*/\n\n/*${entries[0].group}*/\n\n`)
 
   return outputString

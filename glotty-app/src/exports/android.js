@@ -12,7 +12,7 @@ export default(entries, localeCode) => {
     let group = ''
     if (entries.length > index+1 && (entries[index+1].group !== entry.group)) group = `<!--${entries[index+1].group}-->\n\n` //checking if next entry doesnt have the same group
 
-    return str + `<string name="${platform.key}">${translation.translation}</string>\n` + group
+    return str + `<string name="${platform.keyId}">${translation.translation}</string>\n` + group
   }, `<!--${header}--><resources>\n<!--${entries[0].group}-->`)
 
   return outputString + "</resources>"
