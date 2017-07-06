@@ -21,7 +21,8 @@ export class PlatformItem extends PureComponent {
   }
 
   handleBlur(event) {
-    this.props.editKey(this.props.entryId, { updatedKey: event.target.value })
+    const { editKey, entryId, platformCode } = this.props
+    editKey(entryId, { platformCode, updatedKey: event.target.value })
   }
 
   renderTranslations(translation, index) {

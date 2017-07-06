@@ -3,8 +3,20 @@
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function (hook) {
-    // Hooks can either return nothing or a promise
-    // that resolves with the `hook` object for asynchronous operations
-    return Promise.resolve(hook);
+
+    if (hook.data.updatedKey === undefined) return Promise.resolve(hook);
+
+    console.log(hook.data)
+    return hook.app.service('entries').get(hook.id)
+      .then((entry) => {
+        const platforms = entry.platforms.map((pf) => {
+          if (pf.platformCode === hook.data.platformCode) {
+            pf.keyId = hook.data.updatedKey
+          }
+          return pf
+        })
+        hook.data.platforms = platforms
+        return Promise.resolve(hook);
+      })
   };
 };
