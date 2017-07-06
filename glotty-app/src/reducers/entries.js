@@ -4,7 +4,7 @@ import { ENTRY_CREATED } from '../actions/entries/create'
 import { ENTRY_DELETED } from '../actions/entries/delete'
 import { PLATFORM_DELETED } from '../actions/platforms/delete'
 import { KEY_EDITED } from '../actions/platforms/edit-key'
-import { ADDED_PLATFORM } from '../actions/entries/add-platform'
+import { ADDED_PLATFORM } from '../actions/platforms/add'
 import { TRANSLATION_UPDATED } from '../actions/translations/update'
 
 // import {
