@@ -36,14 +36,14 @@ export class ProjectPage extends PureComponent {
 
   renderEntries(entry, index) {
     return (
-      <EntryItem key={index} {...entry} />
+      <EntryItem key={index} {...entry} selectedLocales={this.state.selectedLocales} />
     )
   }
 
   render() {
     const { currentProject, entries } = this.props
     if(!currentProject || !entries) return null
-    const { _id, localeCodes, platformCodes, locales } = this.props.currentProject
+    const { _id, localeCodes, locales } = this.props.currentProject
     console.log(this.state.selectedLocales)
     return (
 

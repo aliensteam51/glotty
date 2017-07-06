@@ -60,10 +60,8 @@ export class LocaleContainer extends PureComponent {
   }
 
   toggleCheckbox(event) {
-    this.props.selectLocale('nl')
-    console.log(event)
-    console.log(event.target)
-    console.log(event.target.value)
+    if (event.target.checked) this.props.selectLocale(event.target.value)
+    if (!event.target.checked) this.props.deselectLocale(event.target.value)
   }
 
   render() {
@@ -115,7 +113,7 @@ export class LocaleContainer extends PureComponent {
             {projectLocales.map((locale, index) => {
               return (
                 <tr key={index}>
-                <td className='text-center'><input type='checkbox' onChange={this.toggleCheckbox.bind(this)}/></td>
+                <td className='text-center'><input type='checkbox' onChange={this.toggleCheckbox.bind(this)} value={locale.code} /></td>
                 <td>{locale.code}</td>
                 <td>{locale.name}</td>
                 </tr>
