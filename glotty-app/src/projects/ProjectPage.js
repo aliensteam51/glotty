@@ -71,7 +71,11 @@ export class ProjectPage extends PureComponent {
         filterdEntries = entries.filter((entry)=>  entry.group.toLowerCase().includes(filterText.toLowerCase()))
         break
       case "Tag" :
-        filterdEntries = entries.filter((entry)=>  0 < entry.tags.filter((tag)=> -1 !== tag.toLowerCase().indexOf(filterText.toLowerCase())))
+        filterdEntries = entries.filter((entry)=>
+          entry.tags.filter((tag)=>
+            -1 !== tag.toLowerCase().indexOf(filterText.toLowerCase())
+          ).length > 0
+        )
         break
       default :
         filterdEntries = entries
