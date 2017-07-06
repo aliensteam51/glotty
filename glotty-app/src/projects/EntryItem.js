@@ -7,13 +7,29 @@ import addPlatform from '../actions/entries/add-platform'
 import deleteEntry from '../actions/entries/delete'
 import PlatformItem from './PlatformItem'
 
+const platformOptions = [
+  {
+    name: 'iOS',
+    code: 'ios'
+  },
+  {
+    name: 'Android',
+    code: 'android'
+  },
+  {
+    name: 'i18n',
+    code: 'i18n'
+  }
+]
+
 export class EntryItem extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
       display: "none",
       hidden: true,
-      selectedPlatform: 'ios',
+      selectedPlatform: '',
+      options: [],
     }
   }
 
@@ -29,7 +45,30 @@ export class EntryItem extends PureComponent {
       platforms: platforms,
       addPlatform: this.state.selectedPlatform
     }
+    
+    const newOptions = this.state.options.filter((pf) => (pf.code !== this.state.selectedPlatform))
+
+    this.setOptions(newOptions)
+
     addPlatform(_id, data)
+  }
+
+  componentWillMount() {
+    const { platforms } = this.props
+
+    if (!platforms) return
+
+    const platformCodes = platforms.map((platf) => (platf.platformCode))
+    const options = platformOptions.filter((platf) => (!platformCodes.includes(platf.code)))
+
+    this.setOptions(options)
+  }
+
+  setOptions(options) {
+    this.setState({
+      options: options,
+      selectedPlatform: options.length === 0 ? '' : options[0].code
+    })
   }
 
   renderPlatforms(platform, index) {
@@ -73,9 +112,9 @@ export class EntryItem extends PureComponent {
            <td colSpan="4"></td>
            <td>
              <select value={this.state.selectedPlatform} onChange={this.handlePlatformSelection.bind(this)}>
-              <option value="ios">iOS</option>
-              <option value="android">Android</option>
-              <option value="i18n">i18n</option>
+              {this.state.options.map((opt, index) => (
+                <option key={index} value={opt.code}>{opt.name}</option>
+              ))}
             </select>
            </td>
            <td>
