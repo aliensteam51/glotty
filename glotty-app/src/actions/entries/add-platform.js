@@ -21,17 +21,9 @@ export default (entryId, data) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
         dispatch({
-          type: ADDED_PLATFORM
+          type: ADDED_PLATFORM,
+          payload: result
         })
-        backend.find({ query: { projectId: result.projectId } })
-          .then((result) => {
-            dispatch({ type: APP_DONE_LOADING })
-            dispatch({ type: LOAD_SUCCESS })
-            dispatch({
-              type: FETCHED_ENTRIES,
-              payload: result.data
-            })
-          })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })

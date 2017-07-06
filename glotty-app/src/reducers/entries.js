@@ -4,6 +4,7 @@ import { ENTRY_CREATED } from '../actions/entries/create'
 import { ENTRY_DELETED } from '../actions/entries/delete'
 import { PLATFORM_DELETED } from '../actions/translations/delete'
 import { KEY_EDITED } from '../actions/platforms/edit-key'
+import { ADDED_PLATFORM } from '../actions/entries/add-platform'
 
 // import {
 //   ENTRY_CREATED,
@@ -20,6 +21,7 @@ export default (state = [], { type, payload } = {}) => {
       const newEntry = { ...payload }
       return state.concat([newEntry])
 
+    case ADDED_PLATFORM :
     case KEY_EDITED :
       return state.map((entry) => {
         if (entry._id === payload._id) {
