@@ -98,7 +98,7 @@ export class SaveFile extends PureComponent {
         </label>
         <label>Select a platform
           <select value={this.state.selectedPlatform} onChange={this.handleSelectPlatform.bind(this)} >
-            <option value="ios">ios</option>
+            <option value="ios">iOS</option>
             <option value="android">Android</option>
             <option value="i18n">i18n</option>
           </select>
