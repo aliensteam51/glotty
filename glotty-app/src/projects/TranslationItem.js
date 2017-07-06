@@ -17,7 +17,7 @@ export class TranslationItem extends PureComponent {
   }
 
   render() {
-    const {localeCode} = this.props
+    const {localeCode, isDeleted} = this.props
     return (
       <div className="grid-x">
         <div className="cell small-1">
@@ -29,7 +29,8 @@ export class TranslationItem extends PureComponent {
             id="translation-label"
             value={this.state.translation}
             onChange={this.handleChange.bind(this)}
-            placeholder="Right- and middle-aligned text input"/>
+            placeholder="Right- and middle-aligned text input"
+            disabled={isDeleted}/>
         </div>
       </div>
     )

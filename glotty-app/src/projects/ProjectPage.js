@@ -14,12 +14,15 @@ import './ProjectPage.css'
 
 export class ProjectPage extends PureComponent {
 
-  state = {
-    name: '',
-    description: '',
-    group: '',
-    tags: [],
-    selectedLocales: [],
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: '',
+      description: '',
+      group: '',
+      tags: [],
+      selectedLocales: [],
+    }
   }
 
   componentWillMount() {
@@ -39,7 +42,6 @@ export class ProjectPage extends PureComponent {
   deselectLocale(localeCode) {
     this.setState({ selectedLocales: this.state.selectedLocales.filter((locale) => locale !== localeCode)})
   }
-
 
   renderEntries(entry, index) {
     return (
@@ -89,9 +91,7 @@ export class ProjectPage extends PureComponent {
   }
 
   render() {
-
     const { currentProject, entries } = this.props
-
     if(!currentProject || !entries) return null
     const { _id, localeCodes, locales } = this.props.currentProject
     return (

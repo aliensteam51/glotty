@@ -3,9 +3,10 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import TranslationItem from "./TranslationItem"
-import deletePlatform from '../actions/translations/delete'
-import editKey from '../actions/platforms/edit-key'
 
+import deletePlatform from '../actions/platforms/delete'
+
+import editKey from '../actions/platforms/edit-key'
 
 export class PlatformItem extends PureComponent {
 
@@ -27,22 +28,26 @@ export class PlatformItem extends PureComponent {
 
   renderTranslations(translation, index) {
     return (
-      <TranslationItem key={index} {...translation} />
+      <TranslationItem
+        key={index} {...translation}
+        isDeleted={this.props.deleted} />
     )
   }
 
   render() {
-    const { platformCode, translations, style, _id, entryId, selectedLocales } = this.props
+    const {platformCode, translations, style, _id, entryId, selectedLocales, deleted} = this.props
     let selectedTranslations = translations
     if (selectedLocales.length !== 0) selectedTranslations = translations.filter((trans) => selectedLocales.includes(trans.localeCode))
     return (
-      <tr style={style}>
+      <tr className={deleted ? "deleted" : ""} style={style}>
         <td className="text-center">
-          <button
-            className="button tinyer alert"
-            onClick={() => {if(confirm('Delete the item?')) {this.props.deletePlatform(entryId, _id)}}}>
-            X
-          </button>
+          { deleted ? null :
+            <button
+              className="button tinyer alert"
+              onClick={() => {if(confirm('Delete the item?')) {this.props.deletePlatform(entryId, {_id, remove: true})}}}>
+              X
+            </button>
+          }
         </td>
         <td className="text-center uppercase">{platformCode}</td>
         <td colSpan="4">
@@ -59,11 +64,18 @@ export class PlatformItem extends PureComponent {
                 id="middle-label"
                 value={this.state.keyId}
                 onChange={this.handleChange.bind(this)}
+                disabled={deleted}
                 onBlur={this.handleBlur.bind(this)}
                 placeholder="Trans Key"/>
             </div>
           </div>
           { selectedTranslations.map(this.renderTranslations.bind(this)) }
+          { deleted ? null :
+            <input
+              type="submit"
+              className="button tiny float-right"
+              value="Save"/>
+          }
         </td>
       </tr>
     )

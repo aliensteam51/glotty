@@ -73,7 +73,11 @@ export class EntryItem extends PureComponent {
 
   renderPlatforms(platform, index) {
     return (
-      <PlatformItem key={index} {...platform} entryId={this.props._id} style={{ display: this.state.display }} selectedLocales={this.props.selectedLocales} />
+      <PlatformItem
+        key={index} {...platform}
+        entryId={this.props._id}
+        style={{ display: this.state.display }}
+        selectedLocales={this.props.selectedLocales}/>
     )
   }
 
