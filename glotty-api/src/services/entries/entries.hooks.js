@@ -25,14 +25,16 @@ const platformSchema = {
 
 const addPlatform = require('../../hooks/add-platform');
 
+const deletePlatform = require('../../hooks/delete-platform');
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
     create: [],
-    update: [addPlatform()],
-    patch: [addPlatform()],
+    update: [addPlatform(), deletePlatform()],
+    patch: [addPlatform(), deletePlatform()],
     remove: []
   },
 
