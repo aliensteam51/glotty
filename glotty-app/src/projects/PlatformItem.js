@@ -58,6 +58,10 @@ export class PlatformItem extends PureComponent {
             </div>
           </div>
           { selectedTranslations.map(this.renderTranslations.bind(this)) }
+          <input
+            type="submit"
+            className="button tiny float-right"
+            value="Save"/>
         </td>
       </tr>
     )

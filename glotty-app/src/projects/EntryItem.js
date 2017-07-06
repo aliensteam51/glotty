@@ -95,7 +95,7 @@ export class EntryItem extends PureComponent {
           <td>{name}</td>
           <td>{description}</td>
           <td>{group}</td>
-          <td>{tags}</td>
+          <td>{tags.join(", ")}</td>
           <td className="text-center">
             { deleted ? null :
               <button className="button tiny" onClick={() => {
@@ -122,8 +122,7 @@ export class EntryItem extends PureComponent {
                type="submit"
                className="button tiny"
                value="Add Platform"
-               onClick={this.handlePlatformChoice.bind(this)}
-            />
+               onClick={this.handlePlatformChoice.bind(this)}/>
            </td>
          </tr>
       </tbody>
