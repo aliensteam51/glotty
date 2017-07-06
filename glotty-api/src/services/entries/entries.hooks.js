@@ -27,14 +27,16 @@ const addPlatform = require('../../hooks/add-platform');
 const deletePlatform = require('../../hooks/delete-platform');
 const editKey = require('../../hooks/edit-key');
 
+const updateTranslation = require('../../hooks/update-translation');
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
     create: [],
-    update: [addPlatform(), deletePlatform(), editKey()],
-    patch: [addPlatform(), deletePlatform(), editKey()],
+    update: [addPlatform(), deletePlatform(), editKey(), updateTranslation()],
+    patch: [addPlatform(), deletePlatform(), editKey(), updateTranslation()],
     remove: []
   },
 
