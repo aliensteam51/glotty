@@ -1,5 +1,5 @@
 /*global event*/
-/*eslint no-restricted-globals: ["warn", "confirm"]*/
+/*eslint no-restricted-globals: ["off", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import { push } from 'react-router-redux'

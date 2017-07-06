@@ -1,14 +1,17 @@
 /*global event*/
-/*eslint no-restricted-globals: ["warn", "confirm"]*/
+/*eslint no-restricted-globals: ["off", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import TranslationItem from "./TranslationItem"
+import deletePlatform from '../actions/translations/delete'
+
+
 export class PlatformItem extends PureComponent {
 
   constructor(props) {
     super(props)
     this.state = {
-      key: ""
+      keyId: this.props.keyId
     }
   }
 
@@ -18,15 +21,19 @@ export class PlatformItem extends PureComponent {
     )
   }
 
+  handleChange(event) {
+    this.setState({keyId: event.target.value})
+  }
+
+
   render() {
-    const {platformCode, translations, style} = this.props
-    console.log(this.props)
+    const {platformCode, translations, style, _id, entryId} = this.props
     return (
       <tr style={style}>
         <td className="text-center">
           <button
             className="button tinyer alert"
-            onClick={() => {console.log("delete")}}>
+            onClick={() => {if(confirm('Delete the item?')) {this.props.deletePlatform(entryId, _id)}}}>
             X
           </button>
         </td>
@@ -43,6 +50,8 @@ export class PlatformItem extends PureComponent {
               <input
                 type="text"
                 id="middle-label"
+                value={this.state.keyId}
+                onChange={this.handleChange.bind(this)}
                 placeholder="Trans Key"/>
             </div>
           </div>
@@ -57,4 +66,4 @@ const mapStateToProps = ({currentUser}) => ({
   currentUser,
 })
 
-export default connect(mapStateToProps)(PlatformItem)
+export default connect(mapStateToProps, {deletePlatform})(PlatformItem)

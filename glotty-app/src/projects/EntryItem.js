@@ -1,9 +1,8 @@
 /*global event*/
-/*eslint no-restricted-globals: ["warn", "confirm"]*/
+/*eslint no-restricted-globals: ["off", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import deleteEntry from '../actions/entries/delete'
-import deleteTranslation from '../actions/translations/delete'
 import PlatformItem from './PlatformItem'
 
 export class EntryItem extends PureComponent {
@@ -18,7 +17,7 @@ export class EntryItem extends PureComponent {
 
   renderPlatforms(platform, index) {
     return (
-      <PlatformItem key={index} {...platform} style={{ display: this.state.display }} />
+      <PlatformItem key={index} {...platform} entryId={this.props._id} style={{ display: this.state.display }} />
     )
   }
 
@@ -62,4 +61,4 @@ const mapStateToProps = ({currentUser}) => ({
   currentUser,
 })
 
-export default connect(mapStateToProps, {deleteEntry, deleteTranslation})(EntryItem)
+export default connect(mapStateToProps, {deleteEntry})(EntryItem)

@@ -8,8 +8,12 @@ export class TranslationItem extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      translation: ""
+      translation: this.props.translation
     }
+  }
+
+  handleChange(event) {
+    this.setState({translation: event.target.value})
   }
 
   render() {
@@ -23,6 +27,8 @@ export class TranslationItem extends PureComponent {
           <input
             type="text"
             id="translation-label"
+            value={this.state.translation}
+            onChange={this.handleChange.bind(this)}
             placeholder="Right- and middle-aligned text input"/>
         </div>
       </div>

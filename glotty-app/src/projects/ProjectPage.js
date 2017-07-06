@@ -20,8 +20,17 @@ export class ProjectPage extends PureComponent {
     } = this.props
     const { projectId } = this.props.params
     getProject(projectId)
-    fetchEntries(projectId)
+    fetchEntries()
   }
+
+  // componentWillUnMount() {
+  //   const {
+  //     getProject,
+  //     fetchEntries
+  //   } = this.props
+  //   getProject()
+  //   fetchEntries()
+  // }
 
   renderEntries(entry, index) {
     return (
@@ -32,7 +41,7 @@ export class ProjectPage extends PureComponent {
   render() {
     const { currentProject, entries } = this.props
     if(!currentProject || !entries) return null
-    const { _id, localeCodes, platformCodes, locales } = this.props.currentProject
+    const { _id, localeCodes, locales } = this.props.currentProject
     return (
 
       <div className="grid-container single-project">
