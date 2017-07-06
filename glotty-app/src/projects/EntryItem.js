@@ -52,6 +52,22 @@ export class EntryItem extends PureComponent {
           </td>
         </tr>
          { deleted ? null : platforms.map(this.renderPlatforms.bind(this)) }
+         <tr>
+           <td colSpan="4"></td>
+           <td>
+             <select>
+               <option value="IOS">IOS</option>
+               <option value="Android">Android</option>
+               <option value="I18n">I18n</option>
+             </select>
+           </td>
+           <td>
+             <input
+               type="submit"
+               className="button tiny"
+               value="Add Platform" />
+           </td>
+         </tr>
       </tbody>
     )
   }
