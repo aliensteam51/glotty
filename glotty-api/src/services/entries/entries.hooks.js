@@ -25,14 +25,16 @@ const platformSchema = {
 
 const addPlatform = require('../../hooks/add-platform');
 
+const editKey = require('../../hooks/edit-key');
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
     create: [],
-    update: [addPlatform()],
-    patch: [addPlatform()],
+    update: [addPlatform(), editKey()],
+    patch: [addPlatform(), editKey()],
     remove: []
   },
 

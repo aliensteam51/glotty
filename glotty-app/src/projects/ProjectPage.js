@@ -89,7 +89,9 @@ export class ProjectPage extends PureComponent {
   }
 
   render() {
+
     const { currentProject, entries } = this.props
+
     if(!currentProject || !entries) return null
     const { _id, localeCodes, locales } = this.props.currentProject
     return (
