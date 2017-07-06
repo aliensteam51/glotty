@@ -54,30 +54,22 @@ export class ProjectsContainer extends PureComponent {
     return <tr key={index} className={project.deleted ? "deleted" : ""}>
         <td>{project.name}</td>
         <td>{project.description}</td>
-        { project.deleted ?
-          <td>
-            <div className="expanded button-group">
-              <button type="button" className="primary button" disabled>View</button>
-              <button type="button" className="alert button" disabled>Delete</button>
-            </div>
-          </td>:
           <td>
             <div className="expanded button-group">
                 <button
                   className="primary button"
-                  onClick={() => { this.props.push("/projects/" + project._id) }}>
+                  onClick={() => { this.props.push("/projects/" + project._id) }}
+                  disabled={project.deleted}>
                   View
                 </button>
               <button type="button"
                 className="alert button"
-                onClick={() => {if(confirm('Delete the item?')) {this.props.deleteProject(project._id)}}}>
+                onClick={() => {if(confirm('Delete the item?')) {this.props.deleteProject(project._id)}}}
+                disabled={project.deleted}>
                 Delete
               </button>
             </div>
-
-
           </td>
-        }
       </tr>
   }
 

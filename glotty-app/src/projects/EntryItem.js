@@ -45,7 +45,7 @@ export class EntryItem extends PureComponent {
       platforms: platforms,
       addPlatform: this.state.selectedPlatform
     }
-    
+
     const newOptions = this.state.options.filter((pf) => (pf.code !== this.state.selectedPlatform))
 
     this.setOptions(newOptions)
@@ -73,7 +73,11 @@ export class EntryItem extends PureComponent {
 
   renderPlatforms(platform, index) {
     return (
-      <PlatformItem key={index} {...platform} entryId={this.props._id} style={{ display: this.state.display }} selectedLocales={this.props.selectedLocales} />
+      <PlatformItem
+        key={index} {...platform}
+        entryId={this.props._id}
+        style={{ display: this.state.display }}
+        selectedLocales={this.props.selectedLocales}/>
     )
   }
 

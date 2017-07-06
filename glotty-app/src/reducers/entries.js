@@ -2,7 +2,7 @@ import { FETCHED_ENTRIES } from '../actions/entries/fetch'
 import { ENTRY_CREATED } from '../actions/entries/create'
 // import { ENTRY_UPDATED } from '../actions/entries/update'
 import { ENTRY_DELETED } from '../actions/entries/delete'
-import { PLATFORM_DELETED } from '../actions/translations/delete'
+import { PLATFORM_DELETED } from '../actions/platforms/delete'
 
 // import {
 //   ENTRY_CREATED,
