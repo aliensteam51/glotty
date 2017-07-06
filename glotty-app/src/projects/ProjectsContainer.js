@@ -13,12 +13,12 @@ import './ProjectsContainer.css'
 export class ProjectsContainer extends PureComponent {
 
   constructor(props) {
-      super(props)
-      this.state = {
-        name: '',
-        description: '',
-      }
+    super(props)
+    this.state = {
+      name: '',
+      description: '',
     }
+  }
 
   componentWillMount() {
     const { fetchProjects } = this.props
@@ -99,13 +99,13 @@ export class ProjectsContainer extends PureComponent {
               <tr>
                 <td>
                   <input type="text"
-                  value={this.state.value}
+                  value={this.state.name}
                   onChange={this.handleNameChange.bind(this)}
                   placeholder="Name of the Project" />
                 </td>
                 <td>
                   <input type="text"
-                  value={this.state.value}
+                  value={this.state.description}
                   onChange={this.handleDescritpionChange.bind(this)}
                   placeholder="Description" />
                 </td>
