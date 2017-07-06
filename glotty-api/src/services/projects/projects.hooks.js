@@ -22,8 +22,6 @@ const localeSchema = {
   }
 };
 
-const addPlatform = require('../../hooks/add-platform');
-
 const addLocale = require('../../hooks/add-locale');
 
 module.exports = {
@@ -32,8 +30,8 @@ module.exports = {
     find: [],
     get: [],
     create: [],
-    update: [addPlatform(), addLocale()],
-    patch: [addPlatform(), addLocale()],
+    update: [addLocale()],
+    patch: [addLocale()],
     remove: []
   },
 

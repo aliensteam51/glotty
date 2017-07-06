@@ -45,7 +45,7 @@ export class ProjectPage extends PureComponent {
 
   renderEntries(entry, index) {
     return (
-      <EntryItem key={index} {...entry} selectedLocales={this.state.selectedLocales} />
+      <EntryItem key={index} {...entry} selectedLocales={this.state.selectedLocales} locales={this.props.currentProject.localeCodes} />
     )
   }
 

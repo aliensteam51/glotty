@@ -4,30 +4,34 @@ import {
   APP_DONE_LOADING,
   LOAD_ERROR,
   LOAD_SUCCESS
- } from '../loading'
+} from '../loading'
+import { FETCHED_ENTRIES } from '../entries/fetch'
 
 export const ADDED_PLATFORM = 'ADDED_PLATFORM'
 
 const api = new API()
 
-export default (projectId, addPlatform, platformCodes, localeCodes) => {
+export default (entryId, data) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
     dispatch({ type: LOAD_SUCCESS })
-    const backend = api.service('projects')
-    backend.patch(projectId, {
-      platformCodes: platformCodes,
-      localeCodes: localeCodes,
-      addPlatform: addPlatform
-    })
+    const backend = api.service('entries')
+    backend.patch(entryId, data)
       .then((result) => {
-        console.log(result)
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
         dispatch({
-          type: ADDED_PLATFORM,
-          payload: result
+          type: ADDED_PLATFORM
         })
+        backend.find({ query: { projectId: result.projectId } })
+          .then((result) => {
+            dispatch({ type: APP_DONE_LOADING })
+            dispatch({ type: LOAD_SUCCESS })
+            dispatch({
+              type: FETCHED_ENTRIES,
+              payload: result.data
+            })
+          })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })
