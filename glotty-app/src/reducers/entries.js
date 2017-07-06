@@ -4,6 +4,7 @@ import { ENTRY_CREATED } from '../actions/entries/create'
 import { ENTRY_DELETED } from '../actions/entries/delete'
 import { PLATFORM_DELETED } from '../actions/platforms/delete'
 import { KEY_EDITED } from '../actions/platforms/edit-key'
+import { TRANSLATION_UPDATED } from '../actions/translations/update'
 
 // import {
 //   ENTRY_CREATED,
@@ -20,24 +21,10 @@ export default (state = [], { type, payload } = {}) => {
       const newEntry = { ...payload }
       return state.concat([newEntry])
 
+    case TRANSLATION_UPDATED :
     case KEY_EDITED :
-      return state.map((entry) => {
-        if (entry._id === payload._id) {
-          return { ...payload }
-        }
-        return entry
-      })
-
-    //
-    // case ENTRY_UPDATED :
-    //   return state.map((entry) => {
-    //     if (entry._id === payload._id) {
-    //       return { ...payload }
-    //     }
-    //     return entry
-    //   })
-
     case ENTRY_DELETED :
+    // case ENTRY_UPDATED :
       return state.map((entry) => {
         if (entry._id === payload._id) {
           return { ...payload }
