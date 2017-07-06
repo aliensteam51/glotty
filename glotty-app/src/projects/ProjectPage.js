@@ -13,22 +13,13 @@ import LocaleContainer from './LocaleContainer'
 import './ProjectPage.css'
 
 export class ProjectPage extends PureComponent {
-  constructor(props) {
-    super(props)
 
-    this.state = {
-      name: '',
-      description: '',
-      group: '',
-      tags: [],
-      selectedLocales: [],
-      filterText: '',
-      searchTerm: '',
-      entries: props.entries
-    }
-
-    this.handleFilterTextInput = this.handleFilterTextInput.bind(this)
-    this.handleSearchTermInputChange = this.handleSearchTermInputChange.bind(this)
+  state = {
+    name: '',
+    description: '',
+    group: '',
+    tags: [],
+    selectedLocales: [],
   }
 
   componentWillMount() {
@@ -49,47 +40,6 @@ export class ProjectPage extends PureComponent {
     this.setState({ selectedLocales: this.state.selectedLocales.filter((locale) => locale !== localeCode)})
   }
 
-  handleFilterTextInput(filterText) {
-    this.setState({
-      filterText: filterText
-    })
-  }
-
-  handleSearchTermInputChange(searchTerm) {
-    this.setState({
-      searchTerm: searchTerm
-    })
-  }
-
-  searchEntries(event) {
-    event.preventDefault()
-    const { entries } = this.props
-    this.setState({ entries })
-    const { filterText, searchTerm } = this.state
-    let filterdEntries
-
-    switch(searchTerm) {
-      case "Name" :
-        filterdEntries = entries.filter((entry)=>  entry.name.toLowerCase().includes(filterText.toLowerCase()))
-        break
-      case "Group" :
-        filterdEntries = entries.filter((entry)=>  entry.group.toLowerCase().includes(filterText.toLowerCase()))
-        break
-      case "Tag" :
-        filterdEntries = entries.filter((entry)=>
-          entry.tags.filter((tag)=>
-            -1 !== tag.toLowerCase().indexOf(filterText.toLowerCase())
-          ).length > 0
-        )
-        break
-      default :
-        filterdEntries = entries
-    }
-
-    if(filterText === '') filterdEntries = entries
-
-    this.setState({ entries: filterdEntries })
-  }
 
   renderEntries(entry, index) {
     return (
@@ -139,8 +89,7 @@ export class ProjectPage extends PureComponent {
   }
 
   render() {
-    const { currentProject } = this.props
-    const { entries } = this.state
+    const { currentProject, entries } = this.props
     if(!currentProject || !entries) return null
     const { _id, localeCodes, locales } = this.props.currentProject
     return (
@@ -157,13 +106,7 @@ export class ProjectPage extends PureComponent {
           deselectLocale={this.deselectLocale.bind(this)}
         />
 
-        <SearchItem
-          filterText={this.state.filterText}
-          searchTerm={this.state.searchTerm}
-          onFilterTextInput={this.handleFilterTextInput.bind(this)}
-          onSearchTermInput={this.handleSearchTermInputChange.bind(this)}
-          searchEntries={this.searchEntries.bind(this)}
-        />
+        <SearchItem />
 
         <table>
           <thead>

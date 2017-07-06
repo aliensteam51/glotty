@@ -7,6 +7,7 @@ import projects from './projects'
 import entries from './entries'
 import subscriptions from './subscriptions'
 import locales from './locales'
+import searchQuery from './searchQuery'
 
 export default {
   projects,
@@ -18,4 +19,5 @@ export default {
   loading,
   loadError,
   locales,
+  searchQuery,
 }
