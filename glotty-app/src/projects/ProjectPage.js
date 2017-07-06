@@ -4,6 +4,8 @@ import { push } from 'react-router-redux'
 import SaveFile from '../exports/SaveFile'
 import getProject from '../actions/projects/get'
 import fetchEntries from '../actions/entries/fetch'
+import createEntry from '../actions/entries/create'
+// import resetEntries from '../actions/entries/reset'
 
 import SearchItem from './SearchItem'
 import EntryItem from './EntryItem'
@@ -12,8 +14,15 @@ import LocaleContainer from './LocaleContainer'
 import './ProjectPage.css'
 
 export class ProjectPage extends PureComponent {
-  state = {
-    selectedLocales: []
+
+  constructor(props) {
+    super(props)
+    this.state = {
+      name: '',
+      description: '',
+      group: '',
+      tags: ''
+    }
   }
 
   componentWillMount() {
@@ -23,37 +32,54 @@ export class ProjectPage extends PureComponent {
     } = this.props
     const { projectId } = this.props.params
     getProject(projectId)
-    fetchEntries()
+    fetchEntries(projectId)
   }
-
-  selectLocale(localeCode) {
-    this.setState({ selectedLocales: this.state.selectedLocales.concat(localeCode) })
-  }
-
-  deselectLocale(localeCode) {
-    this.setState({ selectedLocales: this.state.selectedLocales.filter((locale) => locale !== localeCode)})
-  }
-
-  // componentWillUnMount() {
-  //   const {
-  //     getProject,
-  //     fetchEntries
-  //   } = this.props
-  //   getProject()
-  //   fetchEntries()
-  // }
 
   renderEntries(entry, index) {
     return (
-      <EntryItem key={index} {...entry} selectedLocales={this.state.selectedLocales} />
+      <EntryItem key={index} {...entry} />
     )
+  }
+
+  handleNameChange(event) {
+    this.setState({name: event.target.value})
+  }
+
+  handleDescriptionChange(event) {
+    this.setState({description: event.target.value})
+  }
+
+  handleGroupChange(event) {
+    this.setState({group: event.target.value})
+  }
+
+  handleTagsChange(event) {
+    this.setState({tags: event.target.value})
+  }
+
+  handleSubmit(event) {
+    const {
+      name,
+      description,
+      group,
+      tags,
+    } = this.state
+
+    const entry = {
+      name,
+      description,
+      group,
+      tags,
+    }
+      this.props.createEntry(entry)
+      event.preventDefault()
   }
 
   render() {
     const { currentProject, entries } = this.props
     if(!currentProject || !entries) return null
     const { _id, localeCodes, locales } = this.props.currentProject
-
+    console.log(this.state)
     return (
 
       <div className="grid-container single-project">
@@ -64,8 +90,6 @@ export class ProjectPage extends PureComponent {
           projectId={_id}
           localeCodes={localeCodes}
           projectLocales={locales}
-          selectLocale={this.selectLocale.bind(this)}
-          deselectLocale={this.deselectLocale.bind(this)}
         />
 
         <SearchItem />
@@ -81,6 +105,46 @@ export class ProjectPage extends PureComponent {
               <th width="5%"></th>
             </tr>
           </thead>
+          <tbody>
+            <tr>
+              <td></td>
+              <td>
+                <input
+                  type="text"
+                  placeholder="Name"
+                  value={this.state.name}
+                  onChange={this.handleNameChange.bind(this)} />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  placeholder="Description"
+                  value={this.state.description}
+                  onChange={this.handleDescriptionChange.bind(this)} />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  placeholder="Group"
+                  value={this.state.group}
+                  onChange={this.handleGroupChange.bind(this)} />
+              </td>
+              <td>
+                <input
+                  type="text"
+                  placeholder="Tags"
+                  value={this.state.tags}
+                  onChange={this.handleTagsChange.bind(this)} />
+              </td>
+              <td>
+                <input
+                  type="submit"
+                  className="button cell"
+                  value="Add Entry"
+                  onClick={this.handleSubmit.bind(this)}/>
+              </td>
+            </tr>
+          </tbody>
             { entries.map(this.renderEntries.bind(this)) }
         </table>
 
@@ -99,6 +163,7 @@ const mapStateToProps = ({currentUser, projects, currentProject, entries}, {para
 
 export default connect(mapStateToProps, {
   getProject,
+  createEntry,
   fetchEntries,
   // subscribeToEntries,
   push
