@@ -3,7 +3,7 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
-import addPlatform from '../actions/entries/add-platform'
+import addPlatform from '../actions/platforms/add'
 import deleteEntry from '../actions/entries/delete'
 import PlatformItem from './PlatformItem'
 

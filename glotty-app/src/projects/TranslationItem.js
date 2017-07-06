@@ -2,6 +2,7 @@
 /*eslint no-restricted-globals: ["warn", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import updateTranslation from '../actions/translations/update'
 
 export class TranslationItem extends PureComponent {
 
@@ -14,6 +15,15 @@ export class TranslationItem extends PureComponent {
 
   handleChange(event) {
     this.setState({translation: event.target.value})
+  }
+
+  handleBlur(event) {
+    const { updateTranslation, entryId, localeCode, platformCode } = this.props
+    updateTranslation(entryId, {
+      platformCode,
+      localeCode,
+      updatedTranslation: event.target.value
+    })
   }
 
   render() {
@@ -29,7 +39,8 @@ export class TranslationItem extends PureComponent {
             id="translation-label"
             value={this.state.translation}
             onChange={this.handleChange.bind(this)}
-            placeholder="Right- and middle-aligned text input"
+            onBlur={this.handleBlur.bind(this)}
+            placeholder="Translation"
             disabled={isDeleted}/>
         </div>
       </div>
@@ -37,8 +48,8 @@ export class TranslationItem extends PureComponent {
   }
 }
 
-const mapStateToProps = ({currentUser}) => ({
+const mapStateToProps = ({ currentUser }) => ({
   currentUser,
 })
 
-export default connect(mapStateToProps)(TranslationItem)
+export default connect(mapStateToProps, { updateTranslation })(TranslationItem)
