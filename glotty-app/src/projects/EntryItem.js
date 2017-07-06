@@ -2,17 +2,34 @@
 /*eslint no-restricted-globals: ["off", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+
+import addPlatform from '../actions/entries/add-platform'
 import deleteEntry from '../actions/entries/delete'
 import PlatformItem from './PlatformItem'
 
 export class EntryItem extends PureComponent {
-
   constructor(props) {
     super(props)
     this.state = {
       display: "none",
       hidden: true,
+      selectedPlatform: 'ios',
     }
+  }
+
+  handlePlatformSelection(event) {
+    this.setState({ selectedPlatform: event.target.value })
+  }
+
+  handlePlatformChoice(event) {
+    event.preventDefault()
+    const { _id, locales, platforms, addPlatform } = this.props
+    const data = {
+      locales: locales,
+      platforms: platforms,
+      addPlatform: this.state.selectedPlatform
+    }
+    addPlatform(_id, data)
   }
 
   renderPlatforms(platform, index) {
@@ -51,30 +68,32 @@ export class EntryItem extends PureComponent {
             }
           </td>
         </tr>
-         { deleted ? null : platforms.map(this.renderPlatforms.bind(this)) }
-         <tr>
-           <td colSpan="4"></td>
-           <td>
-             <select>
-               <option value="IOS">IOS</option>
-               <option value="Android">Android</option>
-               <option value="I18n">I18n</option>
-             </select>
-           </td>
-           <td>
-             <input
-               type="submit"
-               className="button tiny"
-               value="Add Platform" />
-           </td>
-         </tr>
+        { deleted ? null : platforms.map(this.renderPlatforms.bind(this)) }
+        <tr>
+          <td colSpan="4"></td>
+          <td>
+            <select value={this.state.selectedPlatform} onChange={this.handlePlatformSelection.bind(this)}>
+              <option value="ios">iOS</option>
+              <option value="android">Android</option>
+              <option value="i18n">i18n</option>
+            </select>
+          </td>
+          <td>
+            <input
+              type="submit"
+              className="button tiny"
+              value="Add Platform"
+              onClick={this.handlePlatformChoice.bind(this)}
+            />
+          </td>
+        </tr>
       </tbody>
     )
   }
 }
 
-const mapStateToProps = ({currentUser}) => ({
+const mapStateToProps = ({ currentUser }) => ({
   currentUser,
 })
 
-export default connect(mapStateToProps, {deleteEntry})(EntryItem)
+export default connect(mapStateToProps, { addPlatform, deleteEntry })(EntryItem)
