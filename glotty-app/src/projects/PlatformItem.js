@@ -4,6 +4,7 @@ import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 import TranslationItem from "./TranslationItem"
 import deletePlatform from '../actions/translations/delete'
+import editKey from '../actions/platforms/edit-key'
 
 
 export class PlatformItem extends PureComponent {
@@ -11,8 +12,17 @@ export class PlatformItem extends PureComponent {
   constructor(props) {
     super(props)
     this.state = {
-      keyId: this.props.keyId
+      keyId: this.props.keyId,
     }
+  }
+
+  handleChange(event) {
+    this.setState({keyId: event.target.value})
+  }
+
+  handleBlur(event) {
+    const { editKey, entryId, platformCode } = this.props
+    editKey(entryId, { platformCode, updatedKey: event.target.value })
   }
 
   renderTranslations(translation, index) {
@@ -21,13 +31,8 @@ export class PlatformItem extends PureComponent {
     )
   }
 
-  handleChange(event) {
-    this.setState({keyId: event.target.value})
-  }
-
-
   render() {
-    const {platformCode, translations, style, _id, entryId, selectedLocales} = this.props
+    const { platformCode, translations, style, _id, entryId, selectedLocales } = this.props
     let selectedTranslations = translations
     if (selectedLocales.length !== 0) selectedTranslations = translations.filter((trans) => selectedLocales.includes(trans.localeCode))
     return (
@@ -54,22 +59,19 @@ export class PlatformItem extends PureComponent {
                 id="middle-label"
                 value={this.state.keyId}
                 onChange={this.handleChange.bind(this)}
+                onBlur={this.handleBlur.bind(this)}
                 placeholder="Trans Key"/>
             </div>
           </div>
           { selectedTranslations.map(this.renderTranslations.bind(this)) }
-          <input
-            type="submit"
-            className="button tiny float-right"
-            value="Save"/>
         </td>
       </tr>
     )
   }
 }
 
-const mapStateToProps = ({currentUser}) => ({
+const mapStateToProps = ({ currentUser }) => ({
   currentUser,
 })
 
-export default connect(mapStateToProps, {deletePlatform})(PlatformItem)
+export default connect(mapStateToProps, { deletePlatform, editKey })(PlatformItem)
