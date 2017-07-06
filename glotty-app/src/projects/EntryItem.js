@@ -45,7 +45,7 @@ export class EntryItem extends PureComponent {
       platforms: platforms,
       addPlatform: this.state.selectedPlatform
     }
-    
+
     const newOptions = this.state.options.filter((pf) => (pf.code !== this.state.selectedPlatform))
 
     this.setOptions(newOptions)
