@@ -6,7 +6,7 @@ import {
   LOAD_SUCCESS
 } from '../loading'
 
-export const TRANSLATION_DELETED = 'TRANSLATION_DELETED'
+export const PLATFORM_DELETED = 'PLATFORM_DELETED'
 
 const api = new API()
 
@@ -15,15 +15,26 @@ export default (entryId, platformId) => {
     dispatch({ type: APP_LOADING })
 
     const backend = api.service('entries')
-
     api.app.authenticate()
       .then(() => {
-        backend.patch(entryId, {platformId, deletePlatform: true})
+
+
+        // db.getCollection('entries').update(
+        //   {"_id": ObjectId("595dcbce1cb1607a3e60afe5"), "platforms._id": ObjectId("595dcbce1cb1607a3e60afe6")},
+        //   {'$set': {'platforms.$.deleted': true}}
+        // )
+
+        // THIS SHOULD WORK BUT DOESNT....
+        backend.update({"_id": entryId, "platforms._id": platformId},
+          {'$set': {'platforms.$.deleted': true}}
+        )
+        /////
+
           .then((result) => {
             dispatch({ type: APP_DONE_LOADING })
             dispatch({ type: LOAD_SUCCESS })
             dispatch({
-              type: TRANSLATION_DELETED,
+              type: PLATFORM_DELETED,
               payload: result
             })
           })

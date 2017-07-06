@@ -23,7 +23,7 @@ export class ProjectPage extends PureComponent {
     } = this.props
     const { projectId } = this.props.params
     getProject(projectId)
-    fetchEntries(projectId)
+    fetchEntries()
   }
 
   selectLocale(localeCode) {
@@ -33,6 +33,15 @@ export class ProjectPage extends PureComponent {
   deselectLocale(localeCode) {
     this.setState({ selectedLocales: this.state.selectedLocales.filter((locale) => locale !== localeCode)})
   }
+
+  // componentWillUnMount() {
+  //   const {
+  //     getProject,
+  //     fetchEntries
+  //   } = this.props
+  //   getProject()
+  //   fetchEntries()
+  // }
 
   renderEntries(entry, index) {
     return (
@@ -44,7 +53,7 @@ export class ProjectPage extends PureComponent {
     const { currentProject, entries } = this.props
     if(!currentProject || !entries) return null
     const { _id, localeCodes, locales } = this.props.currentProject
-    console.log(this.state.selectedLocales)
+
     return (
 
       <div className="grid-container single-project">

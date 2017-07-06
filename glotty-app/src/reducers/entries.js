@@ -2,7 +2,7 @@ import { FETCHED_ENTRIES } from '../actions/entries/fetch'
 // import { ENTRY_CREATED } from '../actions/entries/create'
 // import { ENTRY_UPDATED } from '../actions/entries/update'
 import { ENTRY_DELETED } from '../actions/entries/delete'
-import { TRANSLATION_DELETED } from '../actions/translations/delete'
+import { PLATFORM_DELETED } from '../actions/translations/delete'
 
 // import {
 //   ENTRY_CREATED,
@@ -35,7 +35,7 @@ export default (state = [], { type, payload } = {}) => {
         return entry
       })
 
-    case TRANSLATION_DELETED :
+    case PLATFORM_DELETED:
       return state.map((entry) => {
         if (entry._id === payload._id) {
           return { ...payload }
