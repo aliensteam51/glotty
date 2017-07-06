@@ -33,7 +33,6 @@ export class SearchItem extends PureComponent {
               required
               onChange={this.textSearch}
               onKeyUp={this.textSearch}
-              fullWidth={true}
             />
           </div>
         </div>

@@ -83,6 +83,7 @@ export class EntryItem extends PureComponent {
 
   render() {
     const {name, description, tags, group, deleted, platforms, _id} = this.props
+    console.log(this.state.selectedPlatform.length)
     return (
       <tbody
         className={deleted ? "deleted" : ""}>
@@ -111,7 +112,9 @@ export class EntryItem extends PureComponent {
             }
           </td>
         </tr>
-         { deleted ? null : platforms.map(this.renderPlatforms.bind(this)) }
+
+         { deleted ? (null) : platforms.map(this.renderPlatforms.bind(this)) }
+         { deleted || this.state.selectedPlatform.length === 0 ? null :
          <tr style={{ display: this.state.display }}>
            <td colSpan="4"></td>
            <td>
@@ -129,6 +132,7 @@ export class EntryItem extends PureComponent {
                onClick={this.handlePlatformChoice.bind(this)}/>
            </td>
          </tr>
+         }
       </tbody>
     )
   }
