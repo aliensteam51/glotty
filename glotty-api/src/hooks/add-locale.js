@@ -1,5 +1,6 @@
 // Use this hook to manipulate incoming or outgoing data.
 // For more information on hooks see: http://docs.feathersjs.com/api/hooks.html
+const errors = require('feathers-errors');
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function (hook) {
@@ -8,7 +9,7 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
     const localeCodes = hook.data.localeCodes;
     const addLocale = hook.data.addLocale;
 
-    if (localeCodes.includes(addLocale)) throw new Errors.Unprocessable('Locale already exists on this project');
+    if (localeCodes.includes(addLocale)) throw new errors.Unprocessable('Locale already exists on this project');
 
     hook.data.localeCodes = localeCodes.concat(addLocale);
 

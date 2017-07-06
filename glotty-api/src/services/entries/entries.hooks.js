@@ -23,14 +23,7 @@ const platformSchema = {
   }
 };
 
-const localeSchema = {
-  include: {
-    service: 'locales',
-    nameAs: 'locale',
-    parentField: 'localeCode',
-    childField: 'code'
-  }
-};
+const addPlatform = require('../../hooks/add-platform');
 
 module.exports = {
   before: {
@@ -38,16 +31,15 @@ module.exports = {
     find: [],
     get: [],
     create: [],
-    update: [],
-    patch: [],
+    update: [addPlatform()],
+    patch: [addPlatform()],
     remove: []
   },
 
   after: {
     all: [
       populate({ schema: projectSchema }),
-      populate({ schema: platformSchema }),
-      populate({ schema: localeSchema })
+      populate({ schema: platformSchema })
     ],
     find: [],
     get: [],

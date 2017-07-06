@@ -8,32 +8,23 @@ module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
 
     if (hook.data.addPlatform === undefined) return Promise.resolve(hook);
 
-    const platformCodes = hook.data.platformCodes;
     const addPlatform = hook.data.addPlatform;
+    const locales = hook.data.locales;
+    const platforms = hook.data.platforms
+    const platformCodes = platforms.map((platf) => (platf.platformCode));
 
-    if (platformCodes.includes(addPlatform)) throw new Errors.Unprocessable('Platform already exists on this project');
-
-    hook.data.platformCodes = platformCodes.concat(addPlatform);
-
-    const localeCodes = hook.data.localeCodes
+    if (platformCodes.includes(addPlatform)) throw new Errors.Unprocessable('Platform already exists on this entry');
 
     const newPlatform = {
       platformCode: addPlatform,
       key: '',
-      translations: localeCodes.map((localeCode) => ({
-        localeCode: localeCode,
-        translation: ''
+      translations: locales.map((localeCode) => ({
+        localeCode: localeCode
       }))
     };
 
-    const entries = hook.app.service('entries');
+    hook.data.platforms = platforms.concat(newPlatform)
 
-    return entries.find({ query: { projectId: hook.id } }).limit(0)
-      then((result) => {
-        result.data.map((entry) => {
-          entries.patch(entry._id, { platforms: entry.platforms.concat(newPlatform) })
-        });
-        return Promise.resolve(hook);
-      });
+    return Promise.resolve(hook);
   };
 };
