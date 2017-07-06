@@ -27,7 +27,9 @@ export class PlatformItem extends PureComponent {
 
 
   render() {
-    const {platformCode, translations, style, _id, entryId} = this.props
+    const {platformCode, translations, style, _id, entryId, selectedLocales} = this.props
+    let selectedTranslations = translations
+    if (selectedLocales.length !== 0) selectedTranslations = translations.filter((trans) => selectedLocales.includes(trans.localeCode))
     return (
       <tr style={style}>
         <td className="text-center">
@@ -55,7 +57,7 @@ export class PlatformItem extends PureComponent {
                 placeholder="Trans Key"/>
             </div>
           </div>
-          { translations.map(this.renderTranslations.bind(this)) }
+          { selectedTranslations.map(this.renderTranslations.bind(this)) }
         </td>
       </tr>
     )
