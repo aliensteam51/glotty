@@ -24,7 +24,7 @@ const platformSchema = {
 };
 
 const addPlatform = require('../../hooks/add-platform');
-
+const deletePlatform = require('../../hooks/delete-platform');
 const editKey = require('../../hooks/edit-key');
 
 module.exports = {
@@ -33,8 +33,8 @@ module.exports = {
     find: [],
     get: [],
     create: [],
-    update: [addPlatform(), editKey()],
-    patch: [addPlatform(), editKey()],
+    update: [addPlatform(), deletePlatform(), editKey()],
+    patch: [addPlatform(), deletePlatform(), editKey()],
     remove: []
   },
 
