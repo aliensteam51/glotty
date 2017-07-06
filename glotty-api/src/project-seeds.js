@@ -26,7 +26,7 @@ const entries = [
     platforms: [
       {
         platformCode: 'default',
-        key: 'main_menu_item_data',
+        keyId: 'main_menu_item_data',
         translations: [
           {
             localeCode: 'nl',
@@ -44,7 +44,7 @@ const entries = [
     platforms: [
       {
         platformCode: 'default',
-        key: 'main_menu_item_profile',
+        keyId: 'main_menu_item_profile',
         translations: [
           {
             localeCode: 'nl',
@@ -62,7 +62,7 @@ const entries = [
     platforms: [
       {
         platformCode: 'default',
-        key: 'main_menu_item_messages',
+        keyId: 'main_menu_item_messages',
         translations: [
           {
             localeCode: 'nl',

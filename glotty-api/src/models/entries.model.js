@@ -15,7 +15,7 @@ module.exports = function (app) {
   const platformSchema = new Schema({
     platformId: { type: Schema.Types.ObjectId, ref: 'platforms' },
     platformCode: { type: String, required: true },
-    key: { type: String, default: '' },
+    keyId: { type: String, default: '' },
     deleted: { type: Boolean, default: false },
     translations: [translationSchema]
   });
