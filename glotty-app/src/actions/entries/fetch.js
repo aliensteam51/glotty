@@ -17,7 +17,14 @@ export default (projectId) => {
 
     const backend = api.service('entries')
 
-    backend.find({ query: { projectId: projectId } })
+    backend.find({
+      query: {
+        projectId: projectId,
+        $sort: {
+          group: 1
+        }
+      }
+    })
     .then((result) => {
       dispatch({ type: APP_DONE_LOADING })
       dispatch({ type: LOAD_SUCCESS })

@@ -50,6 +50,7 @@ export class ProjectPage extends PureComponent {
       <div className="grid-container single-project">
         <h1>{currentProject.name}</h1>
         <p>{currentProject.description}</p>
+
         <LocaleContainer
           projectId={_id}
           localeCodes={localeCodes}
@@ -57,7 +58,6 @@ export class ProjectPage extends PureComponent {
           selectLocale={this.selectLocale.bind(this)}
           deselectLocale={this.deselectLocale.bind(this)}
         />
-        <h1>Entries Component</h1>
 
         <SearchItem />
 
