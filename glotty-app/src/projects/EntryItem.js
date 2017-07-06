@@ -52,7 +52,7 @@ export class EntryItem extends PureComponent {
           </td>
         </tr>
          { deleted ? null : platforms.map(this.renderPlatforms.bind(this)) }
-         <tr>
+         <tr style={{ display: this.state.display }}>
            <td colSpan="4"></td>
            <td>
              <select>
