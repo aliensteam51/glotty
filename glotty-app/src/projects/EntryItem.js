@@ -87,6 +87,25 @@ export class EntryItem extends PureComponent {
             />
           </td>
         </tr>
+         { deleted ? null : platforms.map(this.renderPlatforms.bind(this)) }
+         <tr style={{ display: this.state.display }}>
+           <td colSpan="4"></td>
+           <td>
+             <select value={this.state.selectedPlatform} onChange={this.handlePlatformSelection.bind(this)}>
+              <option value="ios">iOS</option>
+              <option value="android">Android</option>
+              <option value="i18n">i18n</option>
+            </select>
+           </td>
+           <td>
+             <input
+               type="submit"
+               className="button tiny"
+               value="Add Platform"
+               onClick={this.handlePlatformChoice.bind(this)}
+            />
+           </td>
+         </tr>
       </tbody>
     )
   }
