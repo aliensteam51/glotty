@@ -7,7 +7,8 @@ import { createMockStore } from 'redux-test-utils'
 import 'jest-enzyme'
 
 import store from '../store'
-import { ProjectPage } from './ProjectPage'
+import ProjectPage from './ProjectPage'
+import LocaleContainer from './LocaleContainer'
 
 chai.use(chaiEnzyme())
 
@@ -62,5 +63,17 @@ describe('<ProjectPage />', () => {
 
   it('has a wrapping div tag', () => {
     expect(page).to.have.tagName('div')
+  })
+
+  it('has project name as title', () => {
+    expect(page.find('h1')).to.have.text(project.name)
+  })
+
+  it('has project description', () => {
+    expect(page.find('p')).to.have.text(project.ddescription)
+  })
+
+  it('contains the LocaleContainer', () => {
+    expect(page).to.have.descendants(LocaleContainer)
   })
 })
