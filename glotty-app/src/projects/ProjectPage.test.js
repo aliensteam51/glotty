@@ -9,6 +9,9 @@ import 'jest-enzyme'
 import store from '../store'
 import ProjectPage from './ProjectPage'
 import LocaleContainer from './LocaleContainer'
+import SearchItem from './SearchItem'
+import SaveFile from '../exports/SaveFile'
+import EntryItem from './EntryItem'
 
 chai.use(chaiEnzyme())
 
@@ -56,6 +59,7 @@ describe('<ProjectPage />', () => {
         params={{projectId: '3'}}
         getProject={jest.fn()}
         fetchEntries={jest.fn()}
+        createEntry={jest.fn()}
       />
     </Provider>,
     { context: { store: store } }
@@ -75,5 +79,17 @@ describe('<ProjectPage />', () => {
 
   it('contains the LocaleContainer', () => {
     expect(page).to.have.descendants(LocaleContainer)
+  })
+
+  it('contains the search bar', () => {
+    expect(page).to.have.descendants(SearchItem)
+  })
+
+  it('contains the export section', () => {
+    expect(page).to.have.descendants(SaveFile)
+  })
+
+  it('contains the entry items', () => {
+    expect(page).to.have.descendants(EntryItem)
   })
 })
