@@ -12,7 +12,7 @@ module.exports = function (app) {
     email: {type: String, unique: true},
     password: { type: String },
 
-    role: { type: String, default: '' },
+    role: { type: String, default: 'organizationUser' },
     organizationId: { type: Schema.Types.ObjectId, ref: 'organizations' },
     deleted: { type: Boolean, default: false },
 

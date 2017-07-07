@@ -74,6 +74,21 @@ const entries = [
   }
 ];
 
+const users = [
+  {
+    'name': 'organizationAdmin',
+    'email': 'organ@organAdmin.com',
+    'password': 'qwerty1',
+    'role': 'organizationAdmin'
+  },
+  {
+    'name': 'organizationUser',
+    'email': 'user@user.com',
+    'password': 'qwerty1',
+    'role': 'organizationUser'
+  },
+]
+
 const feathersClient = feathers();
 
 feathersClient
@@ -85,6 +100,8 @@ feathersClient.service('organizations').create(organization)
   .then((org) => {
     console.log('Organization seeded...', org.name);
     feathersClient.service('projects').create(Object.assign(project, {organizationId: org._id}))
+    feathersClient.service('users').create(Object.assign(users[0], {organizationId: org._id}))
+    feathersClient.service('users').create(Object.assign(users[1], {organizationId: org._id}))
       .then((proj) => {
         console.log('Project seeded...', proj.name);
         entries.map((entry) => {
