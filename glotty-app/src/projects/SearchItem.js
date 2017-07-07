@@ -8,8 +8,7 @@ export class SearchItem extends PureComponent {
   componentWillUpdate(nextProps) {
     const query = nextProps.searchQuery
     const oldQuery = this.props.query
-    const { projectId } = this.props.params
-
+    const projectId = this.props.currentProject._id
     if (query !== oldQuery) {
       this.props.searchEntries(projectId, query)
     }
