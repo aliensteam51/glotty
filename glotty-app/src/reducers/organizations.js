@@ -1,6 +1,7 @@
 import { CREATE_ORGANIZATION } from '../actions/organizations/create'
 import { FETCHED_ORGANIZATIONS } from '../actions/organizations/fetch'
 import { ORGANIZATION_DELETED } from '../actions/organizations/delete'
+import { ORGANIZATION_REVIVED } from '../actions/organizations/revive'
 
 export default (state = [], { type, payload } = {}) => {
   switch(type) {
@@ -11,6 +12,14 @@ export default (state = [], { type, payload } = {}) => {
       return state.concat({ ...payload })
 
     case ORGANIZATION_DELETED :
+    return state.map((organization) => {
+      if (organization._id === payload._id) {
+        return { ...payload }
+      }
+      return organization
+    })
+
+    case ORGANIZATION_REVIVED :
     return state.map((organization) => {
       if (organization._id === payload._id) {
         return { ...payload }

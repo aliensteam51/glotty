@@ -6,6 +6,7 @@ import { push } from 'react-router-redux'
 import fetchOrganizations from '../actions/organizations/fetch'
 import createOrganization from '../actions/organizations/create'
 import deleteOrganization from '../actions/organizations/delete'
+import reviveOrganization from '../actions/organizations/revive'
 
 import './OrganizationsContainer.css'
 
@@ -49,10 +50,18 @@ export class OrganizationsContainer extends PureComponent {
   }
 
   renderOrganization(organization, index) {
-    return <tr key={index} className={organization.deleted ? "deleted" : ""}>
-        <td>{organization.name}</td>
-        <td>{organization.description}</td>
+    return <tr key={index}className={organization.deleted ? "deleted" : ""}>
+        <td><span>{organization.name}</span></td>
+        <td><span>{organization.description}</span></td>
           <td>
+            { organization.deleted ?
+              <div className="expanded button-group">
+                <button
+                  className="primary button success"
+                  onClick={() => {this.props.reviveOrganization(organization._id)}}>
+                  Revive
+                </button>
+              </div>:
             <div className="expanded button-group">
                 <button
                   className="primary button"
@@ -62,11 +71,12 @@ export class OrganizationsContainer extends PureComponent {
                 </button>
               <button type="button"
                 className="alert button"
-                onClick={() => {if(confirm('Delete the item?')) {this.props.deleteOrganization(organization._id)}}}
+                onClick={() => {this.props.deleteOrganization(organization._id)}}
                 disabled={organization.deleted}>
                 Delete
               </button>
             </div>
+            }
           </td>
       </tr>
   }
@@ -122,6 +132,7 @@ const mapStateToProps = ({currentUser, organizations, currentOrganization }) => 
 export default connect(mapStateToProps, {
   fetchOrganizations,
   deleteOrganization,
+  reviveOrganization,
   createOrganization,
   push
 })(OrganizationsContainer)

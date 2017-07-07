@@ -6,35 +6,25 @@ import {
   LOAD_SUCCESS
 } from '../loading'
 
-export const PLATFORM_DELETED = 'PLATFORM_DELETED'
+export const ORGANIZATION_REVIVED = 'ORGANIZATION_REVIVED'
 
 const api = new API()
 
-export default (entryId, platformId) => {
+export default (organizationId) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    const backend = api.service('entries')
+    const backend = api.service('organizations')
+
     api.app.authenticate()
       .then(() => {
-
-
-        // db.getCollection('entries').update(
-        //   {"_id": ObjectId("595dcbce1cb1607a3e60afe5"), "platforms._id": ObjectId("595dcbce1cb1607a3e60afe6")},
-        //   {'$set': {'platforms.$.deleted': true}}
-        // )
-
-        // THIS SHOULD WORK BUT DOESNT....
-        backend.update({"_id": entryId, "platforms._id": platformId},
-          {'$set': {'platforms.$.deleted': true}}
-        )
-        /////
-
+        backend.patch(organizationId, {deleted: false})
           .then((result) => {
             dispatch({ type: APP_DONE_LOADING })
             dispatch({ type: LOAD_SUCCESS })
+
             dispatch({
-              type: PLATFORM_DELETED,
+              type: ORGANIZATION_REVIVED,
               payload: result
             })
           })
