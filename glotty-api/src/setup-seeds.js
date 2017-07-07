@@ -10,7 +10,7 @@ const user = {
   name: 'admin',
   email: 'admin@admin.com',
   password: 'qwerty1',
-  role: 'superAdmin'
+  roles: ['super-admin']
 };
 
 const locales = [

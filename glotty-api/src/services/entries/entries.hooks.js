@@ -31,7 +31,7 @@ const updateTranslation = require('../../hooks/update-translation');
 
 module.exports = {
   before: {
-    all: [],
+    all: [authenticate('jwt')],
     find: [],
     get: [],
     create: [],
