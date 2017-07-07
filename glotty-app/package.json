@@ -22,6 +22,7 @@
     "react-router-redux": "4.0.8",
     "react-test-renderer": "^15.6.1",
     "redux": "^3.7.1",
+    "redux-test-utils": "^0.1.2",
     "redux-thunk": "^2.2.0",
     "socket.io-client": "^2.0.3"
   },
