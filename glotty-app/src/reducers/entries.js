@@ -6,6 +6,7 @@ import { PLATFORM_DELETED } from '../actions/platforms/delete'
 import { KEY_EDITED } from '../actions/platforms/edit-key'
 import { ADDED_PLATFORM } from '../actions/platforms/add'
 import { TRANSLATION_UPDATED } from '../actions/translations/update'
+import { ENTRY_REVIVED } from '../actions/entries/revive'
 
 // import {
 //   ENTRY_CREATED,
@@ -26,6 +27,7 @@ export default (state = [], { type, payload } = {}) => {
     case TRANSLATION_UPDATED :
     case KEY_EDITED :
     case ENTRY_DELETED :
+    case ENTRY_REVIVED :
     // case ENTRY_UPDATED :
       return state.map((entry) => {
         if (entry._id === payload._id) {
