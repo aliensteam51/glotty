@@ -7,6 +7,8 @@ import fetchProjects from '../actions/projects/fetch'
 import createProjects from '../actions/projects/create'
 import getOrganization from '../actions/organizations/get'
 import deleteProject from '../actions/projects/delete'
+import reviveProject from '../actions/projects/revive'
+
 
 import './ProjectsContainer.css'
 
@@ -56,9 +58,17 @@ export class ProjectsContainer extends PureComponent {
     const {organizationId} = this.props.params
 
     return <tr key={index} className={project.deleted ? "deleted" : ""}>
-        <td>{project.name}</td>
-        <td>{project.description}</td>
+        <td><span>{project.name}</span></td>
+        <td><span>{project.description}</span></td>
           <td>
+            { project.deleted ?
+              <div className="expanded button-group">
+                <button
+                  className="primary button success"
+                  onClick={() => {this.props.reviveProject(project._id)}}>
+                  Revive
+                </button>
+              </div> :
             <div className="expanded button-group">
                 <button
                   className="primary button"
@@ -73,6 +83,7 @@ export class ProjectsContainer extends PureComponent {
                 Delete
               </button>
             </div>
+          }
           </td>
       </tr>
   }
@@ -132,5 +143,6 @@ export default connect(mapStateToProps, {
   deleteProject,
   getOrganization,
   createProjects,
+  reviveProject,
   push
 })(ProjectsContainer)

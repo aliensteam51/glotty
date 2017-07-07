@@ -1,7 +1,7 @@
 import { CREATE_PROJECT } from '../actions/projects/create'
 import { FETCHED_PROJECTS } from '../actions/projects/fetch'
 import { PROJECT_DELETED } from '../actions/projects/delete'
-
+import {PROJECT_REVIVED} from '../actions/projects/revive'
 export default (state = [], { type, payload } = {}) => {
   switch(type) {
     case FETCHED_PROJECTS :
@@ -17,6 +17,15 @@ export default (state = [], { type, payload } = {}) => {
       }
       return project
     })
+
+    case PROJECT_REVIVED :
+    return state.map((project) => {
+      if (project._id === payload._id) {
+        return { ...payload }
+      }
+      return project
+    })
+
 
     default :
       return state

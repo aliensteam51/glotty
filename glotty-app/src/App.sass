@@ -7,17 +7,16 @@ body
   background: #f5f5f5
 
 table
-  .button
-    margin: 0
   .deleted
     color: gray
-    text-decoration: line-through
+    background-color: darkgray!important
+    span
+      text-decoration: line-through
     .button
-      background-color: black
-      &:hover
-        background-color: black
+      margin: 0
+      text-decoration: none
 
-[type='text']
+[type='text'], [type='submit']
   margin: 0
 
 .button-group
