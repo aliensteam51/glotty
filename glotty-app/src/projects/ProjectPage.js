@@ -92,7 +92,9 @@ export class ProjectPage extends PureComponent {
 
   render() {
     const { currentProject, entries } = this.props
+
     if(!currentProject || !entries) return null
+
     const { _id, localeCodes, locales } = this.props.currentProject
     return (
 
@@ -108,7 +110,14 @@ export class ProjectPage extends PureComponent {
           deselectLocale={this.deselectLocale.bind(this)}
         />
 
-        <SearchItem />
+        <div>
+          <SearchItem />
+
+          <input
+            type="submit"
+            className="button tiny float-right"
+            value="Hide Archived Entries"/>
+        </div>
 
         <table>
           <thead>
@@ -155,7 +164,7 @@ export class ProjectPage extends PureComponent {
               <td>
                 <input
                  type="submit"
-                 className="button cell"
+                 className="button "
                  value="Add Entry"
                  onClick={this.handleSubmit.bind(this)}/>
                </td>
