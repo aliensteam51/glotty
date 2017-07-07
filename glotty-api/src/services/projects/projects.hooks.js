@@ -1,4 +1,8 @@
 const { populate } = require('feathers-hooks-common');
+const { authenticate } = require('feathers-authentication').hooks
+const { hasRoleOrRestrict } = require('feathers-authentication-hooks')
+
+const restrict = hasRoleOrRestrict({ roles: ['super-admin','admin']})
 
 const organizationSchema = {
   include: {
@@ -26,13 +30,13 @@ const addLocale = require('../../hooks/add-locale');
 
 module.exports = {
   before: {
-    all: [],
+    all: [authenticate('jwt')],
     find: [],
     get: [],
-    create: [],
-    update: [addLocale()],
-    patch: [addLocale()],
-    remove: []
+    create: [restrict],
+    update: [addLocale(), restrict],
+    patch: [addLocale(), restrict],
+    remove: [restrict]
   },
 
   after: {

@@ -9,7 +9,8 @@ const auth = require('feathers-authentication-client');
 const user = {
   name: 'admin',
   email: 'admin@admin.com',
-  password: 'qwerty1'
+  password: 'qwerty1',
+  roles: ['super-admin']
 };
 
 const locales = [

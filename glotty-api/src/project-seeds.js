@@ -74,6 +74,21 @@ const entries = [
   }
 ];
 
+const users = [
+  {
+    'name': 'organizationAdmin',
+    'email': 'organ@organAdmin.com',
+    'password': 'qwerty1',
+    'roles': ['admin']
+  },
+  {
+    'name': 'organizationUser',
+    'email': 'user@user.com',
+    'password': 'qwerty1',
+    'roles': ['user']
+  },
+]
+
 const feathersClient = feathers();
 
 feathersClient
@@ -81,26 +96,38 @@ feathersClient
   .configure(rest('http://localhost:3030').superagent(superagent))
   .configure(auth());
 
-feathersClient.service('organizations').create(organization)
-  .then((org) => {
-    console.log('Organization seeded...', org.name);
-    feathersClient.service('projects').create(Object.assign(project, {organizationId: org._id}))
-      .then((proj) => {
-        console.log('Project seeded...', proj.name);
-        entries.map((entry) => {
-          feathersClient.service('entries').create(Object.assign(entry, {projectId: proj._id}))
-            .then((ent) => {
-              console.log('Entry seeded...', ent.name);
-            })
-            .catch((error) => {
-              console.error('Error seeding entry!', error.message);
+feathersClient.authenticate({
+  strategy: 'local',
+  email: 'admin@admin.com',
+  password: 'qwerty1'
+})
+  .then(() => {
+    feathersClient.service('organizations').create(organization)
+      .then((org) => {
+        console.log('Organization seeded...', org.name);
+        feathersClient.service('projects').create(Object.assign(project, {organizationId: org._id}))
+        feathersClient.service('users').create(Object.assign(users[0], {organizationId: org._id}))
+        feathersClient.service('users').create(Object.assign(users[1], {organizationId: org._id}))
+          .then((proj) => {
+            console.log('Project seeded...', proj.name);
+            entries.map((entry) => {
+              feathersClient.service('entries').create(Object.assign(entry, {projectId: proj._id}))
+                .then((ent) => {
+                  console.log('Entry seeded...', ent.name);
+                })
+                .catch((error) => {
+                  console.error('Error seeding entry!', error.message);
+                });
             });
-        });
+          })
+          .catch((error) => {
+            console.error('Error seeding project!', error.message);
+          });
       })
       .catch((error) => {
-        console.error('Error seeding project!', error.message);
+        console.error('Error seeding organization!', error.message);
       });
   })
-  .catch((error) => {
-    console.error('Error seeding organization!', error.message);
+  .catch(function(error){
+    console.error('Error authenticating!', error.message);
   });
