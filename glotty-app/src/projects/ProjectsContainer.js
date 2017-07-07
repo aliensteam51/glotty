@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import fetchProjects from '../actions/projects/fetch'
 import createProjects from '../actions/projects/create'
-import getOrganization from '../actions/projects/get'
+import getOrganization from '../actions/organizations/get'
 import deleteProject from '../actions/projects/delete'
 
 import './ProjectsContainer.css'
@@ -21,9 +21,10 @@ export class ProjectsContainer extends PureComponent {
   }
 
   componentWillMount() {
-    const { fetchProjects } = this.props
-    // getOrganization(currentUser.organizationId)
-    fetchProjects()
+    const { fetchProjects, getOrganization, currentProject} = this.props
+    const { organizationId } = this.props.params
+    getOrganization(organizationId)
+    fetchProjects(organizationId)
   }
 
   handleNameChange(event) {
@@ -38,8 +39,9 @@ export class ProjectsContainer extends PureComponent {
     const {
       name,
       description,
-      organizationId,
     } = this.state
+
+    const {organizationId} = this.props.params
 
     const project = {
       name,
@@ -51,6 +53,8 @@ export class ProjectsContainer extends PureComponent {
   }
 
   renderProject(project, index) {
+    const {organizationId} = this.props.params
+
     return <tr key={index} className={project.deleted ? "deleted" : ""}>
         <td>{project.name}</td>
         <td>{project.description}</td>
@@ -58,7 +62,7 @@ export class ProjectsContainer extends PureComponent {
             <div className="expanded button-group">
                 <button
                   className="primary button"
-                  onClick={() => { this.props.push("/projects/" + project._id) }}
+                  onClick={() => { this.props.push("/" + organizationId  + "/" + project._id) }}
                   disabled={project.deleted}>
                   View
                 </button>
@@ -74,11 +78,11 @@ export class ProjectsContainer extends PureComponent {
   }
 
   render() {
-    if (!this.props.projects[0]) return null
+    const {currentOrganization} = this.props
+    if (!currentOrganization) return null
     return (
       <main className="grid-container projects">
-        <h1 className="text-center">Organization Name</h1>
-          <form onSubmit={this.handleSubmit.bind(this)}>
+        <h1 className="text-center">{currentOrganization.name}</h1>
           <table>
             <thead>
               <tr>
@@ -102,14 +106,16 @@ export class ProjectsContainer extends PureComponent {
                   placeholder="Description" />
                 </td>
                 <td>
-                  <input type="submit" className="button cell" value="Create New Project" />
+                  <input
+                    type="submit"
+                    className="button cell"
+                    value="Create New Project"
+                    onClick={this.handleSubmit.bind(this)}/>
                 </td>
               </tr>
                 { this.props.projects.map(this.renderProject.bind(this)) }
             </tbody>
           </table>
-        </form>
-
       </main>
     )
   }

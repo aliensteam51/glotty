@@ -30,10 +30,15 @@ export class ProjectPage extends PureComponent {
       getProject,
       fetchEntries
     } = this.props
+
     const { projectId } = this.props.params
-    getProject(projectId)
+
+    console.log(this.props.params.projectId)
     fetchEntries(projectId)
+    getProject(projectId)
   }
+
+
 
   selectLocale(localeCode) {
     this.setState({ selectedLocales: this.state.selectedLocales.concat(localeCode) })
@@ -74,7 +79,6 @@ export class ProjectPage extends PureComponent {
     } = this.state
 
     const {localeCodes} = this.props.currentProject
-    console.log(localeCodes)
     const entry = {
       projectId: this.props.currentProject._id,
       name,
@@ -85,7 +89,6 @@ export class ProjectPage extends PureComponent {
       }],
       tags: tags.split(/\W+/),
     }
-      console.log(entry)
       this.props.createEntry(entry)
       event.preventDefault()
   }
@@ -93,9 +96,10 @@ export class ProjectPage extends PureComponent {
   render() {
     const { currentProject, entries } = this.props
 
-    if(!currentProject || !entries) return null
+    if(!currentProject || !entries || !this.props.params) return null
 
     const { _id, localeCodes, locales } = this.props.currentProject
+    console.log(entries.length === 0)
     return (
 
       <div className="grid-container single-project">
@@ -109,8 +113,10 @@ export class ProjectPage extends PureComponent {
           selectLocale={this.selectLocale.bind(this)}
           deselectLocale={this.deselectLocale.bind(this)}
         />
-
+        
+        { entries.length === 0 ? null:
         <div>
+
           <SearchItem />
 
           <input
@@ -118,6 +124,8 @@ export class ProjectPage extends PureComponent {
             className="button tiny float-right"
             value="Hide Archived Entries"/>
         </div>
+
+        }
 
         <table>
           <thead>
