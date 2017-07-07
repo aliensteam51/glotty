@@ -38,10 +38,11 @@ export class PlatformItem extends PureComponent {
     const {platformCode, translations, style, _id, entryId, selectedLocales, deleted} = this.props
     let selectedTranslations = translations
     if (selectedLocales.length !== 0) selectedTranslations = translations.filter((trans) => selectedLocales.includes(trans.localeCode))
+    console.log(this.props)
     return (
       <tr className={deleted ? "deleted" : ""} style={style}>
         <td className="text-center">
-          { deleted ? null :
+          { deleted || platformCode === "default" ? null :
             <button
               className="button tinyer alert"
               onClick={() => {if(confirm('Delete the item?')) {this.props.deletePlatform(entryId, {_id, remove: true})}}}>
