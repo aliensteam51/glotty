@@ -1,4 +1,3 @@
-const { authenticate } = require('feathers-authentication').hooks;
 const { populate } = require('feathers-hooks-common');
 
 const projectSchema = {
@@ -31,7 +30,7 @@ const updateTranslation = require('../../hooks/update-translation');
 
 module.exports = {
   before: {
-    all: [authenticate('jwt')],
+    all: [],
     find: [],
     get: [],
     create: [],
