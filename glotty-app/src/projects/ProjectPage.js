@@ -33,7 +33,6 @@ export class ProjectPage extends PureComponent {
 
     const { projectId } = this.props.params
 
-    console.log(this.props.params.projectId)
     fetchEntries(projectId)
     getProject(projectId)
   }
@@ -99,7 +98,6 @@ export class ProjectPage extends PureComponent {
     if(!currentProject || !entries || !this.props.params) return null
 
     const { _id, localeCodes, locales } = this.props.currentProject
-    console.log(entries.length === 0)
     return (
 
       <div className="grid-container single-project">
@@ -113,8 +111,7 @@ export class ProjectPage extends PureComponent {
           selectLocale={this.selectLocale.bind(this)}
           deselectLocale={this.deselectLocale.bind(this)}
         />
-        
-        { entries.length === 0 ? null:
+
         <div>
 
           <SearchItem />
@@ -125,7 +122,6 @@ export class ProjectPage extends PureComponent {
             value="Hide Archived Entries"/>
         </div>
 
-        }
 
         <table>
           <thead>
