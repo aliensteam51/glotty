@@ -4,6 +4,7 @@ import currentUser from './currentUser'
 import currentProject from './currentProject'
 import currentOrganization from './currentOrganization'
 import projects from './projects'
+import organizations from './organizations'
 import entries from './entries'
 import subscriptions from './subscriptions'
 import locales from './locales'
@@ -20,4 +21,5 @@ export default {
   loadError,
   locales,
   searchQuery,
+  organizations,
 }

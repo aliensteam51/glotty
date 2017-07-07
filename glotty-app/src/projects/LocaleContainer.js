@@ -69,7 +69,7 @@ export class LocaleContainer extends PureComponent {
     const { locales, projectLocales } = this.props
 
     if (!locales || !projectLocales) return null
-
+    console.log(projectLocales)
     return(
       <div className="container">
         <h2>Locales</h2>
@@ -101,6 +101,10 @@ export class LocaleContainer extends PureComponent {
             </div>
           </div>
         </form>
+
+        { projectLocales.length === 0 ? null:
+
+        <div>
         <h5>Supported locales:</h5>
         <table>
           <thead>
@@ -121,6 +125,9 @@ export class LocaleContainer extends PureComponent {
               )})}
             </tbody>
         </table>
+        </div>
+        }
+
       </div>
     )
   }

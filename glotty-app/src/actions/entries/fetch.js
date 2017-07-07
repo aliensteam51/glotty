@@ -32,8 +32,6 @@ export default (projectId, query_str) => {
       }
     }
 
-    console.log(search)
-
     backend.find(search)
     .then((result) => {
       dispatch({ type: APP_DONE_LOADING })

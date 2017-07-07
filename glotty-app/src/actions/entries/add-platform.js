@@ -5,7 +5,6 @@ import {
   LOAD_ERROR,
   LOAD_SUCCESS
 } from '../loading'
-import { FETCHED_ENTRIES } from '../entries/fetch'
 
 export const ADDED_PLATFORM = 'ADDED_PLATFORM'
 

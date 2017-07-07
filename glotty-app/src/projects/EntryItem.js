@@ -83,7 +83,6 @@ export class EntryItem extends PureComponent {
 
   render() {
     const {name, description, tags, group, deleted, platforms, _id} = this.props
-    console.log(this.state.selectedPlatform.length)
     return (
       <tbody
         className={deleted ? "deleted" : ""}>

@@ -1,4 +1,4 @@
-import { GOT_ORGANIZATION } from '../actions/organization/get'
+import { GOT_ORGANIZATION } from '../actions/organizations/get'
 
 export default (state = null, { type, payload } = {}) => {
   switch (type) {

@@ -1,6 +1,5 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import fetchEntries from '../actions/entries/fetch'
 import generateIos from './ios'
 import generateAndroid from './android'
 import generateI18n from './i18n'
@@ -14,11 +13,6 @@ export class SaveFile extends PureComponent {
       selectedPlatform: 'ios',
       selectedLanguage: props.currentProject.localeCodes[0],
     }
-  }
-
-  componentWillMount() {
-    const { fetchEntries, currentProject } = this.props
-    fetchEntries(currentProject._id)
   }
 
   renderSelectLangauges() {
@@ -111,4 +105,4 @@ export class SaveFile extends PureComponent {
 
 const mapStateToProps = ({ entries, currentProject }) => ({ entries, currentProject })
 
-export default connect(mapStateToProps, { fetchEntries })(SaveFile)
+export default connect(mapStateToProps)(SaveFile)

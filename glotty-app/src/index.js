@@ -5,19 +5,19 @@ import { Router, Route, IndexRoute } from 'react-router'
 import store, { history } from './store'
 import registerServiceWorker from './registerServiceWorker'
 import App from './App'
+import OrganizationsContainer from './projects/OrganizationsContainer'
 import ProjectsContainer from './projects/ProjectsContainer'
 import ProjectPage from './projects/ProjectPage'
 import SignIn from './users/SignIn'
-import LocaleContainer from './projects/LocaleContainer'
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={ProjectsContainer} />
+        <IndexRoute component={OrganizationsContainer} />
         <Route path="/sign-in" component={SignIn} />
-        <Route path="/locales" component={LocaleContainer} />
-        <Route path="/projects/:projectId" component={ProjectPage} />
+        <Route path="/:organizationId" component={ProjectsContainer} />
+        <Route path="/:organizationId/:projectId" component={ProjectPage} />
       </Route>
     </Router>
   </Provider>,
