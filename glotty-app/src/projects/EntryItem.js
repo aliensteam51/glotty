@@ -5,6 +5,7 @@ import { connect } from 'react-redux'
 
 import addPlatform from '../actions/platforms/add'
 import deleteEntry from '../actions/entries/delete'
+import reviveEntry from '../actions/entries/revive'
 import PlatformItem from './PlatformItem'
 
 const platformOptions = [
@@ -83,13 +84,17 @@ export class EntryItem extends PureComponent {
 
   render() {
     const {name, description, tags, group, deleted, platforms, _id} = this.props
-    console.log(this.state.selectedPlatform.length)
     return (
       <tbody
         className={deleted ? "deleted" : ""}>
         <tr>
           <td className="text-center">
-            { deleted ? null :
+            { deleted ?
+              <button
+                className="button tiny success"
+                onClick={() => {this.props.reviveEntry(_id)}}>
+                O
+              </button> :
               <button
                 className="button tiny alert"
                 onClick={() => {if(confirm('Delete the item?')) {this.props.deleteEntry(_id)}}}>
@@ -142,4 +147,4 @@ const mapStateToProps = ({ currentUser }) => ({
   currentUser,
 })
 
-export default connect(mapStateToProps, { addPlatform, deleteEntry })(EntryItem)
+export default connect(mapStateToProps, { addPlatform, deleteEntry, reviveEntry })(EntryItem)
