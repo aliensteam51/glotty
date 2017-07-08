@@ -105,9 +105,9 @@ feathersClient.authenticate({
     feathersClient.service('organizations').create(organization)
       .then((org) => {
         console.log('Organization seeded...', org.name);
-        feathersClient.service('projects').create(Object.assign(project, {organizationId: org._id}))
         feathersClient.service('users').create(Object.assign(users[0], {organizationId: org._id}))
         feathersClient.service('users').create(Object.assign(users[1], {organizationId: org._id}))
+        feathersClient.service('projects').create(Object.assign(project, {organizationId: org._id}))
           .then((proj) => {
             console.log('Project seeded...', proj.name);
             entries.map((entry) => {

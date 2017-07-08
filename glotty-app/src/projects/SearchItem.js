@@ -5,19 +5,11 @@ import updateQuery from '../actions/entries/search'
 
 export class SearchItem extends PureComponent {
 
-  componentWillUpdate(nextProps) {
-    const query = nextProps.searchQuery
-    const oldQuery = this.props.query
-    const projectId = this.props.currentProject._id
-    if (query !== oldQuery) {
-      this.props.searchEntries(projectId, query)
-    }
-  }
-
   textSearch = (event) => {
     const query = event.target.value
     if (query.length > 0 && query.length < 3) return
     this.props.updateQuery(query)
+    this.props.searchEntries(this.props.currentProject._id, query)
   }
 
   render() {
