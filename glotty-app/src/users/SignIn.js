@@ -1,5 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
+import { push } from 'react-router-redux'
 import signIn from '../actions/users/sign-in'
 import './SignIn.css'
 
@@ -19,6 +20,7 @@ export class SignIn extends PureComponent {
   }
 
   render() {
+    if (this.props.currentUser) this.props.push("/")
     return (
       <div className="sign-in grid-container">
         <form onSubmit={this.submitForm.bind(this)}>
@@ -44,4 +46,9 @@ export class SignIn extends PureComponent {
   }
 }
 
-export default connect(null, { signIn })(SignIn)
+const mapStateToProps = ({currentUser }) => ({
+  currentUser,
+})
+
+
+export default connect(mapStateToProps, { signIn, push })(SignIn)

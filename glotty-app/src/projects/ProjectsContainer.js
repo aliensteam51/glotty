@@ -78,7 +78,7 @@ export class ProjectsContainer extends PureComponent {
                 </button>
               <button type="button"
                 className="alert button"
-                onClick={() => {if(confirm('Delete the item?')) {this.props.deleteProject(project._id)}}}
+                onClick={() => {this.props.deleteProject(project._id)}}
                 disabled={project.deleted}>
                 Delete
               </button>

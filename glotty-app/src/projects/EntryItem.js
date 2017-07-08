@@ -1,5 +1,3 @@
-/*global event*/
-/*eslint no-restricted-globals: ["off", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
@@ -97,7 +95,7 @@ export class EntryItem extends PureComponent {
               </button> :
               <button
                 className="button tiny alert"
-                onClick={() => {if(confirm('Delete the item?')) {this.props.deleteEntry(_id)}}}>
+                onClick={() => {this.props.deleteEntry(_id)}}>
                 X
               </button>
             }
