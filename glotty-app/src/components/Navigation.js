@@ -23,8 +23,8 @@ class Navigation extends PureComponent {
           <ul className="menu">
             <li>
               { signedIn ?
-                <Link to="/sign-in" onClick={() => {this.props.signOut()}}>Sign Out</Link> :
-                <Link to="/sign-in">Sign In</Link>
+                <Link to="/" onClick={() => {this.props.signOut()}}>Sign Out</Link> :
+                <Link to="/">Sign In</Link>
               }
             </li>
           </ul>

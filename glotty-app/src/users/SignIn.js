@@ -20,7 +20,7 @@ export class SignIn extends PureComponent {
   }
 
   render() {
-    if (this.props.currentUser) this.props.push("/")
+    if (this.props.currentUser) this.props.push("/organizations")
     return (
       <div className="grid-container">
         {/* <h1>Glotty</h1> */}
