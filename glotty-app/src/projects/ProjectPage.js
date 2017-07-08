@@ -84,7 +84,7 @@ export class ProjectPage extends PureComponent {
     return (
       <div className="grid-container single-project">
         <h1>{currentProject.name}</h1>
-        <p>{currentProject.description}</p>
+        <p className="text-center">{currentProject.description}</p>
 
         <LocaleContainer
           projectId={_id}
@@ -94,69 +94,64 @@ export class ProjectPage extends PureComponent {
           deselectLocale={this.deselectLocale.bind(this)}
         />
 
-        <div>
-
+        <div className="container">
+          <h2>Entries</h2>
           <SearchItem />
 
-          <input
-            type="submit"
-            className="button tiny float-right"
-            value="Hide Archived Entries"/>
+          <table>
+            <thead>
+              <tr>
+                <th width="5%"></th>
+                <th width="20%">Name</th>
+                <th width="25%">Description</th>
+                <th width="25%">Group</th>
+                <th width="20%">tags</th>
+                <th width="5%"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td></td>
+                <td>
+                  <input
+                    type="text"
+                    placeholder="Name"
+                    value={this.state.name}
+                    onChange={(event) => this.setState({name: event.target.value})}  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    placeholder="Description"
+                    value={this.state.description}
+                    onChange={(event) => this.setState({description: event.target.value})}  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    placeholder="Group"
+                    value={this.state.group}
+                    onChange={(event) => this.setState({group: event.target.value})}  />
+                </td>
+                <td>
+                  <input
+                    type="text"
+                    placeholder="Tags"
+                    value={this.state.tags}
+                    onChange={(event) => this.setState({tags: event.target.value})} />
+                </td>
+                <td>
+                  <input
+                    type="submit"
+                    className="button "
+                    value="Submit"
+                    onClick={this.handleSubmit.bind(this)}/>
+                 </td>
+              </tr>
+            </tbody>
+              { entries.map(this.renderEntries.bind(this)) }
+          </table>
         </div>
-
-        <table>
-          <thead>
-            <tr>
-              <th width="5%"></th>
-              <th width="20%">Name</th>
-              <th width="25%">Description</th>
-              <th width="25%">Group</th>
-              <th width="20%">tags</th>
-              <th width="5%"></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td></td>
-              <td>
-                <input
-                  type="text"
-                  placeholder="Name"
-                  value={this.state.name}
-                  onChange={(event) => this.setState({name: event.target.value})}  />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  placeholder="Description"
-                  value={this.state.description}
-                  onChange={(event) => this.setState({description: event.target.value})}  />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  placeholder="Group"
-                  value={this.state.group}
-                  onChange={(event) => this.setState({group: event.target.value})}  />
-              </td>
-              <td>
-                <input
-                  type="text"
-                  placeholder="Tags"
-                  value={this.state.tags}
-                  onChange={(event) => this.setState({tags: event.target.value})} />
-              </td>
-              <td>
-                <input
-                  type="submit"
-                  className="button "
-                  value="Submit"
-                  onClick={this.handleSubmit.bind(this)}/>
-               </td>
-            </tr>
-          </tbody>
-            { entries.map(this.renderEntries.bind(this)) }
-        </table>
 
         <SaveFile />
 

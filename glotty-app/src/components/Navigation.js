@@ -4,13 +4,14 @@ import { connect } from 'react-redux'
 import { push } from 'react-router-redux'
 import { Link } from 'react-router'
 import signOut from '../actions/users/sign-out'
+import "./Navigation.css"
 
 class Navigation extends PureComponent {
 
   render() {
     const { signedIn } = this.props
     return (
-      <div className="top-bar">
+      <div className="top-bar grid-container">
         <div className="top-bar-left">
           <ul className="menu">
             <li className="menu-text">

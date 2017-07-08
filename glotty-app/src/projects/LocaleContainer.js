@@ -74,21 +74,26 @@ export class LocaleContainer extends PureComponent {
         <h2>Locales</h2>
         <form onSubmit={this.submitForm.bind(this)}>
           <div className="grid-container">
-            <div className="grid-x">
-              <div className="content-box medium-10">
-                <input
-                  type="text"
-                  placeholder="Select a locale to add"
-                  className='locale-select'
-                  onFocus={this.focus.bind(this)}
-                  onBlur={this.blur.bind(this)}
-                  onChange={this.updateSearch.bind(this)}
-                  value={this.state.search}/>
-                  <div className={this.classNames()}>
-                  <div className="medium-10">
-                  {this.state.display.map((option, index) => <p key={index} onClick={this.selectLocale.bind(this, option)}>{`${option.name} (${option.code})`}</p>)}
-                  </div>
-                  </div>
+            <div className="grid-x grid-padding-x">
+              <div>
+                <label htmlFor="middle-label" className="text-left middle">Add Locale to Project</label>
+              </div>
+              <div className="medium-4 cell">
+                <div className="content-box medium-10">
+                  <input
+                    type="text"
+                    placeholder="Select a locale to add"
+                    className='locale-select'
+                    onFocus={this.focus.bind(this)}
+                    onBlur={this.blur.bind(this)}
+                    onChange={this.updateSearch.bind(this)}
+                    value={this.state.search}/>
+                    <div className={this.classNames()}>
+                      <div className="medium-10">
+                        {this.state.display.map((option, index) => <p key={index} onClick={this.selectLocale.bind(this, option)}>{`${option.name} (${option.code})`}</p>)}
+                      </div>
+                    </div>
+                </div>
               </div>
               <div className="medium-2">
                 <button

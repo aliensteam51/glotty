@@ -22,25 +22,33 @@ export class SignIn extends PureComponent {
   render() {
     if (this.props.currentUser) this.props.push("/")
     return (
-      <div className="sign-in grid-container">
-        <form onSubmit={this.submitForm.bind(this)}>
-          <h2>Sign In</h2>
-          <div className="grid-x">
-            <div className="medium-offset-4 medium-4 cell">
-              <label>Email
-                <input ref="email" type="email" placeholder="Email address" />
-              </label>
-            </div>
-            <div className="medium-offset-4 medium-4 cell">
-              <label>Password
-                <input ref="password" type="password" placeholder="Password" />
-              </label>
-            </div>
-            <div className="medium-offset-4 medium-4 cell right">
-              <input type="submit" className="button" value="Sign In" />
-            </div>
+      <div className="grid-container">
+        {/* <h1>Glotty</h1> */}
+        {/* <hr className="star-light"></hr> */}
+        {/* <p className="glotty-description">Glotty streamlines the process to publish & maintain multilingual versions of your applications.</p> */}
+        <div className="sign-in grid-x">
+          <div className="cell">
+            <form onSubmit={this.submitForm.bind(this)}>
+              <h1>Sign In</h1>
+              <div className="grid-x">
+                <div className="medium-offset-4 medium-4 cell">
+                  <label>Email
+                    <input ref="email" type="email" placeholder="Email address" />
+                  </label>
+                </div>
+                <div className="medium-offset-4 medium-4 cell">
+                  <label>Password
+                    <input ref="password" type="password" placeholder="Password" />
+                  </label>
+                </div>
+                <div className="medium-offset-4 medium-4 cell right">
+                  <input type="submit" className="button" value="Sign In" />
+                </div>
+              </div>
+            </form>
+
           </div>
-        </form>
+        </div>
       </div>
     )
   }

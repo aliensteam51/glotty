@@ -6,10 +6,16 @@ const superagent = require('superagent');
 const hooks = require('feathers-hooks');
 const auth = require('feathers-authentication-client');
 
-const organization = {
-  name: 'Aliens Are Among Us',
-  description: 'Aliens Are Among Us main organization'
-};
+const organization = [
+  {
+    name: 'Aliens Are Among Us',
+    description: 'Extraordinary Application Development: We help you create solutions that matter! Apps for iOS and Android and much more!'
+  },
+  {
+    name: 'Codaisseur',
+    description: 'We teach you all the skills you need to succeed in your career and we help you land your first developer job!'
+  },
+]
 
 const project = {
   name: 'My first project',
@@ -105,9 +111,9 @@ feathersClient.authenticate({
     feathersClient.service('organizations').create(organization)
       .then((org) => {
         console.log('Organization seeded...', org.name);
-        feathersClient.service('users').create(Object.assign(users[0], {organizationId: org._id}))
-        feathersClient.service('users').create(Object.assign(users[1], {organizationId: org._id}))
-        feathersClient.service('projects').create(Object.assign(project, {organizationId: org._id}))
+        feathersClient.service('users').create(Object.assign(users[0], {organizationId: org[0]._id}))
+        feathersClient.service('users').create(Object.assign(users[1], {organizationId: org[0]._id}))
+        feathersClient.service('projects').create(Object.assign(project, {organizationId: org[0]._id}))
           .then((proj) => {
             console.log('Project seeded...', proj.name);
             entries.map((entry) => {

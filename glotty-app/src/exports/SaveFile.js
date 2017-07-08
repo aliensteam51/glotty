@@ -84,21 +84,40 @@ export class SaveFile extends PureComponent {
   render() {
     if (!this.props.entries[0]) return null
     return (
-      <div>
-        <h3>Generate your file here:</h3>
-        <label>Select a Language
-          <select value={this.state.selectedLanguage} onChange={this.handleSelectLanguage.bind(this)}>
-            {this.renderSelectLangauges()}
-          </select>
-        </label>
-        <label>Select a platform
-          <select value={this.state.selectedPlatform} onChange={this.handleSelectPlatform.bind(this)} >
-            <option value="ios">ios</option>
-            <option value="android">Android</option>
-            <option value="i18n">i18n</option>
-          </select>
-        </label>
-        <button type="button" onClick={this.generateFile.bind(this)} className="success button">Generate & Download</button>
+      <div className="container">
+        <h2>Generate Translation File</h2>
+        <div className="grid-x grid-padding-x">
+          <div>
+            <label htmlFor="middle-label" className="text-right middle">Select Language</label>
+          </div>
+          <div className="cell medium-3">
+            <select
+              id="middle-label"
+              value={this.state.selectedLanguage}
+              onChange={this.handleSelectLanguage.bind(this)}>
+              {this.renderSelectLangauges()}
+            </select>
+          </div>
+            <div>
+              <label htmlFor="middle-label" className="text-right middle">Platform</label>
+            </div>
+            <div className="medium-3 cell">
+              <select
+                id="middle-label"
+                value={this.state.selectedPlatform}
+                onChange={this.handleSelectPlatform.bind(this)} >
+                <option value="ios">ios</option>
+                <option value="android">Android</option>
+                <option value="i18n">i18n</option>
+              </select>
+            </div>
+          <div>
+            <button type="button"
+              onClick={this.generateFile.bind(this)}
+              className="button">Generate
+            </button>
+          </div>
+        </div>
       </div>
     )
   }

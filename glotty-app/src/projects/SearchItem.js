@@ -16,15 +16,18 @@ export class SearchItem extends PureComponent {
     return (
     <form>
       <div className="grid-container">
-        <div className="grid-x">
+        <div className="grid-x grid-padding-x">
+          <div>
+            <label htmlFor="middle-label" className="text-left middle">Search Entry</label>
+          </div>
           <div className="medium-2 cell">
             <input
+              id="middle-label"
               type="search"
               placeholder="Search entries..."
               required
               onChange={this.textSearch}
-              onKeyUp={this.textSearch}
-            />
+              onKeyUp={this.textSearch}/>
           </div>
         </div>
       </div>
