@@ -50,7 +50,8 @@ export class OrganizationsContainer extends PureComponent {
   }
 
   renderOrganization(organization, index) {
-    return <tr key={index}className={organization.deleted ? "deleted" : ""}>
+    return (
+      <tr key={index}className={organization.deleted ? "deleted" : ""}>
         <td><span>{organization.name}</span></td>
         <td><span>{organization.description}</span></td>
           <td>
@@ -79,6 +80,7 @@ export class OrganizationsContainer extends PureComponent {
             }
           </td>
       </tr>
+    )
   }
 
   render() {
@@ -86,6 +88,8 @@ export class OrganizationsContainer extends PureComponent {
     return (
       <main className="grid-container organizations">
         <h1 className="text-center">Organizations</h1>
+        <div className="container">
+
           <form onSubmit={this.handleSubmit.bind(this)}>
           <table>
             <thead>
@@ -101,7 +105,7 @@ export class OrganizationsContainer extends PureComponent {
                   <input type="text"
                   value={this.state.name}
                   onChange={this.handleNameChange.bind(this)}
-                  placeholder="Name of the Organization" />
+                  placeholder="Name" />
                 </td>
                 <td>
                   <input type="text"
@@ -117,7 +121,7 @@ export class OrganizationsContainer extends PureComponent {
             </tbody>
           </table>
         </form>
-
+      </div>
       </main>
     )
   }

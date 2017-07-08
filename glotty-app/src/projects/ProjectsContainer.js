@@ -23,7 +23,7 @@ export class ProjectsContainer extends PureComponent {
   }
 
   componentWillMount() {
-    const { fetchProjects, getOrganization, currentProject} = this.props
+    const { fetchProjects, getOrganization} = this.props
     const { organizationId } = this.props.params
     getOrganization(organizationId)
     fetchProjects(organizationId)
@@ -57,7 +57,8 @@ export class ProjectsContainer extends PureComponent {
   renderProject(project, index) {
     const {organizationId} = this.props.params
 
-    return <tr key={index} className={project.deleted ? "deleted" : ""}>
+    return (
+    <tr key={index} className={project.deleted ? "deleted" : ""}>
         <td><span>{project.name}</span></td>
         <td><span>{project.description}</span></td>
           <td>
@@ -86,6 +87,7 @@ export class ProjectsContainer extends PureComponent {
           }
           </td>
       </tr>
+    )
   }
 
   render() {
@@ -93,7 +95,11 @@ export class ProjectsContainer extends PureComponent {
     if (!currentOrganization) return null
     return (
       <main className="grid-container projects">
-        <h1 className="text-center">{currentOrganization.name}</h1>
+        <h1>{currentOrganization.name}</h1>
+        <p className="text-center">{currentOrganization.descirption}</p>
+        <div className="container">
+          <h2 className="text-center">Project List</h2>
+
           <table>
             <thead>
               <tr>
@@ -127,6 +133,7 @@ export class ProjectsContainer extends PureComponent {
                 { this.props.projects.map(this.renderProject.bind(this)) }
             </tbody>
           </table>
+        </div>
       </main>
     )
   }
