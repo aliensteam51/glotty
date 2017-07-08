@@ -15,15 +15,18 @@ export default () => {
     dispatch({ type: APP_LOADING })
     dispatch({ type: LOAD_SUCCESS })
     const backend = api.service('organizations')
-    backend.find()
-    .then((result) => {
-      dispatch({ type: APP_DONE_LOADING })
-      dispatch({ type: LOAD_SUCCESS })
-      dispatch({
-        type: FETCHED_ORGANIZATIONS,
-        payload: result.data
+    api.app.authenticate()
+      .then(() => {
+        backend.find()
+        .then((result) => {
+          dispatch({ type: APP_DONE_LOADING })
+          dispatch({ type: LOAD_SUCCESS })
+          dispatch({
+            type: FETCHED_ORGANIZATIONS,
+            payload: result.data
+          })
+        })
       })
-    })
     .catch((error) => {
       dispatch({ type: APP_DONE_LOADING })
       dispatch({

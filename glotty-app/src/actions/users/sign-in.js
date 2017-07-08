@@ -25,7 +25,7 @@ export default (user) => {
 
         api.app.set('user', user)
         console.log('User', api.app.get('user'))
-        history.replace('/')
+        history.replace('/organizations')
 
         dispatch({
           type: USER_SIGNED_IN,

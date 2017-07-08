@@ -14,8 +14,8 @@ ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
-        <IndexRoute component={OrganizationsContainer} />
-        <Route path="/sign-in" component={SignIn} />
+        <IndexRoute component={SignIn} />
+        <Route path="/organizations" component={OrganizationsContainer} />
         <Route path="/:organizationId" component={ProjectsContainer} />
         <Route path="/:organizationId/:projectId" component={ProjectPage} />
       </Route>
