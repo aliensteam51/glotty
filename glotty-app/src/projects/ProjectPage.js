@@ -37,8 +37,6 @@ export class ProjectPage extends PureComponent {
     getProject(projectId)
   }
 
-
-
   selectLocale(localeCode) {
     this.setState({ selectedLocales: this.state.selectedLocales.concat(localeCode) })
   }
@@ -49,24 +47,11 @@ export class ProjectPage extends PureComponent {
 
   renderEntries(entry, index) {
     return (
-      <EntryItem key={index} {...entry} selectedLocales={this.state.selectedLocales} locales={this.props.currentProject.localeCodes} />
+      <EntryItem
+        key={index} {...entry}
+        selectedLocales={this.state.selectedLocales}
+        locales={this.props.currentProject.localeCodes} />
     )
-  }
-
-  handleNameChange(event) {
-    this.setState({name: event.target.value})
-  }
-
-  handleDescriptionChange(event) {
-    this.setState({description: event.target.value})
-  }
-
-  handleGroupChange(event) {
-    this.setState({group: event.target.value})
-  }
-
-  handleTagsChange(event) {
-    this.setState({tags: event.target.value})
   }
 
   handleSubmit(event) {
@@ -94,12 +79,9 @@ export class ProjectPage extends PureComponent {
 
   render() {
     const { currentProject, entries } = this.props
-
     if(!currentProject || !entries || !this.props.params) return null
-
     const { _id, localeCodes, locales } = this.props.currentProject
     return (
-
       <div className="grid-container single-project">
         <h1>{currentProject.name}</h1>
         <p>{currentProject.description}</p>
@@ -122,7 +104,6 @@ export class ProjectPage extends PureComponent {
             value="Hide Archived Entries"/>
         </div>
 
-
         <table>
           <thead>
             <tr>
@@ -142,35 +123,35 @@ export class ProjectPage extends PureComponent {
                   type="text"
                   placeholder="Name"
                   value={this.state.name}
-                  onChange={this.handleNameChange.bind(this)} />
+                  onChange={(event) => this.setState({name: event.target.value})}  />
               </td>
               <td>
                 <input
                   type="text"
                   placeholder="Description"
                   value={this.state.description}
-                  onChange={this.handleDescriptionChange.bind(this)} />
+                  onChange={(event) => this.setState({description: event.target.value})}  />
               </td>
               <td>
                 <input
                   type="text"
                   placeholder="Group"
                   value={this.state.group}
-                  onChange={this.handleGroupChange.bind(this)} />
+                  onChange={(event) => this.setState({group: event.target.value})}  />
               </td>
               <td>
                 <input
                   type="text"
                   placeholder="Tags"
                   value={this.state.tags}
-                  onChange={this.handleTagsChange.bind(this)} />
+                  onChange={(event) => this.setState({tags: event.target.value})} />
               </td>
               <td>
                 <input
-                 type="submit"
-                 className="button "
-                 value="Add Entry"
-                 onClick={this.handleSubmit.bind(this)}/>
+                  type="submit"
+                  className="button "
+                  value="Submit"
+                  onClick={this.handleSubmit.bind(this)}/>
                </td>
             </tr>
           </tbody>
