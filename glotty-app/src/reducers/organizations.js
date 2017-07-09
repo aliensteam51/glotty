@@ -2,6 +2,7 @@ import { CREATE_ORGANIZATION } from '../actions/organizations/create'
 import { FETCHED_ORGANIZATIONS } from '../actions/organizations/fetch'
 import { ORGANIZATION_DELETED } from '../actions/organizations/delete'
 import { ORGANIZATION_REVIVED } from '../actions/organizations/revive'
+import { ORGANIZATION_HARD_DELETED } from '../actions/organizations/hard-delete'
 
 export default (state = [], { type, payload } = {}) => {
   switch(type) {
@@ -18,6 +19,9 @@ export default (state = [], { type, payload } = {}) => {
       }
       return organization
     })
+
+    case ORGANIZATION_HARD_DELETED :
+      return state.filter((organization) => (organization.deleted !== true))
 
     case ORGANIZATION_REVIVED :
     return state.map((organization) => {

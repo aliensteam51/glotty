@@ -7,6 +7,7 @@ import { KEY_EDITED } from '../actions/platforms/edit-key'
 import { ADDED_PLATFORM } from '../actions/platforms/add'
 import { TRANSLATION_UPDATED } from '../actions/translations/update'
 import { ENTRY_REVIVED } from '../actions/entries/revive'
+import { ENTRIES_HARD_DELETED } from '../actions/entries/hard-delete'
 
 // import {
 //   ENTRY_CREATED,
@@ -35,6 +36,9 @@ export default (state = [], { type, payload } = {}) => {
         }
         return entry
       })
+
+    case ENTRIES_HARD_DELETED :
+      return state.filter((entry) => (entry.deleted !== true))
 
     case PLATFORM_DELETED:
       return state.map((entry) => {

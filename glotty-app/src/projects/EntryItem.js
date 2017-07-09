@@ -6,8 +6,7 @@ import deleteEntry from '../actions/entries/delete'
 import reviveEntry from '../actions/entries/revive'
 import PlatformItem from './PlatformItem'
 
-const platformOptions = [
-  {
+const platformOptions = [{
     name: 'iOS',
     code: 'ios'
   },
@@ -55,7 +54,7 @@ export class EntryItem extends PureComponent {
   componentWillMount() {
     const { platforms } = this.props
 
-    if (!platforms) return
+    if(!platforms) return
 
     const platformCodes = platforms.map((platf) => (platf.platformCode))
     const options = platformOptions.filter((platf) => (!platformCodes.includes(platf.code)))
@@ -71,18 +70,18 @@ export class EntryItem extends PureComponent {
   }
 
   renderPlatforms(platform, index) {
-    return (
+    return(
       <PlatformItem
         key={index} {...platform}
         entryId={this.props._id}
-        style={{ display: this.state.display }}
+        hidden={this.state.hidden}
         selectedLocales={this.props.selectedLocales}/>
     )
   }
 
   render() {
-    const {name, description, tags, group, deleted, platforms, _id} = this.props
-    return (
+    const { name, description, tags, group, deleted, platforms, _id } = this.props
+    return(
       <tbody
         className={deleted ? "deleted" : ""}>
         <tr>
@@ -106,36 +105,35 @@ export class EntryItem extends PureComponent {
           <td>{tags.join(", ")}</td>
           <td className="text-center">
             { deleted ? null :
-              <button className="button tiny" onClick={() => {
-                this.state.hidden ?
-                this.setState({ display: "table-row", hidden: false }):
-                this.setState({ display: "none", hidden: true }) }}>
-                {this.state.hidden? "+": "-"}
-              </button>
+            <button className="button tiny" onClick={() => {
+              this.state.hidden ?
+                this.setState({ hidden: false }):
+                this.setState({ hidden: true })}}>
+              {this.state.hidden? "+": "-"}
+            </button>
             }
           </td>
         </tr>
-
-         { deleted ? (null) : platforms.map(this.renderPlatforms.bind(this)) }
-         { deleted || this.state.selectedPlatform.length === 0 ? null :
-         <tr style={{ display: this.state.display }}>
-           <td colSpan="4"></td>
-           <td>
-             <select value={this.state.selectedPlatform} onChange={this.handlePlatformSelection.bind(this)}>
+        { deleted ? (null) : platforms.map(this.renderPlatforms.bind(this)) }
+        { deleted || this.state.selectedPlatform.length === 0 ? null :
+        <tr className={this.state.hidden ? "hide" : "show"}>
+          <td colSpan="4"></td>
+          <td>
+            <select value={this.state.selectedPlatform} onChange={this.handlePlatformSelection.bind(this)}>
               {this.state.options.map((opt, index) => (
                 <option key={index} value={opt.code}>{opt.name}</option>
               ))}
             </select>
-           </td>
-           <td>
-             <input
-               type="submit"
-               className="button tiny"
-               value="Add Platform"
-               onClick={this.handlePlatformChoice.bind(this)}/>
-           </td>
-         </tr>
-         }
+          </td>
+          <td>
+            <input
+              type="submit"
+              className="button tiny"
+              value="Add Platform"
+              onClick={this.handlePlatformChoice.bind(this)}/>
+          </td>
+        </tr>
+        }
       </tbody>
     )
   }

@@ -8,7 +8,7 @@ import createProjects from '../actions/projects/create'
 import getOrganization from '../actions/organizations/get'
 import deleteProject from '../actions/projects/delete'
 import reviveProject from '../actions/projects/revive'
-
+import hardDelete from '../actions/projects/hard-delete'
 
 import './ProjectsContainer.css'
 
@@ -35,40 +35,40 @@ export class ProjectsContainer extends PureComponent {
       description,
     } = this.state
 
-    const {organizationId} = this.props.params
+    const { organizationId } = this.props.params
 
     const project = {
       name,
       description,
       organizationId,
     }
-      this.props.createProjects(project)
-      event.preventDefault()
+    this.props.createProjects(project)
+    event.preventDefault()
   }
 
   renderProject(project, index) {
-    const {organizationId} = this.props.params
+    const { organizationId } = this.props.params
 
-    return (
-    <tr key={index} className={project.deleted ? "deleted" : ""}>
+    return(
+      <tr key={index} className={project.deleted ? "deleted" : ""}>
         <td><span>{project.name}</span></td>
         <td><span>{project.description}</span></td>
-          <td>
-            { project.deleted ?
-              <div className="expanded button-group">
-                <button
-                  className="primary button success"
-                  onClick={() => {this.props.reviveProject(project._id)}}>
-                  Revive
-                </button>
-              </div> :
+        <td>
+          { project.deleted ?
             <div className="expanded button-group">
-                <button
-                  className="primary button"
-                  onClick={() => { this.props.push("/" + organizationId  + "/" + project._id) }}
-                  disabled={project.deleted}>
-                  View
-                </button>
+              <button
+                className="primary button success"
+                onClick={() => {this.props.reviveProject(project._id)}}>
+                Revive
+              </button>
+            </div> :
+            <div className="expanded button-group">
+              <button
+                className="primary button"
+                onClick={() => { this.props.push("/" + organizationId  + "/" + project._id) }}
+                disabled={project.deleted}>
+                View
+              </button>
               <button type="button"
                 className="alert button"
                 onClick={() => {this.props.deleteProject(project._id)}}
@@ -77,21 +77,28 @@ export class ProjectsContainer extends PureComponent {
               </button>
             </div>
           }
-          </td>
+        </td>
       </tr>
     )
   }
 
   render() {
-    const {currentOrganization} = this.props
-    if (!currentOrganization) return null
-    return (
+    const { currentOrganization } = this.props
+    if(!currentOrganization) return null
+    return(
       <main className="grid-container projects">
         <h1>{currentOrganization.name}</h1>
         <p className="text-center">{currentOrganization.descirption}</p>
         <div className="container">
           <h2 className="text-center">Project List</h2>
-
+          <button
+            type="button"
+            style={{margin: "0 0 10px 0"}}
+            className="alert button tiny float-right"
+            onClick={() => {this.props.hardDelete()}}
+          >
+            Delete Archived
+          </button>
           <table>
             <thead>
               <tr>
@@ -104,15 +111,17 @@ export class ProjectsContainer extends PureComponent {
               <tr>
                 <td>
                   <input type="text"
-                  value={this.state.name}
-                  onChange={(event) => this.setState({name: event.target.value})}
-                  placeholder="Name of the Project" />
+                    value={this.state.name}
+                    onChange={(event) => this.setState({name: event.target.value})}
+                    placeholder="Name of the Project"
+                  />
                 </td>
                 <td>
                   <input type="text"
-                  value={this.state.description}
-                  onChange={(event) => this.setState({description: event.target.value})}
-                  placeholder="Description" />
+                    value={this.state.description}
+                    onChange={(event) => this.setState({description: event.target.value})}
+                    placeholder="Description"
+                  />
                 </td>
                 <td>
                   <input
@@ -122,7 +131,7 @@ export class ProjectsContainer extends PureComponent {
                     onClick={this.handleSubmit.bind(this)}/>
                 </td>
               </tr>
-                { this.props.projects.map(this.renderProject.bind(this)) }
+              { this.props.projects.map(this.renderProject.bind(this)) }
             </tbody>
           </table>
         </div>
@@ -131,7 +140,7 @@ export class ProjectsContainer extends PureComponent {
   }
 }
 
-const mapStateToProps = ({currentUser, projects, currentOrganization }) => ({
+const mapStateToProps = ({ currentUser, projects, currentOrganization }) => ({
   projects,
   currentUser,
   currentOrganization,
@@ -143,5 +152,6 @@ export default connect(mapStateToProps, {
   getOrganization,
   createProjects,
   reviveProject,
+  hardDelete,
   push
 })(ProjectsContainer)
