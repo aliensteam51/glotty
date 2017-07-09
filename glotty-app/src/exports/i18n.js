@@ -14,8 +14,7 @@ export default(entries, localeCode) => {
 
     const lastEntry =  entries[entries.length-1] !== entry ? `,\n` : `\n`
 
-    return str + `    {\n        "id": "${platform.keyId}",\n        "translation": "${translation.translation}"\n    }${lastEntry}`
-
+    return str + `\t{\n\t\t"id": "${platform.keyId}",\n\t\t"translation": "${translation.translation}"\n\t}${lastEntry}`
   }, "[\n")
 
   return outputString + "]"
