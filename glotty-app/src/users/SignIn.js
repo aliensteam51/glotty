@@ -10,6 +10,10 @@ export class SignIn extends PureComponent {
     this.state = {}
   }
 
+  componentWillMount () {
+    if (this.props.currentUser) this.props.push("/organizations")
+  }
+
   submitForm(event) {
     event.preventDefault()
     const user = {
@@ -20,7 +24,6 @@ export class SignIn extends PureComponent {
   }
 
   render() {
-    if (this.props.currentUser) this.props.push("/organizations")
     return (
       <div className="grid-container">
         {/* <h1>Glotty</h1> */}

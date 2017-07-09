@@ -29,14 +29,6 @@ export class ProjectsContainer extends PureComponent {
     fetchProjects(organizationId)
   }
 
-  handleNameChange(event) {
-     this.setState({name: event.target.value})
-   }
-
-  handleDescritpionChange(event) {
-    this.setState({description: event.target.value})
-  }
-
   handleSubmit(event) {
     const {
       name,
@@ -113,13 +105,13 @@ export class ProjectsContainer extends PureComponent {
                 <td>
                   <input type="text"
                   value={this.state.name}
-                  onChange={this.handleNameChange.bind(this)}
+                  onChange={(event) => this.setState({name: event.target.value})}
                   placeholder="Name of the Project" />
                 </td>
                 <td>
                   <input type="text"
                   value={this.state.description}
-                  onChange={this.handleDescritpionChange.bind(this)}
+                  onChange={(event) => this.setState({description: event.target.value})}
                   placeholder="Description" />
                 </td>
                 <td>
