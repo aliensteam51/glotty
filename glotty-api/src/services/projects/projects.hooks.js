@@ -1,4 +1,5 @@
 const { populate } = require('feathers-hooks-common');
+const {restrictToRoles} = require('feathers-authentication-hooks');
 
 const organizationSchema = {
   include: {
@@ -30,8 +31,8 @@ module.exports = {
     find: [],
     get: [],
     create: [],
-    update: [addLocale(), ],
-    patch: [addLocale(), ],
+    update: [addLocale()],
+    patch: [addLocale()],
     remove: []
   },
 

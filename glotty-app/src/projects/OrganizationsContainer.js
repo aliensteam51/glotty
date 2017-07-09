@@ -25,14 +25,6 @@ export class OrganizationsContainer extends PureComponent {
     fetchOrganizations()
   }
 
-  handleNameChange(event) {
-     this.setState({name: event.target.value})
-   }
-
-  handleDescritpionChange(event) {
-    this.setState({description: event.target.value})
-  }
-
   handleSubmit(event) {
     const {
       name,
@@ -84,7 +76,9 @@ export class OrganizationsContainer extends PureComponent {
   }
 
   render() {
-    if (!this.props.organizations[0]) return null
+    if (!this.props.currentUser || !this.props.organizations[0]) return null
+    if(this.props.currentUser.roles[0] !== 'super-admin') this.props.push('/' + this.props.currentUser.organizationId)
+
     return (
       <main className="grid-container organizations">
         <h1 className="text-center">Organizations</h1>
@@ -104,13 +98,13 @@ export class OrganizationsContainer extends PureComponent {
                 <td>
                   <input type="text"
                   value={this.state.name}
-                  onChange={this.handleNameChange.bind(this)}
+                  onChange={(event) => this.setState({name: event.target.value})}
                   placeholder="Name" />
                 </td>
                 <td>
                   <input type="text"
                   value={this.state.description}
-                  onChange={this.handleDescritpionChange.bind(this)}
+                  onChange={(event) => this.setState({description: event.target.value})}
                   placeholder="Description" />
                 </td>
                 <td>
