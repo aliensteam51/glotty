@@ -9,7 +9,7 @@ const auth = require('feathers-authentication-client');
 const organization = [
   {
     name: 'Aliens Are Among Us',
-    description: 'Extraordinary Application Development: We help you create solutions that matter! Apps for iOS and Android and much more!'
+    description: 'Extraordinary Application Development: We help you create solutions that matter!'
   },
   {
     name: 'Codaisseur',

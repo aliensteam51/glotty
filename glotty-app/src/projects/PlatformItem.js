@@ -37,11 +37,11 @@ export class PlatformItem extends PureComponent {
   }
 
   render() {
-    const {platformCode, translations, style, _id, entryId, selectedLocales, deleted} = this.props
+    const {platformCode, translations, hidden, _id, entryId, selectedLocales, deleted} = this.props
     let selectedTranslations = translations
     if (selectedLocales.length !== 0) selectedTranslations = translations.filter((trans) => selectedLocales.includes(trans.localeCode))
     return (
-      <tr className={deleted ? "deleted" : ""} style={style}>
+      <tr className={hidden ? "hide" : "show"}>
         <td className="text-center">
           { deleted || platformCode === "default" ? null :
             <button

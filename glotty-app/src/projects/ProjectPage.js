@@ -5,6 +5,7 @@ import SaveFile from '../exports/SaveFile'
 import getProject from '../actions/projects/get'
 import fetchEntries from '../actions/entries/fetch'
 import createEntry from '../actions/entries/create'
+import hardDelete from '../actions/entries/hard-delete'
 
 import SearchItem from './SearchItem'
 import EntryItem from './EntryItem'
@@ -42,11 +43,11 @@ export class ProjectPage extends PureComponent {
   }
 
   deselectLocale(localeCode) {
-    this.setState({ selectedLocales: this.state.selectedLocales.filter((locale) => locale !== localeCode)})
+    this.setState({ selectedLocales: this.state.selectedLocales.filter((locale) => locale !== localeCode) })
   }
 
   renderEntries(entry, index) {
-    return (
+    return(
       <EntryItem
         key={index} {...entry}
         selectedLocales={this.state.selectedLocales}
@@ -62,26 +63,26 @@ export class ProjectPage extends PureComponent {
       tags,
     } = this.state
 
-    const {localeCodes} = this.props.currentProject
+    const { localeCodes } = this.props.currentProject
     const entry = {
       projectId: this.props.currentProject._id,
       name,
       description,
       group,
-      platforms: [{translations:
-        localeCodes.map((l) => ({localeCode: l }))
+      platforms: [{
+        translations: localeCodes.map((l) => ({ localeCode: l }))
       }],
       tags: tags.split(/\W+/),
     }
-      this.props.createEntry(entry)
-      event.preventDefault()
+    this.props.createEntry(entry)
+    event.preventDefault()
   }
 
   render() {
     const { currentProject, entries } = this.props
     if(!currentProject || !entries || !this.props.params) return null
     const { _id, localeCodes, locales } = this.props.currentProject
-    return (
+    return(
       <div className="grid-container single-project">
         <h1>{currentProject.name}</h1>
         <p className="text-center">{currentProject.description}</p>
@@ -94,10 +95,9 @@ export class ProjectPage extends PureComponent {
           deselectLocale={this.deselectLocale.bind(this)}
         />
 
-        <div className="container">
+        <div className="container" style={{paddingBottom: "50px"}}>
           <h2>Entries</h2>
           <SearchItem />
-
           <table>
             <thead>
               <tr>
@@ -146,11 +146,20 @@ export class ProjectPage extends PureComponent {
                     className="button "
                     value="Submit"
                     onClick={this.handleSubmit.bind(this)}/>
-                 </td>
+                </td>
               </tr>
             </tbody>
-              { entries.map(this.renderEntries.bind(this)) }
+            { entries.map(this.renderEntries.bind(this)) }
           </table>
+
+          <button
+            type="button"
+            style={{marginTop: "10px"}}
+            className="alert button tiny float-right"
+            onClick={() => {this.props.hardDelete()}}
+          >
+            Delete Archived
+          </button>
         </div>
 
         <SaveFile />
@@ -160,7 +169,7 @@ export class ProjectPage extends PureComponent {
   }
 }
 
-const mapStateToProps = ({currentUser, projects, currentProject, entries}, {params}) => ({
+const mapStateToProps = ({ currentUser, projects, currentProject, entries }, { params }) => ({
   currentUser,
   currentProject,
   entries,
@@ -170,6 +179,7 @@ export default connect(mapStateToProps, {
   getProject,
   fetchEntries,
   createEntry,
+  hardDelete,
   // subscribeToEntries,
   push
 })(ProjectPage)
