@@ -16,8 +16,8 @@ export default(entries, localeCode) => {
     if (entries.length > index+1 && (entries[index+1].group !== entry.group)) group = `<!--${entries[index+1].group}-->\n\n` //checking if next entry doesnt have the same group
     if (platform.keyId === '') platform = defaultPlatform // checking if keyId is empty than gets the keyId of default platform
 
-    return str + `<string name="${platform.keyId}">${translation.translation}</string>\n` + group
-  }, `<!--${header}--><resources>\n<!--${entries[0].group}-->`)
+    return str + `\t<string name="${platform.keyId}">${translation.translation}</string>\n` + group
+  }, `<!--${header}-->\n<resources>\n\t<!--${entries[0].group}-->\n`)
 
   return outputString + "</resources>"
 }
