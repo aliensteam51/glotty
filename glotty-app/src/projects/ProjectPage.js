@@ -152,14 +152,16 @@ export class ProjectPage extends PureComponent {
             { entries.map(this.renderEntries.bind(this)) }
           </table>
 
-          <button
-            type="button"
-            style={{marginTop: "10px"}}
-            className="alert button tiny float-right"
-            onClick={() => {this.props.hardDelete()}}
-          >
-            Delete Archived
-          </button>
+          {this.props.currentUser.roles.includes("super-admin" || "admin") ?
+            <button
+              type="button"
+              style={{marginTop: "10px"}}
+              className="alert button tiny float-right"
+              onClick={() => {this.props.hardDelete()}}
+            >
+              Delete Archived
+            </button>
+          : null}
         </div>
 
         <SaveFile />

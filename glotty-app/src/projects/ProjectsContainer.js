@@ -85,20 +85,23 @@ export class ProjectsContainer extends PureComponent {
   render() {
     const { currentOrganization } = this.props
     if(!currentOrganization) return null
+    console.log(this.props.currentUser.roles.includes("super-admin" || "admin"))
     return(
       <main className="grid-container projects">
         <h1>{currentOrganization.name}</h1>
         <p className="text-center">{currentOrganization.descirption}</p>
         <div className="container">
           <h2 className="text-center">Project List</h2>
-          <button
-            type="button"
-            style={{margin: "0 0 10px 0"}}
-            className="alert button tiny float-right"
-            onClick={() => {this.props.hardDelete()}}
-          >
-            Delete Archived
-          </button>
+          {this.props.currentUser.roles.includes("super-admin" || "admin") ?
+            <button
+              type="button"
+              style={{margin: "0 0 10px 0"}}
+              className="alert button tiny float-right"
+              onClick={() => {this.props.hardDelete()}}
+            >
+              Delete Archived
+            </button>
+          : null}
           <table>
             <thead>
               <tr>

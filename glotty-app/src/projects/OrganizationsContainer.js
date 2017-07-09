@@ -86,7 +86,7 @@ export class OrganizationsContainer extends PureComponent {
         <div className="container">
           <button
             type="button"
-            style={{margin: "0 0 10px 0"}}
+            style={{marginBottom: "10px"}}
             className="alert button tiny float-right"
             onClick={() => {this.props.hardDelete()}}
           >
