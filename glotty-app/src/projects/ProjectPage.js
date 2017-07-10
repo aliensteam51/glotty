@@ -24,6 +24,8 @@ export class ProjectPage extends PureComponent {
       group: '',
       tags: [],
       selectedLocales: [],
+      showReveal: true,
+      editProject: false,
     }
   }
 
@@ -87,91 +89,111 @@ export class ProjectPage extends PureComponent {
     if(!currentProject || !entries || !this.props.params) return null
     const { _id, localeCodes, locales } = this.props.currentProject
     return(
-      <div className="grid-container single-project">
-        <h1>{currentProject.name}</h1>
-        <p className="text-center">{currentProject.description}</p>
+        <div className="grid-container single-project">
+          <div className="reveal-overlay" style={this.state.showReveal ? {display: "none"} : {display: "block"}}>
+            <div className="reveal large" style={this.state.showReveal ? {display: "none"} : {display: "block"}}>
+              <img src={require('../img/example.png')} alt="example-img" />
+              <button
+                className="close-button"
+                type="button"
+                onClick={() => this.setState({ showReveal: true})}
+              >
+                <span>&times;</span>
+              </button>
+            </div>
+          </div>
 
-        <LocaleContainer
-          projectId={_id}
-          localeCodes={localeCodes}
-          projectLocales={locales}
-          selectLocale={this.selectLocale.bind(this)}
-          deselectLocale={this.deselectLocale.bind(this)}
-        />
-
-        <div className="container" style={{paddingBottom: "50px"}}>
-          <h2>Entries</h2>
-          <SearchItem />
-          <table>
-            <thead>
-              <tr>
-                <th width="5%"></th>
-                <th width="20%">Name</th>
-                <th width="25%">Description</th>
-                <th width="25%">Group</th>
-                <th width="20%">tags</th>
-                <th width="5%"></th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr>
-                <td></td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Name"
-                    value={this.state.name}
-                    onChange={(event) => this.setState({name: event.target.value})}  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Description"
-                    value={this.state.description}
-                    onChange={(event) => this.setState({description: event.target.value})}  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Group"
-                    value={this.state.group}
-                    onChange={(event) => this.setState({group: event.target.value})}  />
-                </td>
-                <td>
-                  <input
-                    type="text"
-                    placeholder="Tags"
-                    value={this.state.tags}
-                    onChange={(event) => this.setState({tags: event.target.value})} />
-                </td>
-                <td>
-                  <input
-                    type="submit"
-                    className="button "
-                    value="Submit"
-                    onClick={this.handleSubmit.bind(this)}/>
-                </td>
-              </tr>
-            </tbody>
-            { entries.map(this.renderEntries.bind(this)) }
-          </table>
-
-          {this.props.currentUser.roles.includes("super-admin" || "admin") ?
-            <button
-              type="button"
-              style={{marginTop: "10px"}}
-              className="alert button tiny float-right"
-              onClick={() => {this.props.hardDelete()}}
-            >
-              Delete Archived
+          <div className="project-nav">
+            <button className="button" type="button" onClick={() => this.setState({ showReveal: false})} >
+              <i className="fa fa-picture-o" aria-hidden="true"></i>
             </button>
-          : null}
+          </div>
+
+          { this.state.editProject ? <input value={currentProject.name}/> : <h1>{currentProject.name}</h1>}
+          <p className="text-center">{currentProject.description}</p>
+
+          <LocaleContainer
+            projectId={_id}
+            localeCodes={localeCodes}
+            projectLocales={locales}
+            selectLocale={this.selectLocale.bind(this)}
+            deselectLocale={this.deselectLocale.bind(this)}
+          />
+
+          <div className="container" style={{paddingBottom: "50px"}}>
+            <h2>Entries</h2>
+            <SearchItem />
+            <table>
+              <thead>
+                <tr>
+                  <th width="5%"></th>
+                  <th width="20%">Name</th>
+                  <th width="25%">Description</th>
+                  <th width="25%">Group</th>
+                  <th width="20%">tags</th>
+                  <th width="5%"></th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td></td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="Name"
+                      value={this.state.name}
+                      onChange={(event) => this.setState({name: event.target.value})}  />
+                  </td>
+                  <td>
+                    <textarea
+                      type="text"
+                      placeholder="Description"
+                      value={this.state.description}
+                      onChange={(event) => this.setState({description: event.target.value})}  />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="Group"
+                      value={this.state.group}
+                      onChange={(event) => this.setState({group: event.target.value})}  />
+                  </td>
+                  <td>
+                    <input
+                      type="text"
+                      placeholder="Tags"
+                      value={this.state.tags}
+                      onChange={(event) => this.setState({tags: event.target.value})} />
+                  </td>
+                  <td>
+                    <input
+                      type="submit"
+                      className="button "
+                      value="Submit"
+                      onClick={this.handleSubmit.bind(this)}/>
+                  </td>
+                </tr>
+              </tbody>
+              { entries.map(this.renderEntries.bind(this)) }
+            </table>
+
+            {this.props.currentUser.roles.includes("super-admin" || "admin") ?
+              <button
+                type="button"
+                style={{marginTop: "10px"}}
+                className="alert button tiny float-right"
+                onClick={() => {this.props.hardDelete()}}
+              >
+                Delete Archived
+              </button>
+            : null}
+          </div>
+
+          <SaveFile />
+
         </div>
 
-        <SaveFile />
-
-      </div>
-    )
+      )
   }
 }
 

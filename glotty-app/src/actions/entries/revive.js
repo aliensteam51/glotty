@@ -22,11 +22,6 @@ export default (entryId) => {
           .then((result) => {
             dispatch({ type: APP_DONE_LOADING })
             dispatch({ type: LOAD_SUCCESS })
-
-            dispatch({
-              type: ENTRY_REVIVED,
-              payload: result
-            })
           })
           .catch((error) => {
             dispatch({ type: APP_DONE_LOADING })

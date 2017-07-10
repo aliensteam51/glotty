@@ -4,6 +4,8 @@ import { connect } from 'react-redux'
 import addPlatform from '../actions/platforms/add'
 import deleteEntry from '../actions/entries/delete'
 import reviveEntry from '../actions/entries/revive'
+import patchEntry from '../actions/entries/patch'
+
 import PlatformItem from './PlatformItem'
 
 const platformOptions = [{
@@ -28,6 +30,11 @@ export class EntryItem extends PureComponent {
       hidden: true,
       selectedPlatform: '',
       options: [],
+      edit: false,
+      name: this.props.name,
+      description: this.props.description,
+      group: this.props.group,
+      tags: this.props.tags,
     }
   }
 
@@ -45,6 +52,26 @@ export class EntryItem extends PureComponent {
     }
 
     addPlatform(_id, data)
+  }
+
+  editEntry(event) {
+    event.preventDefault()
+    const {
+      name,
+      description,
+      group,
+      tags,
+    } = this.state
+
+    const entry = {
+      name,
+      description,
+      group,
+      tags,
+    }
+    const entryId = this.props._id
+    this.props.patchEntry(entryId, entry)
+    this.setState({ edit: false})
   }
 
   componentWillMount() {
@@ -83,39 +110,89 @@ export class EntryItem extends PureComponent {
   }
 
   render() {
-    const { name, description, tags, group, deleted, platforms, _id } = this.props
+    const { name, description, tags, group, deleted, platforms, _id} = this.props
+    const { edit } = this.state
     return(
       <tbody
         className={deleted ? "deleted" : ""}>
-        <tr>
-          <td className="text-center">
-            { deleted ?
-              <button
-                className="button tiny success"
-                onClick={() => {this.props.reviveEntry(_id)}}>
-                O
-              </button> :
-              <button
-                className="button tiny alert"
-                onClick={() => {this.props.deleteEntry(_id)}}>
-                X
-              </button>
-            }
+        { edit ? <tr>
+          <td></td>
+          <td>
+            <input
+              type="text"
+              placeholder="Name"
+              value={this.state.name}
+              onChange={(event) => this.setState({name: event.target.value})}  />
           </td>
-          <td>{name}</td>
-          <td>{description}</td>
-          <td>{group}</td>
-          <td>{tags.join(", ")}</td>
+          <td>
+            <textarea
+              type="text"
+              placeholder="Description"
+              value={this.state.description}
+              onChange={(event) => this.setState({description: event.target.value})}  />
+          </td>
+          <td>
+            <input
+              type="text"
+              placeholder="Group"
+              value={this.state.group}
+              onChange={(event) => this.setState({group: event.target.value})}  />
+          </td>
+          <td>
+            <input
+              type="text"
+              placeholder="Tags"
+              value={this.state.tags}
+              onChange={(event) => this.setState({tags: event.target.value})} />
+          </td>
           <td className="text-center">
-            { deleted ? null :
-            <button className="button tiny" onClick={() => {
-              this.state.hidden ?
-                this.setState({ hidden: false }):
-                this.setState({ hidden: true })}}>
-              {this.state.hidden? "+": "-"}
+            <button
+              className="button tiny"
+              onClick={this.editEntry.bind(this)}>
+              <i className="fa fa-floppy-o" aria-hidden="true"></i>
             </button>
-            }
           </td>
+        </tr>
+
+        :
+
+          <tr>
+            <td className="text-center">
+              { deleted ?
+                <button
+                  className="button tiny"
+                  onClick={() => {this.props.reviveEntry(_id)}}>
+                  O
+                </button> :
+                <button
+                  className="button tiny alert"
+                  onClick={() => {this.props.deleteEntry(_id)}}>
+                  X
+                </button>
+              }
+            </td>
+            <td>{name}</td>
+            <td>{description}</td>
+            <td>{group}</td>
+            <td>{tags.join(", ")}</td>
+            <td className="text-center">
+              { deleted ? null :
+              <button className="button tiny" style={{marginRight: "2px"}} onClick={() => {
+                this.state.hidden ?
+                  this.setState({ hidden: false }):
+                  this.setState({ hidden: true })}}>
+                {this.state.hidden? "+": "-"}
+              </button>
+              }
+              <button
+                className="button tiny"
+                onClick={() => this.setState({ edit: true})} >
+                <i className="fa fa-pencil-square-o" aria-hidden="true"></i>
+              </button>
+            </td>
+          </tr>
+        }
+        <tr className={this.state.hidden ? "hide" : "show"}>
         </tr>
         { deleted ? (null) : platforms.map(this.renderPlatforms.bind(this)) }
         { deleted || this.state.selectedPlatform.length === 0 ? null :
@@ -146,4 +223,9 @@ const mapStateToProps = ({ currentUser }) => ({
   currentUser,
 })
 
-export default connect(mapStateToProps, { addPlatform, deleteEntry, reviveEntry })(EntryItem)
+export default connect(mapStateToProps, {
+  addPlatform,
+  deleteEntry,
+  reviveEntry,
+  patchEntry
+})(EntryItem)

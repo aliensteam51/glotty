@@ -20,10 +20,6 @@ export default (newEntry) => {
      .then((result) => {
        dispatch({ type: LOAD_SUCCESS })
        dispatch({ type: APP_DONE_LOADING })
-       dispatch({
-         type: ENTRY_CREATED,
-         payload: result
-       })
      })
      .catch((error) => {
        dispatch({ type: APP_DONE_LOADING })

@@ -20,10 +20,6 @@ export default (entryId, data) => {
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
-        dispatch({
-          type: PLATFORM_DELETED,
-          payload: result
-        })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })
