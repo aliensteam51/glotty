@@ -1,4 +1,5 @@
 import API from '../../api'
+import { history } from '../../store'
 import {
   APP_LOADING,
   APP_DONE_LOADING,
@@ -27,12 +28,13 @@ export default () => {
           })
         })
       })
-    .catch((error) => {
-      dispatch({ type: APP_DONE_LOADING })
-      dispatch({
-         type: LOAD_ERROR,
-         payload: error.message
+      .catch((error) => {
+        dispatch({ type: APP_DONE_LOADING })
+        dispatch({
+           type: LOAD_ERROR,
+           payload: "Please Login Before Continuing."
+        })
+        history.replace('/')
       })
-    })
   }
 }
