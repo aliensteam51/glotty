@@ -49,7 +49,7 @@ export class AdminPage extends PureComponent {
       organizationId = this.props.organizations[0]._id :
       organizationId = this.state.organizationId
 
-  
+
     const {
       name,
       email,
@@ -120,7 +120,7 @@ export class AdminPage extends PureComponent {
                   <input
                     type="submit"
                     className="button "
-                    value="Submit"
+                    value="Create User"
                     onClick={this.handleSubmit.bind(this)}/>
                 </td>
               </tr>
