@@ -5,9 +5,11 @@ import parseStrings from '../actions/imports/parse-strings'
 import parseJson from '../actions/imports/parse-json'
 import parseXml from '../actions/imports/parse-xml'
 
+import LocaleSelector from './LocaleSelector'
+
 export class FileUploader extends PureComponent {
   state = {
-    locale: "",
+    localeCode: "",
     type: "",
     text: "",
   }
@@ -27,24 +29,24 @@ export class FileUploader extends PureComponent {
   }
 
   submitForm() {
-    const { parseStrings, parseJson, parseXml, projectId } = this.props
+    const { parseStrings, parseJson, parseXml, projectId, projectLocales } = this.props
     if (this.state.text.length === 0) {
       console.error('File not loaded yet')
     } else {
-      const locale = this.state.locale
+      const localeCode = this.state.localeCode
       const text = this.state.text
 
       switch (this.state.type) {
         case 'strings':
-          parseStrings(locale, text, projectId)
+          parseStrings(localeCode, text, projectId, projectLocales)
           break;
 
         case 'application/json':
-          parseJson(locale, text, projectId)
+          parseJson(localeCode, text, projectId, projectLocales)
           break;
 
         case 'text/xml':
-          parseXml(locale, text, projectId)
+          parseXml(localeCode, text, projectId, projectLocales)
           break;
 
         default:
@@ -53,11 +55,15 @@ export class FileUploader extends PureComponent {
     }
   }
 
+  setLocaleCode(localeCode) {
+    this.setState({ localeCode: localeCode})
+  }
+
   render() {
     return (
       <div className='container'>
         <h2>Import Files</h2>
-        <input type="text" className="locale-select" placeholder="Locale Selector" onChange={event => this.setState({ locale: event.target.value })} />
+        <LocaleSelector setLocaleCode={this.setLocaleCode.bind(this)} />
         <br/>
         <input type="file" onChange={this.handleUploadFile.bind(this)} />
         <button

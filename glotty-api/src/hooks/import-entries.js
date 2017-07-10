@@ -3,10 +3,11 @@
 
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function (hook) {
-    if (hook.data.parsedEntries === undefined) return Promis.resolve(hook);
+    if (hook.data.parsedEntries === undefined) return Promise.resolve(hook);
     console.log(hook.data)
-    const { localeCode } = hook.data
-    hook.data.localeCodes = [localeCode]
+    const { localeCode, projectLocales } = hook.data
+
+    if (!projectLocales.includes(localeCode)) hook.data.localeCodes = [localeCode]
 
     const entries = hook.app.service('entries')
 

@@ -10,7 +10,7 @@ export const JSON_PARSED = 'JSON_PARSED'
 
 const api = new API()
 
-export default(localeCode, text, projectId) => {
+export default(localeCode, text, projectId, projectLocales) => {
   const array = parseText(text)
 
   return(dispatch) => {
@@ -20,7 +20,7 @@ export default(localeCode, text, projectId) => {
 
     api.app.authenticate()
       .then(() => {
-        backend.patch(projectId, { localeCode, parsedEntries: array })
+        backend.patch(projectId, { localeCode, projectLocales, parsedEntries: array, platform: 'i18n' })
           .then((result) => {
             dispatch({ type: APP_DONE_LOADING })
             dispatch({ type: LOAD_SUCCESS })
@@ -58,7 +58,7 @@ function parseText(text, startIndex = 0, array = []) {
 
   const keyId = text.substring(keyStartIndex, keyEndIndex)
   const translation = text.substring(transStartIndex, transEndIndex)
-  
+
   const entry = [{keyId, translation}]
   const newArray = array.concat(entry)
   return parseText(text, transEndIndex, newArray)

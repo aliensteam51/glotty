@@ -10,7 +10,7 @@ export const XML_PARSED = 'XML_PARSED'
 
 const api = new API()
 
-export default(localeCode, text, projectId) => {
+export default(localeCode, text, projectId, projectLocales) => {
   const array = parseText(text)
 
   return(dispatch) => {
@@ -20,7 +20,7 @@ export default(localeCode, text, projectId) => {
 
     api.app.authenticate()
       .then(() => {
-        backend.patch(projectId, { localeCode, parsedEntries: array })
+        backend.patch(projectId, { localeCode, projectLocales, parsedEntries: array, platform: 'android' })
           .then((result) => {
             dispatch({ type: APP_DONE_LOADING })
             dispatch({ type: LOAD_SUCCESS })

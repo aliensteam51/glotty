@@ -7,6 +7,7 @@ import fetchEntries from '../actions/entries/fetch'
 import createEntry from '../actions/entries/create'
 import hardDelete from '../actions/entries/hard-delete'
 import subscribeToEntries from '../actions/entries/subscribe'
+import fetchLocales from '../actions/locales/fetch'
 
 import SearchItem from './SearchItem'
 import EntryItem from './EntryItem'
@@ -32,12 +33,14 @@ export class ProjectPage extends PureComponent {
     const {
       getProject,
       fetchEntries,
-      subscribeToEntries
+      subscribeToEntries,
+      fetchLocales
     } = this.props
 
     const { projectId } = this.props.params
     const { subscribed } = this.props
 
+    fetchLocales()
     fetchEntries(projectId)
     getProject(projectId)
     if (!subscribed) subscribeToEntries()
@@ -92,7 +95,7 @@ export class ProjectPage extends PureComponent {
         <h1>{currentProject.name}</h1>
         <p className="text-center">{currentProject.description}</p>
 
-        <FileUploader projectId={_id} />
+        <FileUploader projectId={_id} projectLocales={localeCodes} />
 
         <LocaleContainer
           projectId={_id}
@@ -191,5 +194,6 @@ export default connect(mapStateToProps, {
   createEntry,
   hardDelete,
   subscribeToEntries,
-  push
+  push,
+  fetchLocales
 })(ProjectPage)
