@@ -11,6 +11,7 @@ import subscribeToEntries from '../actions/entries/subscribe'
 import SearchItem from './SearchItem'
 import EntryItem from './EntryItem'
 import LocaleContainer from './LocaleContainer'
+import FileUploader from '../imports/FileUploader'
 
 import './ProjectPage.css'
 
@@ -90,6 +91,8 @@ export class ProjectPage extends PureComponent {
       <div className="grid-container single-project">
         <h1>{currentProject.name}</h1>
         <p className="text-center">{currentProject.description}</p>
+
+        <FileUploader projectId={_id} />
 
         <LocaleContainer
           projectId={_id}

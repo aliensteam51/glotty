@@ -27,7 +27,7 @@ export class FileUploader extends PureComponent {
   }
 
   submitForm() {
-    const { parseStrings, parseJson, parseXml } = this.props
+    const { parseStrings, parseJson, parseXml, projectId } = this.props
     if (this.state.text.length === 0) {
       console.error('File not loaded yet')
     } else {
@@ -36,15 +36,15 @@ export class FileUploader extends PureComponent {
 
       switch (this.state.type) {
         case 'strings':
-          parseStrings(locale, text)
+          parseStrings(locale, text, projectId)
           break;
 
         case 'application/json':
-          parseJson(locale, text)
+          parseJson(locale, text, projectId)
           break;
 
         case 'text/xml':
-          parseXml(locale, text)
+          parseXml(locale, text, projectId)
           break;
 
         default:
@@ -55,8 +55,10 @@ export class FileUploader extends PureComponent {
 
   render() {
     return (
-      <div>
+      <div className='container'>
+        <h2>Import Files</h2>
         <input type="text" className="locale-select" placeholder="Locale Selector" onChange={event => this.setState({ locale: event.target.value })} />
+        <br/>
         <input type="file" onChange={this.handleUploadFile.bind(this)} />
         <button
           className="primary button"
