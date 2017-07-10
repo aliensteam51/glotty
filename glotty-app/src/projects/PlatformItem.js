@@ -17,6 +17,10 @@ export class PlatformItem extends PureComponent {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ keyId: nextProps.keyId })
+  }
+
   handleChange(event) {
     this.setState({keyId: event.target.value})
   }

@@ -13,6 +13,10 @@ export class TranslationItem extends PureComponent {
     }
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.setState({ translation: nextProps.translation })
+  }
+
   handleChange(event) {
     this.setState({translation: event.target.value})
   }
