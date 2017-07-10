@@ -9,19 +9,6 @@ const projectSchema = {
   }
 };
 
-const platformSchema = {
-  include: {
-    service: 'platforms',
-    nameAs: 'platform',
-    asArray: true,
-    parentField: 'platforms',
-    childField: 'code',
-    select: (_, parent) => parent.platforms ? ({
-      code: { $in: parent.platforms.map(platf => platf.platformCode) }
-    }) : {},
-  }
-};
-
 const addPlatform = require('../../hooks/add-platform');
 const deletePlatform = require('../../hooks/delete-platform');
 const editKey = require('../../hooks/edit-key');
@@ -41,8 +28,7 @@ module.exports = {
 
   after: {
     all: [
-      populate({ schema: projectSchema }),
-      populate({ schema: platformSchema })
+      populate({ schema: projectSchema })
     ],
     find: [],
     get: [],
