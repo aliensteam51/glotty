@@ -21,8 +21,11 @@ export class OrganizationsContainer extends PureComponent {
   }
 
   componentWillMount() {
-    const { fetchOrganizations } = this.props
+    const { fetchOrganizations, currentUser, push } = this.props
     fetchOrganizations()
+    if(currentUser) {
+      if(currentUser.roles[0] !== 'super-admin') push('/' + currentUser.organizationId)
+    }
   }
 
   handleSubmit(event) {
@@ -77,8 +80,6 @@ export class OrganizationsContainer extends PureComponent {
 
   render() {
     if(!this.props.currentUser) return null
-
-    if(this.props.currentUser.roles[0] !== 'super-admin') this.props.push('/' + this.props.currentUser.organizationId)
 
     return(
       <main className="grid-container organizations">
