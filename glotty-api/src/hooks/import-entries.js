@@ -4,31 +4,44 @@
 module.exports = function (options = {}) { // eslint-disable-line no-unused-vars
   return function (hook) {
     if (hook.data.parsedEntries === undefined) return Promise.resolve(hook);
-    console.log(hook.data)
     const { localeCode, projectLocales } = hook.data
+    if (projectLocales.includes(localeCode)) return Promise.resolve(hook);
 
-    if (!projectLocales.includes(localeCode)) hook.data.localeCodes = [localeCode]
+    hook.data.localeCodes = projectLocales.concat(localeCode);
 
-    const entries = hook.app.service('entries')
+    const entries = hook.app.service('entries');
 
-    hook.data.parsedEntries.map((entry) => {
-      const newEntry = {
-        name: entry.keyId,
-        projectId: hook.id,
-        platforms: [
-          {
-            keyId: entry.keyId,
-            translations: [
+    entries.find({ query: { projectId: hook.id, $limit: 800 }})
+      .then((result) => {
+        let parsedEntries = hook.data.parsedEntries
+        result.data.map((entr) => {
+          parsedEntries = parsedEntries.filter((entry) => {
+            if (entr.platforms[0].keyId === entry.keyId) {
+              entr.platforms[0].translations = entr.platforms[0].translations.concat({ localeCode: localeCode, translation: entry.translation })
+              entries.patch(entr._id, { platforms: entr.platforms })
+              return false
+            }
+            return true
+          })
+        })
+        parsedEntries.map((entry) => {
+          entries.create({
+            name: entry.keyId,
+            projectId: hook.id,
+            platforms: [
               {
-                localeCode: localeCode,
-                translation: entry.translation
+                keyId: entry.keyId,
+                translations: [
+                  {
+                    localeCode: localeCode,
+                    translation: entry.translation
+                  }
+                ]
               }
             ]
-          }
-        ]
-      }
-      entries.create(newEntry)
-    })
+          })
+        })
+      })
     return Promise.resolve(hook);
   };
 };
