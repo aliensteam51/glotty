@@ -1,19 +1,21 @@
 import { FETCHED_ENTRIES } from '../actions/entries/fetch'
-import { ENTRY_CREATED } from '../actions/entries/create'
+// import { ENTRY_CREATED } from '../actions/entries/create'
 // import { ENTRY_UPDATED } from '../actions/entries/update'
-import { ENTRY_DELETED } from '../actions/entries/delete'
+// import { ENTRY_DELETED } from '../actions/entries/delete'
 import { PLATFORM_DELETED } from '../actions/platforms/delete'
 import { KEY_EDITED } from '../actions/platforms/edit-key'
 import { ADDED_PLATFORM } from '../actions/platforms/add'
 import { TRANSLATION_UPDATED } from '../actions/translations/update'
-import { ENTRY_REVIVED } from '../actions/entries/revive'
-import { ENTRIES_HARD_DELETED } from '../actions/entries/hard-delete'
+// import { ENTRY_REVIVED } from '../actions/entries/revive'
+// import { ENTRIES_HARD_DELETED } from '../actions/entries/hard-delete'
 
-// import {
-//   ENTRY_CREATED,
-//   ENTRY_UPDATED,
-//   ENTRY_DELETED,
-// } from '../actions/entries/subscribe'
+import {
+  ENTRY_CREATED,
+  ENTRY_UPDATED,
+  ENTRY_DELETED,
+  ENTRY_REVIVED,
+  ENTRIES_HARD_DELETED,
+} from '../actions/entries/subscribe'
 
 export default (state = [], { type, payload } = {}) => {
   switch (type) {
@@ -29,7 +31,7 @@ export default (state = [], { type, payload } = {}) => {
     case KEY_EDITED :
     case ENTRY_DELETED :
     case ENTRY_REVIVED :
-    // case ENTRY_UPDATED :
+    case ENTRY_UPDATED :
       return state.map((entry) => {
         if (entry._id === payload._id) {
           return { ...payload }
