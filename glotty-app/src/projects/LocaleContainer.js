@@ -1,7 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
-import fetchLocales from '../actions/locales/fetch'
 import addLocale from '../actions/projects/add-locale'
 
 import './LocaleContainer.css'
@@ -12,10 +11,6 @@ export class LocaleContainer extends PureComponent {
     search: '',
     selected: {},
     display: [],
-  }
-
-  componentWillMount() {
-    this.props.fetchLocales()
   }
 
   submitForm(event) {
@@ -143,4 +138,4 @@ function sleep(ms) {
 
 const mapStateToProps = ({ locales }) => ({ locales })
 
-export default connect(mapStateToProps, { fetchLocales, addLocale })(LocaleContainer)
+export default connect(mapStateToProps, { addLocale })(LocaleContainer)

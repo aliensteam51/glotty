@@ -25,14 +25,16 @@ const localeSchema = {
 
 const addLocale = require('../../hooks/add-locale');
 
+const importEntries = require('../../hooks/import-entries');
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
     create: [],
-    update: [addLocale()],
-    patch: [addLocale()],
+    update: [addLocale(), importEntries()],
+    patch: [addLocale(), importEntries()],
     remove: []
   },
 
