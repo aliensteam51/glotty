@@ -6,22 +6,31 @@ import {
   LOAD_SUCCESS
 } from '../loading'
 
-export const ENTRY_DELETED = 'ENTRY_DELETED'
+export const USER_TOGGLED = 'USER_TOGGLED'
 
 const api = new API()
 
-export default (entryId) => {
+export default (userId, curRole) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    const backend = api.service('entries')
+    const backend = api.service('users')
+
+    let newRole
+
+    curRole === "user" ? newRole = "admin" : newRole = "user"
 
     api.app.authenticate()
       .then(() => {
-        backend.patch(entryId, {deleted: true})
+        backend.patch(userId, {roles: [newRole]})
           .then((result) => {
             dispatch({ type: APP_DONE_LOADING })
             dispatch({ type: LOAD_SUCCESS })
+
+            dispatch({
+              type: USER_TOGGLED,
+              payload: result
+            })
           })
           .catch((error) => {
             dispatch({ type: APP_DONE_LOADING })

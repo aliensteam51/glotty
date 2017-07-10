@@ -6,22 +6,27 @@ import {
   LOAD_SUCCESS
 } from '../loading'
 
-export const ENTRY_DELETED = 'ENTRY_DELETED'
+export const USER_DELETED = 'USER_DELETED'
 
 const api = new API()
 
-export default (entryId) => {
+export default (userId) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
 
-    const backend = api.service('entries')
+    const backend = api.service('users')
 
     api.app.authenticate()
       .then(() => {
-        backend.patch(entryId, {deleted: true})
+        backend.remove(userId)
           .then((result) => {
             dispatch({ type: APP_DONE_LOADING })
             dispatch({ type: LOAD_SUCCESS })
+
+            dispatch({
+              type: USER_DELETED,
+              payload: result
+            })
           })
           .catch((error) => {
             dispatch({ type: APP_DONE_LOADING })

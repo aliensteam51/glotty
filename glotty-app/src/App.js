@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-
 import Navigation from './components/Navigation'
+import LoadErrorMessage from './components/LoadErrorMessage'
+
 import './App.css'
 
 class App extends Component {
@@ -10,9 +11,9 @@ class App extends Component {
         <header>
           <Navigation />
         </header>
-          { this.props.children }
-        <footer>
-        </footer>
+        <LoadErrorMessage />
+        { this.props.children }
+        <footer></footer>
       </div>
     )
   }

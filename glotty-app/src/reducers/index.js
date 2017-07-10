@@ -9,10 +9,12 @@ import entries from './entries'
 import subscriptions from './subscriptions'
 import locales from './locales'
 import searchQuery from './searchQuery'
+import users from './users'
 
 export default {
   projects,
   entries,
+  users,
   currentUser,
   currentProject,
   currentOrganization,

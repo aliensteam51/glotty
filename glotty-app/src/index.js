@@ -9,14 +9,14 @@ import OrganizationsContainer from './projects/OrganizationsContainer'
 import ProjectsContainer from './projects/ProjectsContainer'
 import ProjectPage from './projects/ProjectPage'
 import SignIn from './users/SignIn'
-import FileUploader from './imports/FileUploader'
+import AdminPage from './admins/AdminPage'
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={SignIn} />
-        <Route path="/upload" component={FileUploader} />
+        <Route path="/admin" component={AdminPage} />
         <Route path="/organizations" component={OrganizationsContainer} />
         <Route path="/:organizationId" component={ProjectsContainer} />
         <Route path="/:organizationId/:projectId" component={ProjectPage} />

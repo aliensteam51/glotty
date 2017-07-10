@@ -6,25 +6,32 @@ import {
   LOAD_SUCCESS
 } from '../loading'
 
-export const ADDED_PLATFORM = 'ADDED_PLATFORM'
+export const USER_CREATED = 'USER_CREATED'
+const defPass = "qwerty1"
 
 const api = new API()
 
-export default (entryId, data) => {
+export default (user) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
-    dispatch({ type: LOAD_SUCCESS })
-    const backend = api.service('entries')
-    backend.patch(entryId, data)
+
+    const backend = api.service('users')
+
+    backend.create({...user, password: defPass})
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
+
+        dispatch({
+          type: USER_CREATED,
+          payload: result
+        })
       })
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({
-           type: LOAD_ERROR,
-           payload: error.message
+          type: LOAD_ERROR,
+          payload: error.message
         })
       })
   }

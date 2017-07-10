@@ -46,7 +46,7 @@ export class OrganizationsContainer extends PureComponent {
 
   renderOrganization(organization, index) {
     return(
-      <tr key={index}className={organization.deleted ? "deleted" : "show"}>
+      <tr key={index} className={organization.deleted ? "deleted" : "show"}>
         <td><span>{organization.name}</span></td>
         <td><span>{organization.description}</span></td>
         <td>
