@@ -7,13 +7,11 @@ module.exports = function (app) {
   const { Schema } = mongooseClient;
 
   const translationSchema = new Schema({
-    localeId: { type: Schema.Types.ObjectId, ref: 'locales' },
     localeCode: { type: String, required: true },
     translation: { type: String, default: '' }
   });
 
   const platformSchema = new Schema({
-    platformId: { type: Schema.Types.ObjectId, ref: 'platforms' },
     platformCode: { type: String, default: 'default' },
     keyId: { type: String, default: '' },
     deleted: { type: Boolean, default: false },
