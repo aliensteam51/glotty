@@ -44,10 +44,6 @@ export class EntryItem extends PureComponent {
       addPlatform: this.state.selectedPlatform
     }
 
-    const newOptions = this.state.options.filter((pf) => (pf.code !== this.state.selectedPlatform))
-
-    this.setOptions(newOptions)
-
     addPlatform(_id, data)
   }
 
@@ -57,6 +53,13 @@ export class EntryItem extends PureComponent {
     if(!platforms) return
 
     const platformCodes = platforms.map((platf) => (platf.platformCode))
+    const options = platformOptions.filter((platf) => (!platformCodes.includes(platf.code)))
+
+    this.setOptions(options)
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const platformCodes = nextProps.platforms.map((platf) => (platf.platformCode))
     const options = platformOptions.filter((platf) => (!platformCodes.includes(platf.code)))
 
     this.setOptions(options)
