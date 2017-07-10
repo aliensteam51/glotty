@@ -51,11 +51,14 @@ export default(localeCode, text, projectId) => {
 function parseText(text, startIndex = 0, array = []) {
   const keyStartIndex = text.indexOf('"id": "', startIndex) + 7
   if (keyStartIndex === 6) return array
+
   const keyEndIndex = text.indexOf('",', keyStartIndex)
   const transStartIndex = text.indexOf('"translation": "', startIndex) + 16
   const transEndIndex = text.indexOf('"', transStartIndex)
+
   const keyId = text.substring(keyStartIndex, keyEndIndex)
   const translation = text.substring(transStartIndex, transEndIndex)
+  
   const entry = [{keyId, translation}]
   const newArray = array.concat(entry)
   return parseText(text, transEndIndex, newArray)
