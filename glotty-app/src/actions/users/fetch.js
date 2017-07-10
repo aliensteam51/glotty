@@ -10,22 +10,26 @@ export const FETCHED_USERS = 'FETCHED_USERS'
 
 const api = new API()
 
-export default () => {
+export default (organizationId = undefined) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
     dispatch({ type: LOAD_SUCCESS })
 
     const backend = api.service('users')
+    let search = {
+      query: {
+        $limit: 800,
+        $sort: {
+          organizationId: 1
+        }
+      }
+    }
+
+    if (organizationId) search.query = {...search.query, organizationId: organizationId }
+
     api.app.authenticate()
       .then(() => {
-        backend.find({
-          query: {
-            $limit: 800,
-            $sort: {
-              organizationId: 1
-            }
-          }
-        })
+        backend.find(search)
         .then((result) => {
           dispatch({ type: APP_DONE_LOADING })
           dispatch({ type: LOAD_SUCCESS })
