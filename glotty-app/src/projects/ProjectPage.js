@@ -6,6 +6,7 @@ import getProject from '../actions/projects/get'
 import fetchEntries from '../actions/entries/fetch'
 import createEntry from '../actions/entries/create'
 import hardDelete from '../actions/entries/hard-delete'
+import subscribeToEntries from '../actions/entries/subscribe'
 
 import SearchItem from './SearchItem'
 import EntryItem from './EntryItem'
@@ -29,13 +30,16 @@ export class ProjectPage extends PureComponent {
   componentWillMount() {
     const {
       getProject,
-      fetchEntries
+      fetchEntries,
+      subscribeToEntries
     } = this.props
 
     const { projectId } = this.props.params
+    const { subscribed } = this.props
 
     fetchEntries(projectId)
     getProject(projectId)
+    if (!subscribed) subscribeToEntries()
   }
 
   selectLocale(localeCode) {
@@ -171,10 +175,11 @@ export class ProjectPage extends PureComponent {
   }
 }
 
-const mapStateToProps = ({ currentUser, projects, currentProject, entries }, { params }) => ({
+const mapStateToProps = ({ currentUser, projects, currentProject, entries, subscriptions }, { params }) => ({
   currentUser,
   currentProject,
   entries,
+  subscribed: subscriptions.includes('entries'),
 })
 
 export default connect(mapStateToProps, {
@@ -182,6 +187,6 @@ export default connect(mapStateToProps, {
   fetchEntries,
   createEntry,
   hardDelete,
-  // subscribeToEntries,
+  subscribeToEntries,
   push
 })(ProjectPage)
