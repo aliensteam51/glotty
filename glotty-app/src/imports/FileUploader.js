@@ -12,6 +12,7 @@ export class FileUploader extends PureComponent {
     localeCode: "",
     type: "",
     text: "",
+    empty: false,
   }
 
   handleUploadFile(event) {
@@ -32,6 +33,8 @@ export class FileUploader extends PureComponent {
     const { parseStrings, parseJson, parseXml, projectId, projectLocales } = this.props
     if (this.state.text.length === 0) {
       console.error('File not loaded yet')
+    } else if (this.state.localeCode.length === 0) {
+      console.error('No locale selected')
     } else {
       const localeCode = this.state.localeCode
       const text = this.state.text
@@ -53,9 +56,11 @@ export class FileUploader extends PureComponent {
           console.error('File type not supported')
       }
     }
+    this.setState({ empty: true })
   }
 
   setLocaleCode(localeCode) {
+    this.setState({ empty: false })
     this.setState({ localeCode: localeCode})
   }
 
@@ -63,7 +68,7 @@ export class FileUploader extends PureComponent {
     return (
       <div className='container'>
         <h2>Import Files</h2>
-        <LocaleSelector setLocaleCode={this.setLocaleCode.bind(this)} />
+        <LocaleSelector setLocaleCode={this.setLocaleCode.bind(this)} empty={this.state.empty} />
         <br/>
         <input type="file" onChange={this.handleUploadFile.bind(this)} />
         <button

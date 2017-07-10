@@ -11,6 +11,10 @@ export class LocaleContainer extends PureComponent {
     display: [],
   }
 
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.empty) this.setState({ search: '', selected: {} })
+  }
+
   focus() {
     if (this.state.display.length === 0) this.setState({ display: this.props.locales.slice(0, 10)})
     this.setState({ focus: true })
