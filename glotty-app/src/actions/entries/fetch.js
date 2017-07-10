@@ -1,4 +1,5 @@
 import API from '../../api'
+import { history } from '../../store'
 import {
   APP_LOADING,
   APP_DONE_LOADING,
@@ -16,38 +17,49 @@ export default (projectId, query_str) => {
     dispatch({ type: LOAD_SUCCESS })
 
     const backend = api.service('entries')
-    let search = { query: { projectId: projectId, $sort: { group: 1 } }}
+    api.app.authenticate()
+    .then(() => {
+      let search = { query: { projectId: projectId, $sort: { group: 1 } }}
 
-    if (query_str) {
-      const regex = { $regex: query_str, $options: 'i' }
-      search.query = {
-        projectId: projectId,
-        $sort: { group: 1 },
-        $or: [
-          { 'name': regex },
-          { 'description': regex },
-          { 'group': regex },
-          { 'tags': regex },
-        ]
+      if (query_str) {
+        const regex = { $regex: query_str, $options: 'i' }
+        search.query = {
+          projectId: projectId,
+          $sort: { group: 1 },
+          $or: [
+            { 'name': regex },
+            { 'description': regex },
+            { 'group': regex },
+            { 'tags': regex },
+          ]
+        }
       }
-    }
 
-    backend.find(search)
-    .then((result) => {
-      dispatch({ type: APP_DONE_LOADING })
-      dispatch({ type: LOAD_SUCCESS })
+      backend.find(search)
+      .then((result) => {
+        dispatch({ type: APP_DONE_LOADING })
+        dispatch({ type: LOAD_SUCCESS })
 
-      dispatch({
-        type: FETCHED_ENTRIES,
-        payload: result.data
+        dispatch({
+          type: FETCHED_ENTRIES,
+          payload: result.data
+        })
+      })
+      .catch((error) => {
+        dispatch({ type: APP_DONE_LOADING })
+        dispatch({
+           type: LOAD_ERROR,
+           payload: error.message
+        })
       })
     })
     .catch((error) => {
       dispatch({ type: APP_DONE_LOADING })
       dispatch({
          type: LOAD_ERROR,
-         payload: error.message
+         payload: "Please Login Before Continuing."
       })
+      history.replace('/')
     })
   }
 }
