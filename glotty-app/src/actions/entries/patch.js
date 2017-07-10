@@ -6,16 +6,18 @@ import {
   LOAD_SUCCESS
 } from '../loading'
 
-export const ADDED_PLATFORM = 'ADDED_PLATFORM'
-
 const api = new API()
 
-export default (entryId, data) => {
+export const ENTRY_UPDATED = 'ENTRY_UPDATED'
+
+
+export default (entryId, entryEdit) => {
   return (dispatch) => {
     dispatch({ type: APP_LOADING })
-    dispatch({ type: LOAD_SUCCESS })
-    const backend = api.service('entries')
-    backend.patch(entryId, data)
+
+    const entries = api.service('entries')
+
+    entries.patch(entryId, entryEdit)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
@@ -23,8 +25,8 @@ export default (entryId, data) => {
       .catch((error) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({
-           type: LOAD_ERROR,
-           payload: error.message
+          type: LOAD_ERROR,
+          payload: error.message
         })
       })
   }
