@@ -29,7 +29,7 @@ export class PlatformItem extends PureComponent {
   renderTranslations(translation, index) {
     return (
       <TranslationItem
-        key={index} {...translation}
+        key={translation.localeCode} {...translation}
         isDeleted={this.props.deleted}
         platformCode={this.props.platformCode}
         entryId={this.props.entryId} />
