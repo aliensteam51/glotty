@@ -68,7 +68,7 @@ export class FileUploader extends PureComponent {
     return (
       <div className='container'>
         <h2>Import Files</h2>
-        <LocaleSelector setLocaleCode={this.setLocaleCode.bind(this)} empty={this.state.empty} />
+        <LocaleSelector localeCodes={this.props.projectLocales} setLocaleCode={this.setLocaleCode.bind(this)} empty={this.state.empty} />
         <br/>
         <input type="file" onChange={this.handleUploadFile.bind(this)} />
         <button
