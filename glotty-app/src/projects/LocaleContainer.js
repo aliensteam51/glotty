@@ -128,7 +128,7 @@ export class LocaleContainer extends PureComponent {
           <tbody>
             {projectLocales.map((locale, index) => {
               return (
-                <tr key={index}>
+                <tr key={locale.code}>
                 <td className='text-center'><input type='checkbox' onChange={this.toggleCheckbox.bind(this)} value={locale.code} /></td>
                 <td>{locale.code}</td>
                 <td>{locale.name}</td>
