@@ -27,14 +27,16 @@ const addLocale = require('../../hooks/add-locale');
 
 const importEntries = require('../../hooks/import-entries');
 
+const deleteLocale = require('../../hooks/delete-locale');
+
 module.exports = {
   before: {
     all: [],
     find: [],
     get: [],
     create: [],
-    update: [addLocale(), importEntries()],
-    patch: [addLocale(), importEntries()],
+    update: [addLocale(), importEntries(), deleteLocale()],
+    patch: [addLocale(), importEntries(), deleteLocale()],
     remove: []
   },
 
