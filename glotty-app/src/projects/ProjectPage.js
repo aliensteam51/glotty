@@ -129,7 +129,7 @@ export class ProjectPage extends PureComponent {
             </ul>
           </div> */}
 
-          <div className="project-nav">
+          <div className="project-nav show-for-large">
             <button title="Show Picture" className="button" type="button" onClick={() => this.setState({ showReveal: false})} >
               <i className="fa fa-picture-o" aria-hidden="true"></i>
             </button>
