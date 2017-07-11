@@ -29,7 +29,7 @@ export class FileUploader extends PureComponent {
     })
   }
 
-  submitForm() {
+  submitForm(event) {
     const { parseStrings, parseJson, parseXml, projectId, projectLocales } = this.props
     if (this.state.text.length === 0) {
       console.error('File not loaded yet')
@@ -57,6 +57,8 @@ export class FileUploader extends PureComponent {
       }
     }
     this.setState({ empty: true })
+    this.props.closeWindow({ showImportReveal: true })
+    document.getElementById("file-upload").value = ""
   }
 
   setLocaleCode(localeCode) {
@@ -70,7 +72,7 @@ export class FileUploader extends PureComponent {
         <h2>Import Files</h2>
         <LocaleSelector localeCodes={this.props.projectLocales} setLocaleCode={this.setLocaleCode.bind(this)} empty={this.state.empty} />
         <br/>
-        <input type="file" onChange={this.handleUploadFile.bind(this)} />
+        <input type="file" id="file-upload" onChange={this.handleUploadFile.bind(this)} />
         <button
           className="primary button"
           onClick={this.submitForm.bind(this)}>

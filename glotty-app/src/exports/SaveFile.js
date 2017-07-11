@@ -79,6 +79,7 @@ export class SaveFile extends PureComponent {
             window.URL.revokeObjectURL(url)
         }, 0)
     }
+    this.props.closeWindow({ showExportReveal: true })
   }
 
   render() {
