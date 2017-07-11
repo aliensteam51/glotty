@@ -10,16 +10,16 @@ export class SaveFile extends PureComponent {
     super()
 
     this.state = {
-      selectedPlatform: 'ios',
-      selectedLanguage: props.currentProject.localeCodes[0],
+      selectedPlatform: 'iOS',
+      selectedLanguage: props.currentProject.locales[0].code,
     }
   }
 
   renderSelectLangauges() {
     const { currentProject } = this.props
-    const { localeCodes } = currentProject
+    const { locales } = currentProject
     let index = 0
-    return localeCodes.map((locCode) => <option key={index++} value={locCode}>{locCode}</option> )
+    return locales.map((locale) => <option key={index++} value={locale.code}>{locale.name}</option> )
   }
 
   handleSelectPlatform(e){
@@ -97,6 +97,7 @@ export class SaveFile extends PureComponent {
                 {this.renderSelectLangauges()}
               </select>
             </label>
+
           </div>
 
           <div className="cell">
@@ -104,7 +105,7 @@ export class SaveFile extends PureComponent {
               <select
                 value={this.state.selectedPlatform}
                 onChange={this.handleSelectPlatform.bind(this)} >
-                <option value="ios">ios</option>
+                <option value="ios">iOS</option>
                 <option value="android">Android</option>
                 <option value="i18n">i18n</option>
               </select>

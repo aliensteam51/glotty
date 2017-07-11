@@ -6,19 +6,19 @@ import {
   LOAD_SUCCESS
  } from '../loading'
 
-export const ADDED_LOCALE = 'ADDED_LOCALE'
+export const LOCALE_DELETED = 'LOCALE_DELETED'
 
 const api = new API()
 
-export default (projectId, data) => {
-  return (dispatch) => {
+export default(projectId, data) => {
+  return(dispatch) => {
     dispatch({ type: APP_LOADING })
     dispatch({ type: LOAD_SUCCESS })
     const backend = api.service('projects')
     backend.patch(projectId, data)
       .then((result) => {
         dispatch({
-          type: ADDED_LOCALE,
+          type: LOCALE_DELETED,
           payload: result
         })
       })

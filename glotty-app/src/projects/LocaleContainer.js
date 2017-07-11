@@ -1,7 +1,10 @@
+/*global event*/
+/*eslint no-restricted-globals: ["off", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
 import addLocale from '../actions/projects/add-locale'
+import deleteLocale from '../actions/locales/delete'
 
 import './LocaleContainer.css'
 
@@ -60,6 +63,11 @@ export class LocaleContainer extends PureComponent {
     if (!event.target.checked) this.props.deselectLocale(event.target.value)
   }
 
+  deleteLocale(localeCode) {
+    const { localeCodes, projectId, deleteLocale } = this.props
+    if(confirm('Delete the locale?')) deleteLocale(projectId, { localeCodes, deleteLocale: localeCode })
+  }
+
   render() {
     const { locales, projectLocales } = this.props
 
@@ -110,7 +118,8 @@ export class LocaleContainer extends PureComponent {
             <tr>
               <th width="5%">Select</th>
               <th width="20%">Code</th>
-              <th width="75%">Name</th>
+              <th width="70%">Name</th>
+              <th width="5%"></th>
             </tr>
           </thead>
           <tbody>
@@ -120,6 +129,13 @@ export class LocaleContainer extends PureComponent {
                 <td className='text-center'><input type='checkbox' onChange={this.toggleCheckbox.bind(this)} value={locale.code} /></td>
                 <td>{locale.code}</td>
                 <td>{locale.name}</td>
+                <td>
+                  <button
+                    className="button tiny alert"
+                    onClick={this.deleteLocale.bind(this, locale.code)}>
+                    X
+                  </button>
+                </td>
                 </tr>
               )})}
             </tbody>
@@ -138,4 +154,4 @@ function sleep(ms) {
 
 const mapStateToProps = ({ locales }) => ({ locales })
 
-export default connect(mapStateToProps, { addLocale })(LocaleContainer)
+export default connect(mapStateToProps, { addLocale, deleteLocale })(LocaleContainer)
