@@ -33,6 +33,15 @@ export class ProjectPage extends PureComponent {
     }
   }
 
+  initializeState() {
+    this.setState({
+      name: '',
+      description: '',
+      group: '',
+      tags: []
+    })
+  }
+
   componentWillMount() {
     const {
       getProject,
@@ -87,6 +96,7 @@ export class ProjectPage extends PureComponent {
       tags: tags.split(/\W+/),
     }
     this.props.createEntry(entry)
+    this.initializeState()
     event.preventDefault()
   }
 
