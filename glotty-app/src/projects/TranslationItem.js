@@ -38,7 +38,7 @@ export class TranslationItem extends PureComponent {
           <label htmlFor="translation-label" className="text-left middle">{localeCode}</label>
         </div>
         <div className="cell small-11">
-          <input
+          <textarea
             type="text"
             id="translation-label"
             value={this.state.translation}

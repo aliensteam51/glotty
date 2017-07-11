@@ -23,12 +23,13 @@ export class LocaleContainer extends PureComponent {
       localeCodes: localeCodes,
       addLocale: this.state.selected.code
     }
-    this.setState({ search: '', selected: {} })
+    this.setState({ search: '', selected: {}, display: [] })
     addLocale(projectId, data)
   }
 
   focus() {
-    if (this.state.display.length === 0) this.setState({ display: this.props.locales.slice(0, 10)})
+    const { localeCodes, locales } = this.props
+    if (this.state.display.length === 0) this.setState({ display: locales.filter(lc => !localeCodes.includes(lc.code)).slice(0, 10)})
     this.setState({ focus: true })
   }
 
@@ -38,10 +39,12 @@ export class LocaleContainer extends PureComponent {
   }
 
   updateSearch(event) {
+    const { localeCodes, locales } = this.props
     const search = new RegExp('.*' + event.target.value.toLowerCase().replace(/\W+/gi, '.*') + '.*')
-    const filtered = this.props.locales.filter((locale) => (
-      (!!locale.code && search.test(locale.code.toLowerCase())) ||
-      (!!locale.name && search.test(locale.name.toLowerCase()))
+    const filtered = locales.filter((locale) => (
+      (!localeCodes.includes(locale.code)) &&
+      ((!!locale.code && search.test(locale.code.toLowerCase())) ||
+      (!!locale.name && search.test(locale.name.toLowerCase())))
     )).slice(0, 10)
     this.setState({ search: event.target.value, display: filtered })
   }
