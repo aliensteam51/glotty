@@ -116,7 +116,7 @@ export class AdminPage extends PureComponent {
                       onChange={this.handleSelectOrganization.bind(this)}>
                       {this.renderSelectOrganizations()}
                     </select>
-                  : <span>PUT ORG IN HERE AS TEXT AND NOT INPUT</span>}
+                  : <span>{this.props.currentUser.organization.name}</span>}
                 </td>
                 <td>
                   <input

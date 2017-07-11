@@ -15,7 +15,13 @@ export class UserItem extends PureComponent {
     if(!organizationId) return null
     return(
       <tr>
-        <td></td>
+        <td>
+          <button type="button"
+            className="alert button tiny"
+            onClick={() => {this.props.deleteUser(_id)}}>
+            X
+          </button>
+        </td>
         <td>{name}</td>
         <td>{email}</td>
         <td>
