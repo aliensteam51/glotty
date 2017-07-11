@@ -9,7 +9,7 @@ import "./Navigation.css"
 class Navigation extends PureComponent {
 
   render() {
-    const { signedIn } = this.props
+    const { signedIn, isAdmin } = this.props
     return (
       <div className="top-bar grid-container">
         <div className="top-bar-left">
@@ -21,6 +21,12 @@ class Navigation extends PureComponent {
         </div>
         <div className="top-bar-right">
           <ul className="menu">
+            { isAdmin ?
+              <li style={{marginRight: "20px"}}>
+                <Link to="/admin">Admin</Link>
+              </li> :
+              null
+            }
             <li>
               { signedIn ?
                 <Link to="/" onClick={() => {this.props.signOut()}}>Sign Out</Link> :
@@ -36,6 +42,7 @@ class Navigation extends PureComponent {
 
 const mapStateToProps = ({ currentUser }) => ({
   signedIn: !!currentUser && !!currentUser._id,
+  isAdmin: !!currentUser && (currentUser.roles.includes("super-admin") || currentUser.roles.includes("admin")),
 })
 
 export default connect(mapStateToProps, { push, signOut })(Navigation)

@@ -67,7 +67,7 @@ export class EntryItem extends PureComponent {
       name,
       description,
       group,
-      tags,
+      tags: tags.split(/\W+/),
     }
     const entryId = this.props._id
     this.props.patchEntry(entryId, entry)

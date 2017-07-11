@@ -22,9 +22,8 @@ export default (user) => {
         dispatch({ type: APP_DONE_LOADING })
         dispatch({ type: LOAD_SUCCESS })
 
-
         api.app.set('user', user)
-        console.log('User', api.app.get('user'))
+
         history.replace('/organizations')
 
         dispatch({

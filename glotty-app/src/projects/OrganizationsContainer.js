@@ -21,11 +21,9 @@ export class OrganizationsContainer extends PureComponent {
   }
 
   componentWillMount() {
-    const { fetchOrganizations, currentUser, push } = this.props
+    const { fetchOrganizations, currentUser, isSuperAdmin } = this.props
     fetchOrganizations()
-    if(currentUser) {
-      if(currentUser.roles[0] !== 'super-admin') push('/' + currentUser.organizationId)
-    }
+    if (currentUser && !isSuperAdmin) this.props.push('/' + currentUser.organizationId)
   }
 
   handleSubmit(event) {
@@ -79,7 +77,8 @@ export class OrganizationsContainer extends PureComponent {
   }
 
   render() {
-    if(!this.props.currentUser) return null
+    const { currentUser, organizations } = this.props
+    if(!currentUser && !organizations) return null
 
     return(
       <main className="grid-container organizations">
@@ -139,6 +138,7 @@ const mapStateToProps = ({ currentUser, organizations, currentOrganization }) =>
   organizations,
   currentUser,
   currentOrganization,
+  isSuperAdmin: currentUser && currentUser.roles.includes("super-admin"),
 })
 
 export default connect(mapStateToProps, {

@@ -19,11 +19,9 @@ class API {
       password
     })
     .then(response => {
-      console.log('Authenticated!', response)
       return this.app.passport.verifyJWT(response.accessToken)
     })
     .then(payload => {
-      console.log('JWT Payload', payload)
       return this.app.service('users').get(payload.userId)
     })
   }

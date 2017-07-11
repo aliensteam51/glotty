@@ -1,13 +1,8 @@
 import { FETCHED_ENTRIES } from '../actions/entries/fetch'
-// import { ENTRY_CREATED } from '../actions/entries/create'
-// import { ENTRY_UPDATED } from '../actions/entries/update'
-// import { ENTRY_DELETED } from '../actions/entries/delete'
 import { PLATFORM_DELETED } from '../actions/platforms/delete'
 import { KEY_EDITED } from '../actions/platforms/edit-key'
 import { ADDED_PLATFORM } from '../actions/platforms/add'
 import { TRANSLATION_UPDATED } from '../actions/translations/update'
-// import { ENTRY_REVIVED } from '../actions/entries/revive'
-// import { ENTRIES_HARD_DELETED } from '../actions/entries/hard-delete'
 
 import {
   ENTRY_CREATED,

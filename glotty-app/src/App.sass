@@ -57,8 +57,13 @@ table
       margin: 0
       text-decoration: none
 
-[type='text'], [type='submit'], [type="button"]
-  margin: 0
+td
+  [type='text'],
+  [type='email'],
+  [type='number'],
+  [type='search'],
+  textarea, select, .button
+    margin-bottom: 0
 
 .button-group
   margin: 0
@@ -72,9 +77,12 @@ table
   display: block
   font-size: 0.72222rem
   font-weight: normal
-  margin-bottom: 1.11111rem
+  margin-bottom: 0
   padding: 0.77778rem 1.33333rem 0.77778rem 0.77778rem
-  position: relative
+  position: fixed
+  top: 0
+  width: 100%
+  z-index: 999999
   transition: opacity 300ms ease-out
   background-color: #cc4b37
   border-color: #cc4b37
@@ -101,6 +109,6 @@ table
     width: 50px
     height: 50px
     margin: 5px
-textarea 
+textarea
   min-height: 30px
     border-radius: 0

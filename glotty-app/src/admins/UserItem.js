@@ -11,38 +11,23 @@ export class UserItem extends PureComponent {
   }
 
   render() {
-    const { name, email, organizationId, roles, currentUser, _id } = this.props
+    const { name, email, organizationId, roles, _id } = this.props
     if(!organizationId) return null
     return(
       <tr>
+        <td></td>
         <td>{name}</td>
         <td>{email}</td>
-        {currentUser.roles.includes("super-admin") ?
-          <div>
-            <td>{roles[0]}</td>
-            <td className="text-center">
-              {this.findOrganizationNameById(organizationId)}
-            </td>
-            <td>
-              <div className="expanded button-group">
-                <button
-                  className="primary button success"
-                  onClick={() => {this.props.toggleRole(_id, roles[0])}}>
-                  {roles.includes("admin") ? "Demote" : "Promote" }
-                </button>
-              </div>
-            </td>
-          </div> : null }
-
-          <td>
-            <div className="expanded button-group">
-              <button type="button"
-                className="alert button"
-                onClick={() => {this.props.deleteUser(_id)}}>
-                Delete
-              </button>
-            </div>
-          </td>
+        <td>
+          {this.findOrganizationNameById(organizationId)}
+        </td>
+        <td>
+          <button
+            className="primary button expanded"
+            onClick={() => {this.props.toggleRole(_id, roles[0])}}>
+            {roles.includes("admin") ? "Make User" : "Make Admin" }
+          </button>
+        </td>
       </tr>
     )
   }
