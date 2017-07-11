@@ -84,37 +84,37 @@ export class SaveFile extends PureComponent {
   render() {
     if (!this.props.entries[0]) return null
     return (
-      <div className="container">
-        <h2>Generate Translation File</h2>
-        <div className="grid-x grid-padding-x">
-          <div>
-            <label htmlFor="middle-label" className="text-right middle">Select Locale</label>
-          </div>
-          <div className="cell medium-3">
-            <select
-              id="middle-label"
-              value={this.state.selectedLanguage}
-              onChange={this.handleSelectLanguage.bind(this)}>
-              {this.renderSelectLangauges()}
-            </select>
-          </div>
-            <div>
-              <label htmlFor="middle-label" className="text-right middle">Platform</label>
-            </div>
-            <div className="medium-3 cell">
+      <div>
+        <h2>Generate Locale File</h2>
+        <div className="grid-x grid-padding-y">
+
+          <div className="cell">
+            <label>Locale Code
+
               <select
-                id="middle-label"
+                value={this.state.selectedLanguage}
+                onChange={this.handleSelectLanguage.bind(this)}>
+                {this.renderSelectLangauges()}
+              </select>
+            </label>
+
+          </div>
+
+          <div className="cell">
+            <label>Platform
+              <select
                 value={this.state.selectedPlatform}
                 onChange={this.handleSelectPlatform.bind(this)} >
                 <option value="ios">iOS</option>
                 <option value="android">Android</option>
                 <option value="i18n">i18n</option>
               </select>
-            </div>
-          <div>
+            </label>
+          </div>
+          <div className="cell">
             <button type="button"
               onClick={this.generateFile.bind(this)}
-              className="button">Generate
+            className="button">Generate
             </button>
           </div>
         </div>

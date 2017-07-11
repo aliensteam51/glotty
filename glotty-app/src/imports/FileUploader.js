@@ -66,7 +66,7 @@ export class FileUploader extends PureComponent {
 
   render() {
     return (
-      <div className='container'>
+      <div>
         <h2>Import Files</h2>
         <LocaleSelector setLocaleCode={this.setLocaleCode.bind(this)} empty={this.state.empty} />
         <br/>

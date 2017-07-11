@@ -91,10 +91,10 @@ export class LocaleContainer extends PureComponent {
                     onBlur={this.blur.bind(this)}
                     onChange={this.updateSearch.bind(this)}
                     value={this.state.search}/>
-                    <div className={this.classNames()}>
-                      <div className="medium-10">
-                        {this.state.display.map((option, index) => <p key={index} onClick={this.selectLocale.bind(this, option)}>{`${option.name} (${option.code})`}</p>)}
-                      </div>
+                  <div className={this.classNames()}>
+                    <div className="medium-10">
+                      {this.state.display.map((option, index) => <p key={index} onClick={this.selectLocale.bind(this, option)}>{`${option.name} (${option.code})`}</p>)}
+                    </div>
                     </div>
                 </div>
               </div>
