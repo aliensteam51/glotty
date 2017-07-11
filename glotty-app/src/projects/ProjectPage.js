@@ -109,7 +109,6 @@ export class ProjectPage extends PureComponent {
     } = this.props
     if(!currentProject || !entries || !this.props.params) return null
     const { _id, localeCodes, locales } = this.props.currentProject
-    console.log(this.props)
 
     return(
         <div className="grid-container single-project">
@@ -156,12 +155,16 @@ export class ProjectPage extends PureComponent {
 
           <div className="reveal-overlay" style={this.state.showImportReveal ? {display: "none"} : {display: "block"}}>
             <div className="reveal medium import-reveal" style={this.state.showImportReveal ? {display: "none"} : {display: "block"}}>
-              <FileUploader projectId={_id} projectLocales={localeCodes} />
+              <FileUploader projectId={_id} projectLocales={localeCodes} closeWindow={this.setState.bind(this)} />
 
               <button
                 className="close-button"
                 type="button"
-                onClick={() => this.setState({ showImportReveal: true})}
+                onClick={() => {
+                  return(
+                    this.setState({ showImportReveal: true}),
+                    document.getElementById("file-upload").value = ""
+                  )}}
               >
                 <span>&times;</span>
               </button>
@@ -170,7 +173,7 @@ export class ProjectPage extends PureComponent {
 
           <div className="reveal-overlay" style={this.state.showExportReveal ? {display: "none"} : {display: "block"}}>
             <div className="reveal medium" style={this.state.showExportReveal ? {display: "none"} : {display: "block"}}>
-              <SaveFile />
+              <SaveFile closeWindow={this.setState.bind(this)}/>
 
               <button
                 className="close-button"
