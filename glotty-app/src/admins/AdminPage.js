@@ -24,13 +24,26 @@ export class AdminPage extends PureComponent {
     const { organizationId } = currentUser
     fetchOrganizations()
 
-    if (currentUser.roles.includes("admin")){
-      fetchUsers(organizationId)
-      this.setState({ organizationId })
-      this.setState({ roles: ["user"] })
-    }
+    if (currentUser.roles.includes("admin")){ fetchUsers(organizationId); this.updateStateRoles() }
+    if (currentUser.roles.includes("super-admin")){ fetchUsers(); this.updateStateRoles() }
+  }
 
-    if (currentUser.roles.includes("super-admin")){ fetchUsers(); this.setState({ roles: ["admin"] }) }
+  initializeState() {
+    this.setState({
+      name: '',
+      email: '',
+      roles: [],
+      organizationId: ""
+    })
+    this.updateStateRoles()
+  }
+
+  updateStateRoles() {
+    const { currentUser } = this.props
+    const { organizationId } = currentUser
+
+    if (currentUser.roles.includes("admin")) this.setState({ organizationId, roles: ["user"] })
+    if (currentUser.roles.includes("super-admin")) this.setState({ roles: ["admin"] })
   }
 
   renderUsers(user, index) {
@@ -64,6 +77,7 @@ export class AdminPage extends PureComponent {
     }
 
     this.props.createUser(user)
+    this.initializeState()
     event.preventDefault()
   }
 
