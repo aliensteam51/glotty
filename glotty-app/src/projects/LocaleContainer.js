@@ -1,3 +1,5 @@
+/*global event*/
+/*eslint no-restricted-globals: ["off", "confirm"]*/
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
 
@@ -63,7 +65,7 @@ export class LocaleContainer extends PureComponent {
 
   deleteLocale(localeCode) {
     const { localeCodes, projectId, deleteLocale } = this.props
-    deleteLocale(projectId, { localeCodes, deleteLocale: localeCode })
+    if(confirm('Delete the locale?')) deleteLocale(projectId, { localeCodes, deleteLocale: localeCode })
   }
 
   render() {
