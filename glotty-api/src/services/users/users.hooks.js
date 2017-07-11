@@ -1,7 +1,16 @@
 const { authenticate } = require('feathers-authentication').hooks;
 const commonHooks = require('feathers-hooks-common');
-
+const { populate } = require('feathers-hooks-common');
 const { hashPassword } = require('feathers-authentication-local').hooks;
+
+const organizationSchema = {
+  include: {
+    service: 'organizations',
+    nameAs: 'organization',
+    parentField: 'organizationId',
+    childField: '_id',
+  }
+};
 
 module.exports = {
   before: {
@@ -16,6 +25,7 @@ module.exports = {
 
   after: {
     all: [
+      populate({ schema: organizationSchema }),
       commonHooks.when(
         hook => hook.params.provider,
         commonHooks.discard('password')
