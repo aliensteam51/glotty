@@ -27,6 +27,8 @@ export class ProjectPage extends PureComponent {
       tags: [],
       selectedLocales: [],
       showReveal: true,
+      showImportReveal: true,
+      showExportReveal: true,
       editProject: false,
     }
   }
@@ -107,16 +109,48 @@ export class ProjectPage extends PureComponent {
             </div>
           </div>
 
+          <div className="reveal-overlay" style={this.state.showImportReveal ? {display: "none"} : {display: "block"}}>
+            <div className="reveal medium import-reveal" style={this.state.showImportReveal ? {display: "none"} : {display: "block"}}>
+              <FileUploader projectId={_id} projectLocales={localeCodes} />
+
+              <button
+                className="close-button"
+                type="button"
+                onClick={() => this.setState({ showImportReveal: true})}
+              >
+                <span>&times;</span>
+              </button>
+            </div>
+          </div>
+
+          <div className="reveal-overlay" style={this.state.showExportReveal ? {display: "none"} : {display: "block"}}>
+            <div className="reveal medium" style={this.state.showExportReveal ? {display: "none"} : {display: "block"}}>
+              <SaveFile />
+
+              <button
+                className="close-button"
+                type="button"
+                onClick={() => this.setState({ showExportReveal: true})}
+              >
+                <span>&times;</span>
+              </button>
+            </div>
+          </div>
+
           <div className="project-nav">
-            <button className="button" type="button" onClick={() => this.setState({ showReveal: false})} >
+            <button title="Show Picture" className="button" type="button" onClick={() => this.setState({ showReveal: false})} >
               <i className="fa fa-picture-o" aria-hidden="true"></i>
+            </button>
+            <button title="import Locale File" className="button" type="button" onClick={() => this.setState({ showImportReveal: false})} >
+              <i className="fa fa-upload" aria-hidden="true"></i>
+            </button>
+            <button title="Export Locale File" className="button" type="button" onClick={() => this.setState({ showExportReveal: false})} >
+              <i className="fa fa-download" aria-hidden="true"></i>
             </button>
           </div>
 
           { this.state.editProject ? <input value={currentProject.name}/> : <h1>{currentProject.name}</h1>}
           <p className="text-center">{currentProject.description}</p>
-          
-          <FileUploader projectId={_id} projectLocales={localeCodes} />
 
           <LocaleContainer
             projectId={_id}
@@ -194,8 +228,6 @@ export class ProjectPage extends PureComponent {
               </button>
             : null}
           </div>
-
-          <SaveFile />
 
         </div>
 
