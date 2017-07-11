@@ -83,13 +83,13 @@ export class ProjectsContainer extends PureComponent {
   }
 
   render() {
-    const { currentOrganization } = this.props
-    if(!currentOrganization) return null
-    console.log(this.props.currentUser.roles.includes("super-admin" || "admin"))
+    const { currentOrganization, projects } = this.props
+    if(!currentOrganization || !projects[0]) return null
+    // console.log(this.props.currentUser.roles.includes("super-admin" || "admin"))
     return(
       <main className="grid-container projects">
         <h1>{currentOrganization.name}</h1>
-        <p className="text-center">{currentOrganization.descirption}</p>
+        <p className="text-center">{currentOrganization.description}</p>
         <div className="container">
           <h2 className="text-center">Project List</h2>
           {this.props.currentUser.roles.includes("super-admin" || "admin") ?

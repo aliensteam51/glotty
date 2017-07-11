@@ -15,7 +15,6 @@ export default (entryId, data) => {
     dispatch({ type: APP_LOADING })
     dispatch({ type: LOAD_SUCCESS })
     const backend = api.service('entries')
-    console.log(entryId)
     backend.patch(entryId, data)
       .then((result) => {
         dispatch({ type: APP_DONE_LOADING })

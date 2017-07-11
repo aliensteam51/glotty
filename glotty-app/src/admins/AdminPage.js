@@ -74,19 +74,21 @@ export class AdminPage extends PureComponent {
   }
 
   render() {
-    const { currentUser, users } = this.props
-    if(!users) return null
+    const { currentUser, users, organizations } = this.props
+    if(!users || !organizations) return null
+    console.log(this.props.currentUser.organizationId)
     return(
+      <main className="grid-container projects">
+        <h1>Admin Page</h1>
         <div className="container" style={{paddingBottom: "50px"}}>
-          <h2>Users</h2>
           <table>
             <thead>
               <tr>
                 <th width="5%"></th>
-                <th width="30%">Name</th>
+                <th width="20%">Name</th>
                 <th width="30%">email</th>
-                {currentUser.roles.includes("super-admin") ? <th width="30%">Organization</th> : null}
-                <th width="5%"></th>
+                <th width="30%">Organization</th>
+                <th width="15%"></th>
               </tr>
             </thead>
             <tbody>
@@ -114,22 +116,23 @@ export class AdminPage extends PureComponent {
                       onChange={this.handleSelectOrganization.bind(this)}>
                       {this.renderSelectOrganizations()}
                     </select>
-                  : null}
+                  : <span>PUT ORG IN HERE AS TEXT AND NOT INPUT</span>}
                 </td>
                 <td>
                   <input
                     type="submit"
-                    className="button "
+                    className="button expanded"
                     value="Create User"
                     onClick={this.handleSubmit.bind(this)}/>
                 </td>
               </tr>
             </tbody>
             <tbody>
-            { users.map(this.renderUsers.bind(this)) }
+              { users.map(this.renderUsers.bind(this)) }
             </tbody>
           </table>
         </div>
+      </main>
     )
   }
 }
