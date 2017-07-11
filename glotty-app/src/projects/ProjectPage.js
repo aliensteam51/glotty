@@ -8,6 +8,7 @@ import createEntry from '../actions/entries/create'
 import hardDelete from '../actions/entries/hard-delete'
 import subscribeToEntries from '../actions/entries/subscribe'
 import fetchLocales from '../actions/locales/fetch'
+// import { Link } from 'react-router'
 
 import SearchItem from './SearchItem'
 import EntryItem from './EntryItem'
@@ -91,11 +92,45 @@ export class ProjectPage extends PureComponent {
   }
 
   render() {
-    const { currentProject, entries } = this.props
+    const { currentProject,
+      entries,
+      // currentUser,
+      // isSuperAdmin
+    } = this.props
     if(!currentProject || !entries || !this.props.params) return null
     const { _id, localeCodes, locales } = this.props.currentProject
+    console.log(this.props)
+
     return(
         <div className="grid-container single-project">
+
+          {/* <div aria-label="You are here:" role="navigation">
+            <ul className="breadcrumbs">
+              { isSuperAdmin ?
+            <li>
+            <Link to="/organizations">Organizations</Link>
+            </li> : null }
+              <li>
+            <Link to="/organizations">{currentUser.organization.name}</Link>
+              </li>
+              <li>
+            <span className="show-for-sr">Current: </span> {currentProject.name}
+              </li>
+            </ul>
+          </div> */}
+
+          <div className="project-nav">
+            <button title="Show Picture" className="button" type="button" onClick={() => this.setState({ showReveal: false})} >
+              <i className="fa fa-picture-o" aria-hidden="true"></i>
+            </button>
+            <button title="import Locale File" className="button" type="button" onClick={() => this.setState({ showImportReveal: false})} >
+              <i className="fa fa-upload" aria-hidden="true"></i>
+            </button>
+            <button title="Export Locale File" className="button" type="button" onClick={() => this.setState({ showExportReveal: false})} >
+              <i className="fa fa-download" aria-hidden="true"></i>
+            </button>
+          </div>
+
           <div className="reveal-overlay" style={this.state.showReveal ? {display: "none"} : {display: "block"}}>
             <div className="reveal large" style={this.state.showReveal ? {display: "none"} : {display: "block"}}>
               <img src={require('../img/example.png')} alt="example-img" />
@@ -135,18 +170,6 @@ export class ProjectPage extends PureComponent {
                 <span>&times;</span>
               </button>
             </div>
-          </div>
-
-          <div className="project-nav">
-            <button title="Show Picture" className="button" type="button" onClick={() => this.setState({ showReveal: false})} >
-              <i className="fa fa-picture-o" aria-hidden="true"></i>
-            </button>
-            <button title="import Locale File" className="button" type="button" onClick={() => this.setState({ showImportReveal: false})} >
-              <i className="fa fa-upload" aria-hidden="true"></i>
-            </button>
-            <button title="Export Locale File" className="button" type="button" onClick={() => this.setState({ showExportReveal: false})} >
-              <i className="fa fa-download" aria-hidden="true"></i>
-            </button>
           </div>
 
           { this.state.editProject ? <input value={currentProject.name}/> : <h1>{currentProject.name}</h1>}
@@ -240,6 +263,7 @@ const mapStateToProps = ({ currentUser, projects, currentProject, entries, subsc
   currentProject,
   entries,
   subscribed: subscriptions.includes('entries'),
+  isSuperAdmin: currentUser && currentUser.roles.includes("super-admin"),
 })
 
 export default connect(mapStateToProps, {
