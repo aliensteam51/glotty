@@ -1,6 +1,6 @@
 import React, { PureComponent } from 'react'
 import { connect } from 'react-redux'
-import { push } from 'react-router-redux'
+import { push, replace } from 'react-router-redux'
 import signIn from '../actions/users/sign-in'
 import './SignIn.css'
 
@@ -11,14 +11,15 @@ export class SignIn extends PureComponent {
   }
 
   componentWillMount () {
-    const { currentUser } = this.props
+    const { currentUser, replace } = this.props
     if (currentUser) {
-      if (currentUser.roles.includes('super-admin')) {
-        this.props.push("/organizations")
-      } else {
-        this.props.push('/' + currentUser.organizationId)
-      }
+      replace('/')
     }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    const { replace, currentUser } = nextProps
+    if (currentUser) replace('/')
   }
 
   submitForm(event) {
@@ -68,4 +69,4 @@ const mapStateToProps = ({ currentUser }) => ({
 })
 
 
-export default connect(mapStateToProps, { signIn, push })(SignIn)
+export default connect(mapStateToProps, { signIn, push, replace })(SignIn)
