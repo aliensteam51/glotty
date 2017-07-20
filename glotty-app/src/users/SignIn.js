@@ -11,7 +11,14 @@ export class SignIn extends PureComponent {
   }
 
   componentWillMount () {
-    if (this.props.currentUser) this.props.push("/organizations")
+    const { currentUser } = this.props
+    if (currentUser) {
+      if (currentUser.roles.includes('super-admin')) {
+        this.props.push("/organizations")
+      } else {
+        this.props.push('/' + currentUser.organizationId)
+      }
+    }
   }
 
   submitForm(event) {
@@ -49,7 +56,6 @@ export class SignIn extends PureComponent {
                 </div>
               </div>
             </form>
-
           </div>
         </div>
       </div>
@@ -57,7 +63,7 @@ export class SignIn extends PureComponent {
   }
 }
 
-const mapStateToProps = ({currentUser }) => ({
+const mapStateToProps = ({ currentUser }) => ({
   currentUser,
 })
 

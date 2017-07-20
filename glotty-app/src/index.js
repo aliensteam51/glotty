@@ -10,16 +10,19 @@ import ProjectsContainer from './projects/ProjectsContainer'
 import ProjectPage from './projects/ProjectPage'
 import SignIn from './users/SignIn'
 import AdminPage from './admins/AdminPage'
+import EnsureUserLogIn from './components/EnsureUserLogIn'
 
 ReactDOM.render(
   <Provider store={store}>
     <Router history={history}>
       <Route path="/" component={App}>
         <IndexRoute component={SignIn} />
-        <Route path="/admin" component={AdminPage} />
-        <Route path="/organizations" component={OrganizationsContainer} />
-        <Route path="/:organizationId" component={ProjectsContainer} />
-        <Route path="/:organizationId/:projectId" component={ProjectPage} />
+        <Route component={EnsureUserLogIn}>
+          <Route path="/admin" component={AdminPage} />
+          <Route path="/organizations" component={OrganizationsContainer} />
+          <Route path="/:organizationId" component={ProjectsContainer} />
+          <Route path="/:organizationId/:projectId" component={ProjectPage} />
+        </Route>
       </Route>
     </Router>
   </Provider>,
