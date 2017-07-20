@@ -19,13 +19,14 @@ export default (projectId, query_str) => {
     const backend = api.service('entries')
     api.app.authenticate()
     .then(() => {
-      let search = { query: { projectId: projectId, $sort: { group: 1 } }}
+      let search = { query: { projectId: projectId, $sort: { group: 1 }, $limit: 800 }}
 
       if (query_str) {
         const regex = { $regex: query_str, $options: 'i' }
         search.query = {
           projectId: projectId,
           $sort: { group: 1 },
+          $limit: 800,
           $or: [
             { 'name': regex },
             { 'description': regex },
